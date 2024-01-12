@@ -2,11 +2,13 @@ package frc.robot.subsystems;
 
 import frc.robot.subsystems.SwerveModule;
 import frc.robot.Constants;
-
+import frc.robot.lib.math.Conversions;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+
+import org.apache.commons.lang3.Conversion;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 //import com.ctre.phoenix.sensors.Pigeon2;
@@ -19,6 +21,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.math.kinematics.SwerveModulePosition; looking into this, where are we getting "getModulePositions" from?
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +37,13 @@ public class Swerve extends SubsystemBase {
         gyro.clearStickyFaults();
         zeroGyro();
 
+
+        mSwerveMods = new SwerveModule[] {
+            new SwerveModule(1, Constants.Swerve.Mod0.constants),
+            new SwerveModule(1, Constants.Swerve.Mod1.constants),
+            new SwerveModule(1, Constants.Swerve.Mod2.constants),
+            new SwerveModule(1, Constants.Swerve.Mod3.constants)
+        };
         /* By pausing init for a second before setting module offsets, we avoid a bug with inverting motors.
          * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
          */
@@ -48,12 +58,19 @@ public class Swerve extends SubsystemBase {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(5, 0, 0), 
-                new PIDConstants(5, 0, 0), 
-                4.5, 
-                0.381, 
+                new PIDConstants(5), 
+                new PIDConstants(5), 
+                3.81, 
+                0.44, 
                 new ReplanningConfig()), 
-            () -> true, this);
+            () -> {
+                var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                }, 
+            this);
         
     }
 
