@@ -2,13 +2,13 @@ package frc.robot.subsystems;
 
 
 import frc.robot.Constants;
-import frc.robot.lib.math.Conversions;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
-import org.apache.commons.lang3.Conversion;
+
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -59,8 +59,8 @@ public class Swerve extends SubsystemBase {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(5), 
-                new PIDConstants(5), 
+                new PIDConstants(1), 
+                new PIDConstants(1), 
                 3.81, 
                 0.44, 
                 new ReplanningConfig()), 
@@ -72,29 +72,6 @@ public class Swerve extends SubsystemBase {
                     return false;
                 }, 
             this);
-        
-        AutoBuilder.configureHolonomic(
-        this::getPose,
-        this::resetOdometry,
-        this::getRobotRelativeSpeeds,
-        this::driveRobotRelative,
-
-        new HolonomicPathFollowerConfig(
-            new PIDConstants(5.0, 0.0, 0.0),
-            new PIDConstants(5.0, 0.0, 0.0),
-            4.0,
-            4.32,
-            new ReplanningConfig()),
-        () -> {
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;   
-            }
-
-            return false;
-        },
-        this
-        );
     }
 
 
