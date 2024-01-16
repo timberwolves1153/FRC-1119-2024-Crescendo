@@ -81,8 +81,7 @@ public class SwerveModule {
             mDriveMotor.set(percentOutput);
         }
         else {
-            double velocity = Conversions.absoluteEncoderPortsToDegrees(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
-            mDriveMotor.set(velocity); //(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
+        driveController.setReference(desiredState.speedMetersPerSecond, ControlType.kVelocity, 0, feedforward.calculate(desiredState.speedMetersPerSecond));
         }
     }
 
@@ -105,6 +104,7 @@ public class SwerveModule {
 
     private void configAngleMotor(){
         mAngleMotor.restoreFactoryDefaults(); 
+        mAngleMotor.clearFaults();
         CANSparkMaxUtil.setCANSparkMaxBusUsage(mAngleMotor, Usage.kPositionOnly);
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
@@ -127,7 +127,7 @@ public class SwerveModule {
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
         driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionPositionFactor); //fixed in constants file
-        driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionVelocityFactor); //fixed in constants file
+        driveEncoder.setVelocityConversionFactor(Constants.Swerve.driveConversionVelocityFactor); //fixed in constants file
         driveController.setP(Constants.Swerve.angleKP);
         driveController.setI(Constants.Swerve.angleKI);
         driveController.setD(Constants.Swerve.angleKD);
@@ -142,7 +142,9 @@ public class SwerveModule {
         return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
     }
 
-
+    public void setDriveVoltage(double volts){
+        mDriveMotor.setVoltage(volts);
+    }
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(

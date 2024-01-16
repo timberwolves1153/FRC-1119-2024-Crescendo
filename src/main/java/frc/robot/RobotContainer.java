@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.*;
 
@@ -37,6 +38,8 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
+    private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
 
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
@@ -49,9 +52,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> .5, //-driver.getRawAxis(translationAxis), 
-                () -> 0, //-driver.getRawAxis(strafeAxis), 
-                () -> 0, //-driver.getRawAxis(rotationAxis), 
+                () -> -driver.getRawAxis(translationAxis), 
+                () -> -driver.getRawAxis(strafeAxis), 
+                () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
         );
@@ -73,7 +76,9 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         
-       
+        driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
     }
 
     public Joystick getDriveController(){

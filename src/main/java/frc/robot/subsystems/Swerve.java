@@ -20,12 +20,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.math.kinematics.SwerveModulePosition; looking into this, where are we getting "getModulePositions" from?
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+
+import static edu.wpi.first.units.Units.Volts;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -33,6 +39,25 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
     public Alliance alliance;
 
+// Create SysId routine
+private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
+  new SysIdRoutine.Config(),
+    new SysIdRoutine.Mechanism(
+        (Measure<Voltage> volts) -> driveForVoltage(volts.in(Volts)), null, this));
+
+public void driveForVoltage(double characterizationVolts){
+    for(SwerveModule mod : mSwerveMods){
+        mod.setDriveVoltage(characterizationVolts);
+    }
+}
+
+public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+  return sysIdRoutine.quasistatic(direction);
+}
+
+public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+  return sysIdRoutine.dynamic(direction);
+}
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.clearStickyFaults();
