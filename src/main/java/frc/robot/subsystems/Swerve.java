@@ -192,5 +192,3 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
         }
     }
 }
-
-//fix getModulePositions => exists within 6328, commented out function above, why no worky?

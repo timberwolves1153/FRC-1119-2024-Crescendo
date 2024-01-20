@@ -26,6 +26,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final Joystick atari = new Joystick(1); 
     private final SendableChooser<Command> autoChooser;
   
 
@@ -41,11 +42,18 @@ public class RobotContainer {
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
 
+    private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
+    private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
+    private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
+
+    private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
+    private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Pivot pivot = new Pivot();
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -78,6 +86,21 @@ public class RobotContainer {
         
         driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        atariButton1.onTrue(new InstantCommand(() -> pivot.collectPosition()));
+        atariButton1.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        atariButton2.onTrue(new InstantCommand(() -> pivot.shootSpeakerPosition()));
+        atariButton2.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        atariButton3.onTrue(new InstantCommand(() -> pivot.shootAmpPosition()));
+        atariButton3.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        atariButton11.onTrue(new InstantCommand(() -> pivot.pivotForward()));
+        atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        atariButton12.onTrue(new InstantCommand(() -> pivot.pivotBackward()));
+        atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
 
     }
 
