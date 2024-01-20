@@ -26,6 +26,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final Joystick atari = new Joystick(1);
     private final SendableChooser<Command> autoChooser;
   
 
@@ -41,11 +42,15 @@ public class RobotContainer {
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
 
+    private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
+    private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
+
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Collector collector = new Collector();
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -78,7 +83,11 @@ public class RobotContainer {
         
         driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
-
+        
+        atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
     }
 
     public Joystick getDriveController(){
@@ -95,4 +104,6 @@ public class RobotContainer {
         //return autoChooser.getSelected();
         return new PathPlannerAuto("StraightLine");
     }
+
+
 } 
