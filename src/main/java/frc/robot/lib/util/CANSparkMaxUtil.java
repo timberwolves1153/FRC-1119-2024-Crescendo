@@ -1,11 +1,11 @@
 package frc.robot.lib.util;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+//import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import frc.robot.lib.util.CANSparkMaxUtil.Usage;
+// import edu.wpi.first.wpilibj.AnalogInput;
+// import frc.robot.lib.util.CANSparkMaxUtil.Usage;
 
 public class CANSparkMaxUtil {
     public enum Usage {
