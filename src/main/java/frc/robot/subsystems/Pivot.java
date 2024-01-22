@@ -77,12 +77,12 @@ public class Pivot {
     }
 
     public void shootSpeakerPosition() {
-        leftPivotMotorPID.setReference(collectSetpoint - 1, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
+        leftPivotMotorPID.setReference(shootSpeakerSetpoint, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
      //   rightPivotMotorPID.setReference(collectSetpoint - 1, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
     }
 
     public void shootAmpPosition() {
-        leftPivotMotorPID.setReference(collectSetpoint - 5, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
+        leftPivotMotorPID.setReference(shootAmpSetpoint, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
       //  rightPivotMotorPID.setReference(collectSetpoint - 5, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
     }
 
