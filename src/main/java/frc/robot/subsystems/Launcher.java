@@ -21,7 +21,7 @@ public Launcher(){
 
     shooterMotor.restoreFactoryDefaults();
 
-    shooterMotor = new CANSparkMax(0, MotorType.kBrushless);
+    shooterMotor = new CANSparkMax(61, MotorType.kBrushless);
     
     shooterMotorPID = shooterMotor.getPIDController();
 
