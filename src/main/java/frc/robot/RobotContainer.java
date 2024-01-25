@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -93,6 +94,9 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
-        return new PathPlannerAuto("StraightLine");
+        return new PathPlannerAuto("Score1Collect1");
+    //    PathPlannerPath path = PathPlannerPath.fromPathFile("StraightLine");
+
+    //    return AutoBuilder.followPath(path);
     }
 } 

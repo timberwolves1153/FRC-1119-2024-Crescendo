@@ -96,7 +96,7 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getModulePositions());
         // Drive base radius needs to be configured
-        AutoBuilder.configureHolonomic(
+         AutoBuilder.configureHolonomic(
             this::getPose, 
             this::resetOdometry, 
             this::getRobotRelativeSpeeds, 
@@ -104,7 +104,7 @@ public class Swerve extends SubsystemBase {
             new HolonomicPathFollowerConfig(
                 new PIDConstants(5), 
                 new PIDConstants(5), 
-                3.81, 
+                3.00, 
                 0.44, 
                 new ReplanningConfig()), 
             () -> {
