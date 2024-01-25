@@ -19,14 +19,14 @@ public final class Constants {
 
     public static final class Swerve {
         public static final int pigeonID = 5;
-        public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+        public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         public static final NEOSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
             NEOSwerveConstants.SDSMK4i(NEOSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(20.98); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(20.98); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(28); //TODO: This must be tuned to specific robot
+        public static final double wheelBase = Units.inchesToMeters(28); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
         public static final double wheelDiameter = chosenModule.wheelDiameter;
 
@@ -53,12 +53,12 @@ public final class Constants {
         public static final boolean absoluteEncoderPortsInvert = chosenModule.absoluteEncoderPortsInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleContinuousCurrentLimit = 40;
+        public static final int angleContinuousCurrentLimit = 25;
         public static final int anglePeakCurrentLimit = 20;
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 80;
+        public static final int driveContinuousCurrentLimit = 35;
         public static final int drivePeakCurrentLimit = 60;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
@@ -74,7 +74,7 @@ public final class Constants {
         // public static final double angleKD = chosenModule.angleKD;
         // public static final double angleKFF = chosenModule.angleKFF;
 
-        public static final double angleKP = 0.01;
+        public static final double angleKP = 0.05;
         public static final double angleKI = 0.00;
         public static final double angleKD = 0.00;
         public static final double angleKFF = 0.00;
@@ -89,9 +89,9 @@ public final class Constants {
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.667); //TODO: This must be tuned to specific robot
-        public static final double driveKV = (2.44);
-        public static final double driveKA = (0.27);
+        public static final double driveKS = (0.0321); //TODO: This must be tuned to specific robot
+        public static final double driveKV = (0.1807);
+        public static final double driveKA = (0.0615);
 
         public static final double driveConversionPositionFactor = 
             (wheelDiameter * Math.PI) / driveGearRatio;
@@ -116,7 +116,7 @@ public final class Constants {
             public static final int driveMotorID = 01;
             public static final int angleMotorID = 02;
             public static final int absoluteEncoderPorts = 0;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.53);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(141.69 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -126,7 +126,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int absoluteEncoderPorts = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(210.73);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(122.73 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -136,7 +136,7 @@ public final class Constants {
             public static final int driveMotorID = 21;
             public static final int angleMotorID = 22;
             public static final int absoluteEncoderPorts = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(184.49);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.5 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -146,7 +146,7 @@ public final class Constants {
             public static final int driveMotorID = 31;
             public static final int angleMotorID = 32;
             public static final int absoluteEncoderPorts = 3; //MIGHT SWAP WITH 1
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.78);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(345.9 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }

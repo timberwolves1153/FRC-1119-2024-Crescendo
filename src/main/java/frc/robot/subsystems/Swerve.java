@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.MutableMeasure.mutable;
 
 import frc.robot.Constants;
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-
 
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -15,12 +14,14 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Distance;
 import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.math.kinematics.SwerveModulePosition; looking into this, where are we getting "getModulePositions" from?
@@ -31,38 +32,55 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
+    private SwerveDriveKinematics kinematics;
     public Pigeon2 gyro;
     public Alliance alliance;
+    public double voltage;
 
-// Create SysId routine
-private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
-  new SysIdRoutine.Config(),
-    new SysIdRoutine.Mechanism(
-        (Measure<Voltage> volts) -> driveForVoltage(volts.in(Volts)), null, this));
+    private final MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Distance> distance = mutable(Meters.of(0));
+    private final MutableMeasure<Velocity<Distance>> velocity = mutable(MetersPerSecond.of(0));
 
-public void driveForVoltage(double characterizationVolts){
-    for(SwerveModule mod : mSwerveMods){
-        mod.setDriveVoltage(characterizationVolts);
-    }
-}
+    private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
+        new SysIdRoutine.Config(), 
+        new SysIdRoutine.Mechanism(
+            (Measure<Voltage> volts) -> driveForVoltage(volts.in(Volts)), 
+            log -> {
+                log.motor("mod 0")
+                .voltage(appliedVoltage.mut_replace(mSwerveMods[0].getDriveAppliedOutput(), Volts))
+                .linearPosition(distance.mut_replace(mSwerveMods[0].getDriveDistance(), Meters))
+                .linearVelocity(velocity.mut_replace(mSwerveMods[0].getDriveVelocity(), MetersPerSecond));
 
-public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-  return sysIdRoutine.quasistatic(direction);
-}
+                log.motor("mod 1")
+                .voltage(appliedVoltage.mut_replace(mSwerveMods[1].getDriveAppliedOutput(), Volts))
+                .linearPosition(distance.mut_replace(mSwerveMods[1].getDriveDistance(), Meters))
+                .linearVelocity(velocity.mut_replace(mSwerveMods[1].getDriveVelocity(), MetersPerSecond));
 
-public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-  return sysIdRoutine.dynamic(direction);
-}
+                log.motor("mod 2")
+                .voltage(appliedVoltage.mut_replace(mSwerveMods[2].getDriveAppliedOutput(), Volts))
+                .linearPosition(distance.mut_replace(mSwerveMods[2].getDriveDistance(), Meters))
+                .linearVelocity(velocity.mut_replace(mSwerveMods[2].getDriveVelocity(), MetersPerSecond));
+
+                log.motor("mod 3")
+                .voltage(appliedVoltage.mut_replace(mSwerveMods[3].getDriveAppliedOutput(), Volts))
+                .linearPosition(distance.mut_replace(mSwerveMods[3].getDriveDistance(), Meters))
+                .linearVelocity(velocity.mut_replace(mSwerveMods[3].getDriveVelocity(), MetersPerSecond));
+            }, this));
+    
     public Swerve() {
+        
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.clearStickyFaults();
         zeroGyro();
 
+        
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
             new SwerveModule(1, Constants.Swerve.Mod1.constants),
@@ -84,8 +102,8 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(1), 
-                new PIDConstants(1), 
+                new PIDConstants(5), 
+                new PIDConstants(5), 
                 3.81, 
                 0.44, 
                 new ReplanningConfig()), 
@@ -97,6 +115,7 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
                     return false;
                 }, 
             this);
+        
     }
 
 
@@ -127,18 +146,14 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
     }
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
 
-        var states = Constants.Swerve.swerveKinematics.toSwerveModuleStates(robotRelativeSpeeds);
-
-        SwerveDriveKinematics.desaturateWheelSpeeds(getStates(), Constants.Swerve.maxSpeed);
-
-        setModuleStates(states);
+        SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
+        setModuleStates(targetStates);
     }
 
     public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
-        ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation());
-
-        driveRobotRelative(robotRelative);
+        driveRobotRelative(ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation()));
     }
 
     public Pose2d getPose() {
@@ -147,6 +162,8 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
 
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getAngle(), getModulePositions(), pose);
+
+        
     }
 
     public SwerveModuleState[] getStates(){
@@ -181,6 +198,30 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
         }
     }
 
+    public double getGyroAngle() {
+        return gyro.getAngle();
+    }
+
+    public void driveForVoltage(double volts) {
+         for(SwerveModule mod : mSwerveMods) {
+        //     if (mod.moduleNumber == 0 || mod.moduleNumber == 1) {
+        //         mod.setDriveVoltage(volts);
+        //     } else {
+                mod.setDriveVoltage(volts);
+            // }
+            
+            
+        }
+    }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return sysIdRoutine.quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return sysIdRoutine.dynamic(direction);
+    }
+
     @Override
     public void periodic(){
         swerveOdometry.update(getAngle(), getModulePositions());  
@@ -188,7 +229,12 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
+            
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
+            //SmartDashboard.putNumber("Mod" + mod.moduleNumber + " get encoder 1", mod.getDriveEncoderPositon());
+
         }
     }
 }
