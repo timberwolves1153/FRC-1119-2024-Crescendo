@@ -104,7 +104,7 @@ public class Swerve extends SubsystemBase {
             new HolonomicPathFollowerConfig(
                 new PIDConstants(5), 
                 new PIDConstants(5), 
-                3.00, 
+                4.5, 
                 0.44, 
                 new ReplanningConfig()), 
             () -> {

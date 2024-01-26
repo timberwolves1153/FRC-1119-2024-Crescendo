@@ -94,9 +94,9 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
-        return new PathPlannerAuto("Score1Collect1");
+        return new PathPlannerAuto("StraightLine");
     //    PathPlannerPath path = PathPlannerPath.fromPathFile("StraightLine");
 
     //    return AutoBuilder.followPath(path);
     }
-} 
+}
