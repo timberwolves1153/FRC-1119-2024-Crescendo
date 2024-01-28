@@ -105,7 +105,7 @@ public class Swerve extends SubsystemBase {
                 new PIDConstants(5), 
                 new PIDConstants(5), 
                 4.5, 
-                0.44, 
+                0.41, 
                 new ReplanningConfig()), 
             () -> {
                 var alliance = DriverStation.getAlliance();
@@ -133,6 +133,7 @@ public class Swerve extends SubsystemBase {
     }    
 
     /* Used by SwerveControllerCommand in Auto */
+    
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
@@ -182,6 +183,14 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
+    public SwerveModuleState[] getModuleStates(){
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for(SwerveModule mod : mSwerveMods){
+            states[mod.moduleNumber] = mod.getState();
+        }
+        return states;
+    }
+
     public void zeroGyro(){
         gyro.setYaw(0);
     }
@@ -222,6 +231,23 @@ public class Swerve extends SubsystemBase {
         return sysIdRoutine.dynamic(direction);
     }
 
+    public void xPosition(Boolean isOpenLoop) {
+        SwerveModuleState[] swerveModuleStates =
+            new SwerveModuleState[] {
+                new SwerveModuleState(1, Rotation2d.fromDegrees(45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(45))
+            };
+
+            for(SwerveModule mod: mSwerveMods){
+                mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+            }
+
+            System.out.println("set to x position");
+
+    }
+
     @Override
     public void periodic(){
         swerveOdometry.update(getAngle(), getModulePositions());  
@@ -239,4 +265,4 @@ public class Swerve extends SubsystemBase {
     }
 }
 
-//fix getModulePositions => exists within 6328, commented out function above, why no worky?
+//fix getModulePositions => exists within 6328, commented out function above, why no worky? 

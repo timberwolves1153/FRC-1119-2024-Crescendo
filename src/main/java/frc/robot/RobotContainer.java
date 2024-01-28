@@ -27,6 +27,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final Joystick atari = new Joystick(1);
     private final SendableChooser<Command> autoChooser;
   
 
@@ -42,11 +43,16 @@ public class RobotContainer {
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
 
+    private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
+    private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
+    private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
+
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Launcher launcher = new Launcher();
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -79,6 +85,17 @@ public class RobotContainer {
         
         driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        atariButton4.onTrue(new InstantCommand(() -> s_Swerve.xPosition(true)));
+        atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+
+        atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+        atariButton5.onTrue(new InstantCommand(() -> s_Swerve.xPosition(true)));
+        atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+        
 
     }
 

@@ -8,43 +8,24 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Launcher {
-    private int TBD; //THIS IS JUST A PLACEHOLDER UNTIL WE HAVE A ROBOT TO WORK WITH, DELETE WHEN SETPOINT DONE
     private CANSparkMax shooterMotor;
-    private SparkPIDController shooterMotorPID;
-    private RelativeEncoder shooterMotorEncoder;
 
-    
-    public double kp;
-    public double shooterMotorkP;
-
-public Launcher(){
+  public Launcher(){
 
     shooterMotor.restoreFactoryDefaults();
 
     shooterMotor = new CANSparkMax(61, MotorType.kBrushless);
-    
-    shooterMotorPID = shooterMotor.getPIDController();
-
-    shooterMotorEncoder = shooterMotor.getEncoder();
-
-    shooterMotorkP = 0.01;
-
-    shooterMotorPID.setP(shooterMotorkP);
-
-    SmartDashboard.putNumber("shooter P gain", shooterMotorkP);
-
-    SmartDashboard.putNumber("shooter encoder", getTopRPM());
-
 
 }
 
 
 public void shootAmp(){
-    shooterMotor.setVoltage(TBD);
+    shooterMotor.setVoltage(6);
+
 }
 
 public void shootSpeaker(){
-    shooterMotor.setVoltage(TBD);
+    shooterMotor.setVoltage(11);
 }
 
 // public void shootSpeakerLeft(){
@@ -60,11 +41,15 @@ public void shootSpeaker(){
 // }
 
 public void shootSpeakerLine(){
-    shooterMotor.setVoltage(TBD);
+    shooterMotor.setVoltage(11);
 }
 
-public double getTopRPM() {
-    return shooterMotorEncoder.getVelocity();
+public void launcherStop() {
+    shooterMotor.setVoltage(0);
+}
+
+public void ejectDisc() {
+    shooterMotor.setVoltage(-6);
 }
 
 }
