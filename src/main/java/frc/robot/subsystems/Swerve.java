@@ -85,8 +85,8 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
             new HolonomicPathFollowerConfig(
                 new PIDConstants(1), 
                 new PIDConstants(1), 
-                3.81, 
-                0.44, 
+                3.00, 
+                0.50, 
                 new ReplanningConfig()), 
             () -> {
                 var alliance = DriverStation.getAlliance();
@@ -127,17 +127,13 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
 
-        var states = Constants.Swerve.swerveKinematics.toSwerveModuleStates(robotRelativeSpeeds);
-
-        SwerveDriveKinematics.desaturateWheelSpeeds(getStates(), Constants.Swerve.maxSpeed);
-
-        setModuleStates(states);
+       ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
+       SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
+       setModuleStates(targetStates);
     }
 
     public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
-        ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation());
-
-        driveRobotRelative(robotRelative);
+       driveRobotRelative(ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation()));
     }
 
     public Pose2d getPose() {
@@ -191,6 +187,7 @@ public Command sysIdDynamic(SysIdRoutine.Direction direction) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
             SmartDashboard.putNumber("Gyro Heading", getAngle().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
         }
     }
 }
