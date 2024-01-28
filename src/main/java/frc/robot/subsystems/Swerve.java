@@ -183,13 +183,6 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public SwerveModuleState[] getModuleStates(){
-        SwerveModuleState[] states = new SwerveModuleState[4];
-        for(SwerveModule mod : mSwerveMods){
-            states[mod.moduleNumber] = mod.getState();
-        }
-        return states;
-    }
 
     public void zeroGyro(){
         gyro.setYaw(0);

@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import org.littletonrobotics.urcl.URCL;
-
 import java.net.URL;
 
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -33,7 +31,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     DataLogManager.start();
-    URCL.start();
+    //URCL.start();
     m_robotContainer = new RobotContainer();
     
     
