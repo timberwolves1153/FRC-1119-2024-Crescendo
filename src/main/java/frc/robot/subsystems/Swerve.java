@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -48,32 +49,31 @@ public class Swerve extends SubsystemBase {
     private final MutableMeasure<Distance> distance = mutable(Meters.of(0));
     private final MutableMeasure<Velocity<Distance>> velocity = mutable(MetersPerSecond.of(0));
 
-    private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
-        new SysIdRoutine.Config(), 
-        new SysIdRoutine.Mechanism(
-            (Measure<Voltage> volts) -> driveForVoltage(volts.in(Volts)), 
-            log -> {
-                log.motor("mod 0")
-                .voltage(appliedVoltage.mut_replace(mSwerveMods[0].getDriveAppliedOutput(), Volts))
-                .linearPosition(distance.mut_replace(mSwerveMods[0].getDriveDistance(), Meters))
-                .linearVelocity(velocity.mut_replace(mSwerveMods[0].getDriveVelocity(), MetersPerSecond));
+    private final SysIdRoutine driveTrainRoutine = new SysIdRoutine(
+        new SysIdRoutine.Config(),
+        new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this));
 
-                log.motor("mod 1")
-                .voltage(appliedVoltage.mut_replace(mSwerveMods[1].getDriveAppliedOutput(), Volts))
-                .linearPosition(distance.mut_replace(mSwerveMods[1].getDriveDistance(), Meters))
-                .linearVelocity(velocity.mut_replace(mSwerveMods[1].getDriveVelocity(), MetersPerSecond));
+    private void voltageDrive(Measure<Voltage> voltage) {
+        for (SwerveModule module : mSwerveMods) {
+            module.openLoopDiffDrive(voltage.in(Volts));
+        }
+    }
 
-                log.motor("mod 2")
-                .voltage(appliedVoltage.mut_replace(mSwerveMods[2].getDriveAppliedOutput(), Volts))
-                .linearPosition(distance.mut_replace(mSwerveMods[2].getDriveDistance(), Meters))
-                .linearVelocity(velocity.mut_replace(mSwerveMods[2].getDriveVelocity(), MetersPerSecond));
+    private void logMotors(SysIdRoutineLog log) {
+        for (SwerveModule module : mSwerveMods) {
+            module.logMotor(log);
+        }
+    }
 
-                log.motor("mod 3")
-                .voltage(appliedVoltage.mut_replace(mSwerveMods[3].getDriveAppliedOutput(), Volts))
-                .linearPosition(distance.mut_replace(mSwerveMods[3].getDriveDistance(), Meters))
-                .linearVelocity(velocity.mut_replace(mSwerveMods[3].getDriveVelocity(), MetersPerSecond));
-            }, this));
-    
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return driveTrainRoutine.quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return driveTrainRoutine.dynamic(direction);
+    }
+
+
     public Swerve() {
         
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -216,14 +216,6 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-        return sysIdRoutine.quasistatic(direction);
-    }
-
-    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-        return sysIdRoutine.dynamic(direction);
-    }
-
     public void xPosition(Boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
             new SwerveModuleState[] {
@@ -240,6 +232,7 @@ public class Swerve extends SubsystemBase {
             System.out.println("set to x position");
 
     }
+
 
     @Override
     public void periodic(){

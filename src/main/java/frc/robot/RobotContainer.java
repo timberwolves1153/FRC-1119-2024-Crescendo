@@ -43,6 +43,8 @@ public class RobotContainer {
 
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
 
     private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
     private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
@@ -87,7 +89,8 @@ public class RobotContainer {
         
         //driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         //driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
-        driveY.whileTrue(xLock);
+        
+        //driveY.whileTrue(xLock);
 
         // atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
         // atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
@@ -95,6 +98,12 @@ public class RobotContainer {
         // atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
       
         // atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
 
         
