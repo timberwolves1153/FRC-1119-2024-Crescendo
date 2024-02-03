@@ -1,5 +1,10 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.MutableMeasure.mutable;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -10,8 +15,13 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Velocity;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import frc.robot.lib.math.OnBoardModuleState;
 import frc.robot.lib.util.CANSparkMaxUtil;
 import frc.robot.lib.util.SwerveModuleConstants;
@@ -37,6 +47,11 @@ public class SwerveModule {
    // private final WPI_TalonFX test = new WPI_TalonFX(43);
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
+
+    /* Mutate these each time we log so that we aren't creating objects constantly */
+    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Distance> mutableDistance = mutable(Meters.of(0));
+    private final MutableMeasure<Velocity<Distance>> mutableVelocity = mutable(MetersPerSecond.of(0));
 
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
@@ -151,5 +166,24 @@ public class SwerveModule {
         driveEncoder.getPosition(), 
              getAngle()
         );
+    }
+
+    public void openLoopDiffDrive(double voltage) {
+        angleController.setReference(0, ControlType.kPosition);
+        mDriveMotor.setVoltage(voltage);
+    }
+
+    public void logMotor(SysIdRoutineLog log) {
+        log.motor("module# " + moduleNumber)
+            // Log voltage
+            .voltage(
+                mutableAppliedVoltage.mut_replace(
+                    // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
+                    // by the voltage going into the spark max, called the bus voltage to receive the
+                    // output voltage
+                    mDriveMotor.getAppliedOutput() * mDriveMotor.getBusVoltage(), Volts))
+            // the drive encoder has the necessary position and velocity conversion factors already set
+            .linearVelocity(mutableVelocity.mut_replace(driveEncoder.getVelocity(), MetersPerSecond))
+            .linearPosition(mutableDistance.mut_replace(driveEncoder.getPosition(), Meters));
     }
 }

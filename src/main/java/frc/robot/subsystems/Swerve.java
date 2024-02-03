@@ -8,13 +8,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
-import com.ctre.phoenix6.StatusSignal;
+import static edu.wpi.first.units.Units.Volts;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-//import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,15 +22,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
-// import edu.wpi.first.math.kinematics.SwerveModulePosition; looking into this, where are we getting "getModulePositions" from?
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
-import static edu.wpi.first.units.Units.Volts;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -38,25 +36,35 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
     public Alliance alliance;
 
-// Create SysId routine
-private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
-  new SysIdRoutine.Config(),
-    new SysIdRoutine.Mechanism(
-        (Measure<Voltage> volts) -> driveForVoltage(volts.in(Volts)), null, this));
+    // Create SysId routine
+    private SysIdRoutine drivetrainRoutine = new SysIdRoutine(
+      new SysIdRoutine.Config(),
+      new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this));
 
-public void driveForVoltage(double characterizationVolts){
-    for(SwerveModule mod : mSwerveMods){
-        mod.setDriveVoltage(characterizationVolts);
+    private void voltageDrive(Measure<Voltage> voltage) {
+        // Iterate through each of the 4 swerve modules
+        for (SwerveModule module : mSwerveMods) {
+            // Call the open loop method, which sends a voltage with no feedback to the motors, but holds the wheel at 0 degrees
+            module.openLoopDiffDrive(voltage.in(Volts));
+        }
     }
-}
 
-public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-  return sysIdRoutine.quasistatic(direction);
-}
+    private void logMotors(SysIdRoutineLog log) {
+        // Iterate through each of the 4 swerve modules
+        for (SwerveModule module : mSwerveMods) {
+            // Call the open loop method, which sends a voltage with no feedback to the motors, but holds the wheel at 0 degrees
+            module.logMotor(log);
+        }
+    }
 
-public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-  return sysIdRoutine.dynamic(direction);
-}
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return drivetrainRoutine.quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return drivetrainRoutine.dynamic(direction);
+    }
+
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.clearStickyFaults();

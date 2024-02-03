@@ -39,6 +39,8 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
 
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -76,9 +78,15 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
         
-        driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+//        driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+//        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
 
     }
 
