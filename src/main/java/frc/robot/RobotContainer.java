@@ -87,14 +87,9 @@ public class RobotContainer {
         driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
 
-        atariButton1.onTrue(new InstantCommand(() -> pivot.collectPosition()));
-        atariButton1.onFalse(new InstantCommand(() -> pivot.pivotStop()));
-
-        atariButton2.onTrue(new InstantCommand(() -> pivot.shootSpeakerPosition()));
-        atariButton2.onFalse(new InstantCommand(() -> pivot.pivotStop()));
-
-        atariButton3.onTrue(new InstantCommand(() -> pivot.shootAmpPosition()));
-        atariButton3.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+        atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Collect
+        atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Speaker
+        atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR AMP
 
         atariButton11.onTrue(new InstantCommand(() -> pivot.pivotForward()));
         atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));

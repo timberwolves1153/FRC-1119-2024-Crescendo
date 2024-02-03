@@ -3,99 +3,151 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.units.Angle;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Constants;
+import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Velocity;
 
-public class Pivot {
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.MutableMeasure.mutable;
 
-    private CANSparkMax leftPivotMotor;
-    private CANSparkMax rightPivotMotor;
+public class Pivot extends SubsystemBase{
+
+    private CANSparkMax m_leftPivotMotor;
+    private CANSparkMax m_rightPivotMotor;
     private DigitalInput lowerLimitSwitch;
-    private RelativeEncoder pivotEncoder;
+    private DutyCycleEncoder pivotAbsoluteEncoder;
     private SparkPIDController leftPivotMotorPID;
     private SparkPIDController rightPivotMotorPID;
+    private ArmFeedforward leftPivotFF;
 
-    public double kP, kFF;
+    private PIDController leftPivotMotor;
 
-    private final double collectSetpoint = 0.0;
-    private final double shootSpeakerSetpoint = 0.0;
-    private final double shootAmpSetpoint = 0.0;
+    private SysIdRoutine pivotRoutine = new SysIdRoutine(
+        new SysIdRoutine.Config(), 
+        new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this));
 
+    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Angle> mutableDistance = mutable(Degrees.of(0));
+    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(DegreesPerSecond.of(0));
+
+    
     public Pivot() {
 
-       leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
-       rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
+       m_leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
+       m_rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
 
        lowerLimitSwitch = new DigitalInput(1);
 
-       leftPivotMotorPID = leftPivotMotor.getPIDController();
-       rightPivotMotorPID = rightPivotMotor.getPIDController();
-       
-       kP = 0.1;
-       kFF = 0.0;
+       leftPivotMotor = new PIDController(0, 0, 0); //Tune
+       leftPivotFF = new ArmFeedforward(0, 0 , 0); //Tune
 
-       SmartDashboard.putNumber("Pivot P Value", kP);
-       SmartDashboard.putNumber("Pivot Feed Forward", kFF);
-       SmartDashboard.putNumber("Pivot Encoder", getPivotEncoder());
-
+       pivotAbsoluteEncoder = new DutyCycleEncoder(0);
 
        configPivot();
 
     }
 
     public void pivotForward() {
-        leftPivotMotor.setVoltage(6);
-        rightPivotMotor.setVoltage(6);
+        m_leftPivotMotor.setVoltage(6);
     }
 
     public void pivotBackward() {
-        leftPivotMotor.setVoltage(-6);
-        rightPivotMotor.setVoltage(-6);
+        m_leftPivotMotor.setVoltage(-6);
     }
 
     public void pivotStop() {
-        leftPivotMotor.setVoltage(0);
-        rightPivotMotor.setVoltage(0);
+        m_leftPivotMotor.setVoltage(0);
     }
 
-    public double getPivotEncoder() {
-        return pivotEncoder.getPosition();
+    public double getAbsolutePosition() {
+        return pivotAbsoluteEncoder.getAbsolutePosition();
     }
 
-    public void resetPivotEncoder() {
-        pivotEncoder.setPosition(0);
+    public double getPivotRadians() {
+        return getAbsolutePosition() * 2 * Math.PI / 60;
     }
 
-    public void collectPosition() {
-        leftPivotMotorPID.setReference(collectSetpoint, ControlType.kPosition);
-     //   rightPivotMotorPID.setReference(collectSetpoint, ControlType.kPosition);
+    public double getPivotDegrees() {
+        return Math.toDegrees(getPivotRadians());
     }
 
-    public void shootSpeakerPosition() {
-        leftPivotMotorPID.setReference(shootSpeakerSetpoint, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
-     //   rightPivotMotorPID.setReference(collectSetpoint - 1, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
+    public double getPivotRPM_Degrees(){
+        return m_leftPivotMotor.getEncoder().getVelocity() * 360 / 60;
+    }
+    
+    public double getPivotRPM_Radians(){
+        return m_leftPivotMotor.getEncoder().getVelocity() *2 * Math.PI / 60 ;
     }
 
-    public void shootAmpPosition() {
-        leftPivotMotorPID.setReference(shootAmpSetpoint, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
-      //  rightPivotMotorPID.setReference(collectSetpoint - 5, ControlType.kPosition); //BEFORE DRIVING, TEST THIS OUT TO MAKE SURE IT IS CORRECT
+    public void setPivotPosition(double degrees) {
+        double setpointRadians = Math.toRadians(degrees);
+        double feedback = leftPivotMotor.calculate(getPivotRadians(), setpointRadians);
+        double feedforward = leftPivotFF.calculate(setpointRadians, -1);
+
+        m_leftPivotMotor.setVoltage(feedback + feedforward);
     }
+
+    private void voltageDrive(Measure<Voltage> voltage) {
+        m_leftPivotMotor.setVoltage(voltage.in(Volts));
+    }
+
+     public void logMotors(SysIdRoutineLog log) {
+        log.motor("pivot")
+            .voltage(mutableAppliedVoltage.mut_replace(
+                m_leftPivotMotor.getAppliedOutput() * m_leftPivotMotor.getBusVoltage(), Volts))
+
+            .angularPosition(mutableDistance.mut_replace(getPivotDegrees(), Degrees))
+            .angularVelocity(mutableVelocity.mut_replace(getPivotRPM_Degrees(), DegreesPerSecond));
+    }
+
+    
+
+    @Override
+    public void periodic() {
+
+        if (Constants.tunePivot) {
+        SmartDashboard.getNumber("Pivot Degrees", getPivotDegrees());
+        SmartDashboard.getNumber("Pivot Radians", getPivotRadians());
+        SmartDashboard.getNumber("Pivot Absolute Position", getAbsolutePosition());
+        SmartDashboard.getNumber("Pivot Setpoint", leftPivotMotor.getSetpoint());
+        }
+
+    }
+
+
 
     public void configPivot() {
-        leftPivotMotor.restoreFactoryDefaults();
-        leftPivotMotor.setInverted(false);
-        leftPivotMotor.setIdleMode(IdleMode.kCoast);
-        leftPivotMotor.burnFlash();
+        m_leftPivotMotor.restoreFactoryDefaults();
+        m_rightPivotMotor.restoreFactoryDefaults();
 
-        rightPivotMotor.restoreFactoryDefaults();
-        rightPivotMotor.follow(leftPivotMotor, true);
-        rightPivotMotor.setIdleMode(IdleMode.kCoast);
-        rightPivotMotor.burnFlash();
+        m_leftPivotMotor.setIdleMode(IdleMode.kBrake);
+        m_rightPivotMotor.setIdleMode(IdleMode.kBrake);
+
+        m_rightPivotMotor.follow(m_leftPivotMotor, true);
+        m_leftPivotMotor.setInverted(false);
+
+        m_rightPivotMotor.burnFlash();
+        m_leftPivotMotor.burnFlash();
     }
 
 }

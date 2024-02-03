@@ -112,5 +112,3 @@ public class NEOSwerveConstants {
         public static final double SDSMK4i_L3 = (6.12 / 1.0);
     }
 }
-
-  
