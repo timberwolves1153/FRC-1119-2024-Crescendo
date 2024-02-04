@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.TurnAndX;
 import frc.robot.subsystems.*;
 
 /**
@@ -41,6 +43,12 @@ public class RobotContainer {
 
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
+
+    private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
+    private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
+    private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
 
     private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
     private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
@@ -54,10 +62,12 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Pivot pivot = new Pivot();
+    // private final Launcher launcher = new Launcher();
+    private final TurnAndX xLock = new TurnAndX(s_Swerve);
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
+         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
                 () -> driver.getRawAxis(translationAxis), 
@@ -66,6 +76,7 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -84,8 +95,26 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         
-        driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        //driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        //driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        
+        //driveY.whileTrue(xLock);
+
+        // atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        // atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+        // atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+      
+        // atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+
+
+        
 
         atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Collect
         atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Speaker
@@ -112,5 +141,8 @@ public class RobotContainer {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
         return new PathPlannerAuto("StraightLine");
+    //    PathPlannerPath path = PathPlannerPath.fromPathFile("StraightLine");
+
+    //    return AutoBuilder.followPath(path);
     }
-} 
+}

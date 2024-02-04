@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4324184098556527,
-      "y": 6.974011293994152
+      "x": 0.46,
+      "y": 3.63
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LessWonkyScore1Collect1"
+            "pathName": "DriveAuto"
           }
         }
       ]
