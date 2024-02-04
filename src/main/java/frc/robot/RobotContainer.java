@@ -60,7 +60,7 @@ public class RobotContainer {
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
+         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
@@ -69,6 +69,7 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
