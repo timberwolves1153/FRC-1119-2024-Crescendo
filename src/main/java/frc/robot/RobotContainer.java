@@ -46,13 +46,16 @@ public class RobotContainer {
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
 
+    private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
+    private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
+    private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
+
     private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
     private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
     private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
 
-    private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
-    private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
-    private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
+    private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
+    private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
 
     private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
     private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
@@ -61,6 +64,7 @@ public class RobotContainer {
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Collector collector = new Collector();
     private final Pivot pivot = new Pivot();
     // private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
@@ -94,9 +98,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    
         
-        //driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        //driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
         
         //driveY.whileTrue(xLock);
 
@@ -112,9 +119,6 @@ public class RobotContainer {
 
         driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
-
-
-        
 
         atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Collect
         atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Speaker
