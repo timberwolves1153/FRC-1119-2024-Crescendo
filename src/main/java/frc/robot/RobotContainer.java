@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.TurnAndX;
 import frc.robot.subsystems.*;
 
 /**
@@ -26,7 +28,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
-    private final Joystick atari = new Joystick(1);
+    private final Joystick atari = new Joystick(1); 
     private final SendableChooser<Command> autoChooser;
   
 
@@ -41,20 +43,35 @@ public class RobotContainer {
 
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
+
+    private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
+    private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
+    private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
+
+    private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
+    private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
+    private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
 
     private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
     private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
 
+    private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
+    private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Collector collector = new Collector();
+    private final Pivot pivot = new Pivot();
+    // private final Launcher launcher = new Launcher();
+    private final TurnAndX xLock = new TurnAndX(s_Swerve);
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
+         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
@@ -63,6 +80,7 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -80,14 +98,38 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        
-        driveY.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+    
         
         atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
         atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
         atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
         atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        
+        //driveY.whileTrue(xLock);
+
+        // atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        // atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+        // atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+      
+        // atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+
+        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+
+        atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Collect
+        atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Speaker
+        atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR AMP
+
+        atariButton11.onTrue(new InstantCommand(() -> pivot.pivotForward()));
+        atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        atariButton12.onTrue(new InstantCommand(() -> pivot.pivotBackward()));
+        atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
     }
 
     public Joystick getDriveController(){
@@ -103,7 +145,8 @@ public class RobotContainer {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
         return new PathPlannerAuto("StraightLine");
+    //    PathPlannerPath path = PathPlannerPath.fromPathFile("StraightLine");
+
+    //    return AutoBuilder.followPath(path);
     }
-
-
-} 
+}
