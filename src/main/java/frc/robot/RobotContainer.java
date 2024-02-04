@@ -28,7 +28,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
-    private final Joystick atari = new Joystick(1);
+    private final Joystick atari = new Joystick(1); 
     private final SendableChooser<Command> autoChooser;
   
 
@@ -50,11 +50,18 @@ public class RobotContainer {
     private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
     private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
 
+    private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
+    private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
+    private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
+
+    private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
+    private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Pivot pivot = new Pivot();
     // private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
    
@@ -108,6 +115,16 @@ public class RobotContainer {
 
 
         
+
+        atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Collect
+        atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Speaker
+        atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR AMP
+
+        atariButton11.onTrue(new InstantCommand(() -> pivot.pivotForward()));
+        atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        atariButton12.onTrue(new InstantCommand(() -> pivot.pivotBackward()));
+        atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
 
     }
 

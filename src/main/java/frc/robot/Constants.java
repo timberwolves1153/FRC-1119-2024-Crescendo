@@ -14,6 +14,7 @@ import frc.robot.lib.util.SwerveModuleConstants;
 public final class Constants {
 
     public static final boolean collectorTuningMode = false;
+    public static final boolean tunePivot = true;
     public static final boolean tuneSwerve = true;
     public static final boolean tuneLauncher = false;
     public static final double stickDeadband = 0.2;
