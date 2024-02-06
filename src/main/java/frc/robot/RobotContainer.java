@@ -66,7 +66,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final Collector collector = new Collector();
     private final Pivot pivot = new Pivot();
-    // private final Launcher launcher = new Launcher();
+    private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -98,21 +98,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    
-        
-        atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
-        atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
-        atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
         
         //driveY.whileTrue(xLock);
 
-        // atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
-        // atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
 
-        // atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
-      
-        // atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
 
         driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
@@ -120,14 +109,30 @@ public class RobotContainer {
         driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Collect
-        atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR Speaker
-        atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0))); //SWITCH THIS FOR AMP
+        atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Collect
+        atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Speaker
+        atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR AMP
 
-        atariButton11.onTrue(new InstantCommand(() -> pivot.pivotForward()));
+        atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        atariButton4.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        atariButton4.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+        atariButton5.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        atariButton5.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        atariButton11.onTrue(new InstantCommand(() -> pivot.pivotUp()));
         atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
 
-        atariButton12.onTrue(new InstantCommand(() -> pivot.pivotBackward()));
+        atariButton12.onTrue(new InstantCommand(() -> pivot.pivotDown()));
         atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
 
     }

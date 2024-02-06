@@ -63,15 +63,17 @@ public class Pivot extends SubsystemBase{
 
        pivotAbsoluteEncoder = new DutyCycleEncoder(0);
 
+       //SmartDashboard.getNumber("Pivot P Value", kP);
+
        configPivot();
 
     }
 
-    public void pivotForward() {
+    public void pivotUp() {
         m_leftPivotMotor.setVoltage(6);
     }
 
-    public void pivotBackward() {
+    public void pivotDown() {
         m_leftPivotMotor.setVoltage(-6);
     }
 
@@ -139,6 +141,9 @@ public class Pivot extends SubsystemBase{
     public void configPivot() {
         m_leftPivotMotor.restoreFactoryDefaults();
         m_rightPivotMotor.restoreFactoryDefaults();
+
+        m_leftPivotMotor.clearFaults();
+        m_rightPivotMotor.clearFaults();
 
         m_leftPivotMotor.setIdleMode(IdleMode.kBrake);
         m_rightPivotMotor.setIdleMode(IdleMode.kBrake);
