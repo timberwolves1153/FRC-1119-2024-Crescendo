@@ -7,6 +7,10 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.ADXL345_I2C.Axes;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+import edu.wpi.first.wpilibj.simulation.JoystickSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,7 +32,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
-    private final Joystick atari = new Joystick(1); 
+    private final Joystick operator = new Joystick(1);
+   // private final Joystick atari = new Joystick(1); 
     private final SendableChooser<Command> autoChooser;
   
 
@@ -46,19 +51,32 @@ public class RobotContainer {
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
 
-    private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
-    private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
-    private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
+    // private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
+    // private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
+    // private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
 
-    private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
-    private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
-    private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
+    // private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
+    // private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
+    // private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
 
-    private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
-    private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
+    // private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
+    // private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
 
-    private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
-    private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
+    
+
+    private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton opOuttake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+
+    private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
+
+    private final POVButton DownDPad = new POVButton(operator, 180);
+    private final POVButton UpDPad = new POVButton(operator, 0);
+
+    // private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
+    // private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
@@ -78,9 +96,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
-            )
-        );
-        
+            ));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -109,31 +125,47 @@ public class RobotContainer {
         driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Collect
-        atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Speaker
-        atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR AMP
+        opA.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Collect+Speaker
+        opX.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
 
-        atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
-        atariButton4.onTrue(new InstantCommand(() -> collector.collectorIntake()));
-        atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        atariButton4.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opB.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+        opB.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        opY.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        opY.onFalse(new InstantCommand(() -> launcher.launcherStop()));
 
-        atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
-        atariButton5.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
-        atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        atariButton5.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opIntake.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        opIntake.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
-        atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
-        atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
-        atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
-        atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        //opPivot.onTrue(new InstantCommand(() -> ))
 
-        atariButton11.onTrue(new InstantCommand(() -> pivot.pivotUp()));
-        atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+        // atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Collect
+        // atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Speaker
+        // atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR AMP
 
-        atariButton12.onTrue(new InstantCommand(() -> pivot.pivotDown()));
-        atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+        // atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        // atariButton4.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        // atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        // atariButton4.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        // atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+        // atariButton5.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        // atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        // atariButton5.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        // atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
+        // atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        // atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
+        // atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        // atariButton11.onTrue(new InstantCommand(() -> pivot.pivotUp()));
+        // atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        // atariButton12.onTrue(new InstantCommand(() -> pivot.pivotDown()));
+        // atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
 
     }
 
