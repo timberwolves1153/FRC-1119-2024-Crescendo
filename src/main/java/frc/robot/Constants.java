@@ -109,8 +109,8 @@ public final class Constants {
         public static final double maxAngularVelocity = 11.5; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
-        public static final IdleMode angleNeutralMode = IdleMode.kBrake;
-        public static final IdleMode driveNeutralMode = IdleMode.kBrake;
+        public static final IdleMode angleNeutralMode = IdleMode.kCoast; //set to brake
+        public static final IdleMode driveNeutralMode = IdleMode.kBrake; //set to brake
        // public static final double angleConversionFactor = 0;
 
         /* Module Specific Constants */
@@ -139,7 +139,7 @@ public final class Constants {
             public static final int driveMotorID = 21;
             public static final int angleMotorID = 22;
             public static final int absoluteEncoderPorts = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(192.81 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(188.56 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -149,7 +149,7 @@ public final class Constants {
             public static final int driveMotorID = 31;
             public static final int angleMotorID = 32;
             public static final int absoluteEncoderPorts = 3; //MIGHT SWAP WITH 1
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(345.82 + 180); 
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(166.53); 
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }

@@ -39,7 +39,7 @@ import static edu.wpi.first.units.Units.Volts;
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
-    private SwerveDriveKinematics kinematics;
+    public SwerveDriveKinematics kinematics;
     public Pigeon2 gyro;
     public Alliance alliance;
     public double voltage;

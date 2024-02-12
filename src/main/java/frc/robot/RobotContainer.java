@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.TeleopPivot;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TurnAndX;
 import frc.robot.subsystems.*;
@@ -44,7 +45,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton fieldCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -72,9 +73,6 @@ public class RobotContainer {
     private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
 
-    private final POVButton DownDPad = new POVButton(operator, 180);
-    private final POVButton UpDPad = new POVButton(operator, 0);
-
     // private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
     // private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
@@ -95,7 +93,13 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                () -> fieldCentric.getAsBoolean()
+            ));
+
+         pivot.setDefaultCommand(
+            new TeleopPivot(
+                pivot, 
+                () -> -operator.getRawAxis(translationAxis)
             ));
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -115,10 +119,6 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         
-        //driveY.whileTrue(xLock);
-
-
-
         driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
 
@@ -171,6 +171,10 @@ public class RobotContainer {
 
     public Joystick getDriveController(){
         return driver;
+      }
+
+    public Joystick getOperatorController(){
+        return operator;
       }
 
     /**

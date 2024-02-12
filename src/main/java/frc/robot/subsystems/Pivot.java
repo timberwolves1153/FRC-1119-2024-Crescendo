@@ -69,6 +69,9 @@ public class Pivot extends SubsystemBase{
 
     }
 
+    public void movePivot(double percentPower) {
+        m_leftPivotMotor.setVoltage( 6 * percentPower);
+    }
     public void pivotUp() {
         m_leftPivotMotor.setVoltage(6);
     }
