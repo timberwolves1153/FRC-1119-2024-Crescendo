@@ -77,7 +77,7 @@ public final class Constants {
         // public static final double angleKD = chosenModule.angleKD;
         // public static final double angleKFF = chosenModule.angleKFF;
 
-        public static final double angleKP = 0.06;
+        public static final double angleKP = 0.05;
         public static final double angleKI = 0.00;
         public static final double angleKD = 0.02;
         public static final double angleKFF = 0.00;

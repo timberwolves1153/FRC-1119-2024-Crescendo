@@ -185,8 +185,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
-        return new PathPlannerAuto("StraightLine");
-    //    PathPlannerPath path = PathPlannerPath.fromPathFile("StraightLine");
+        return new PathPlannerAuto("Middle3PieceAuto");
+    //    PathPlannerPath path = PathPlannerPath.f romPathFile("StraightLine");
 
     //    return AutoBuilder.followPath(path);
     }

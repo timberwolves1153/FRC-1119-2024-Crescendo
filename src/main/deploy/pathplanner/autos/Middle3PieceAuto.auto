@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.65,
-      "y": 5.49
+      "x": 1.27,
+      "y": 5.58
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2Score2Collect"
+            "pathName": "Middle3PieceAuto"
           }
         }
       ]

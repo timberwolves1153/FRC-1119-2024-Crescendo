@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.13,
-      "y": 4.4
+      "x": 1.43,
+      "y": 5.58
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score3Collect2"
+            "pathName": "CenterShootCenterGrab"
           }
         }
       ]
