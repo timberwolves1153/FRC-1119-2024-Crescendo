@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.76,
-      "y": 4.53
+      "x": 0.65,
+      "y": 4.45
     },
     "rotation": -60.0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Score2MidCollect_Right"
+            "pathName": "Pre-6-3_Right"
           }
         }
       ]

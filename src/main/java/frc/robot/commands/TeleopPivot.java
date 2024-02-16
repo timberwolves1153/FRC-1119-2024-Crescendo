@@ -24,6 +24,6 @@ public class TeleopPivot extends Command {
          pivot.movePivot(
             Math.pow(
                 MathUtil.applyDeadband(translationSupplier.getAsDouble(), Constants.stickDeadband),
-                2));
+                3));
      }
 }

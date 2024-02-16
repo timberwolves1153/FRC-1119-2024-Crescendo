@@ -126,12 +126,12 @@ public class RobotContainer {
         driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
         opA.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Collect+Speaker
-        opX.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
+        opY.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
 
         opB.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
         opB.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        opY.onTrue(new InstantCommand(() -> launcher.shootAmp()));
-        opY.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        opX.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        opX.onFalse(new InstantCommand(() -> launcher.launcherStop()));
 
         opIntake.onTrue(new InstantCommand(() -> collector.collectorIntake()));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop()));
@@ -185,7 +185,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
-        return new PathPlannerAuto("Middle3PieceAuto");
+        return new PathPlannerAuto("Score3MidCollect_Mid");
     //    PathPlannerPath path = PathPlannerPath.f romPathFile("StraightLine");
 
     //    return AutoBuilder.followPath(path);

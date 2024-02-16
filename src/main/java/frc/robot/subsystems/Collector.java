@@ -13,10 +13,10 @@ public class Collector {
     }
 
     public void collectorIntake() {
-        collectorMotor.setVoltage(6);
+        collectorMotor.setVoltage(-6);
     }
     public void collectorOuttake() {
-        collectorMotor.setVoltage(-6);
+        collectorMotor.setVoltage(6);
     }
     public void collectorStop() {
         collectorMotor.setVoltage(0);

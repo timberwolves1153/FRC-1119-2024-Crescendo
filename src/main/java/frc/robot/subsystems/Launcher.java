@@ -59,15 +59,18 @@ public class Launcher extends SubsystemBase {
 
 
 public void shootAmp(){
-    leftShooterMotor.setVoltage(6);
+    leftShooterMotor.setVoltage(-6);
+    rightShooterMotor.setVoltage(-6);
 }
 
 public void shootSpeaker(){
-    leftShooterMotor.setVoltage(6);
+    leftShooterMotor.setVoltage(-8);
+    rightShooterMotor.setVoltage(-8);
 }
 
 public void launcherStop() {
     leftShooterMotor.setVoltage(0);
+    rightShooterMotor.setVoltage(0);
 }
 
 public double getVelocity() {
@@ -87,10 +90,10 @@ public void configMotors(){
     leftShooterMotor.clearFaults();
     rightShooterMotor.clearFaults();
 
-    leftShooterMotor.setIdleMode(IdleMode.kCoast);
-    rightShooterMotor.setIdleMode(IdleMode.kCoast);
+    leftShooterMotor.setIdleMode(IdleMode.kBrake);
+    rightShooterMotor.setIdleMode(IdleMode.kBrake);
 
-    rightShooterMotor.follow(leftShooterMotor, true);
+    rightShooterMotor.setInverted(false);
     leftShooterMotor.setInverted(false);
 
     leftShooterMotor.burnFlash();
