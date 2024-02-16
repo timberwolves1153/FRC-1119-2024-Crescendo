@@ -141,11 +141,11 @@ public class RobotContainer {
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
-        opA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        opX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
+        opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));
 
-        opB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
-        opY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        opB.whileTrue(launcher.sysIdDynamic(Direction.kForward));
+        opY.whileTrue(launcher.sysIdDynamic(Direction.kReverse));
        
 
         //opPivot.onTrue(new InstantCommand(() -> ))

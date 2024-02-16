@@ -26,8 +26,8 @@ import frc.robot.Constants;
 import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Velocity;
 
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.MutableMeasure.mutable;
@@ -41,20 +41,15 @@ public class Pivot extends SubsystemBase{
     private SparkPIDController leftPivotMotorPID;
     private SparkPIDController rightPivotMotorPID;
     private ArmFeedforward leftPivotFF;
-
     private PIDController leftPivotMotor;
-
-    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
-    private final MutableMeasure<Angle> mutableDistance = mutable(Degrees.of(0));
-    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(DegreesPerSecond.of(0));
-
 
     private SysIdRoutine pivotRoutine = new SysIdRoutine(
         new SysIdRoutine.Config(), 
-        new SysIdRoutine.Mechanism(this::voltagePivot, this::logMotors, this));
+        new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this));
 
-        
-
+    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Angle> mutableDistance = mutable(Radians.of(0));
+    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(RadiansPerSecond.of(0));
     
     public Pivot() {
 
@@ -63,19 +58,17 @@ public class Pivot extends SubsystemBase{
 
        lowerLimitSwitch = new DigitalInput(1);
 
-       leftPivotMotor = new PIDController(0, 0, 0); //Tune
-       leftPivotFF = new ArmFeedforward(0, 0 , 0); //Tune
+       leftPivotMotor = new PIDController(0.03426, 0, 0); //Tune
+       leftPivotFF = new ArmFeedforward(0, 0 , 0, 0); //Tune
 
        pivotAbsoluteEncoder = new DutyCycleEncoder(0);
-
-       //SmartDashboard.getNumber("Pivot P Value", kP);
 
        configPivot();
 
     }
 
     public void movePivot(double percentPower) {
-        m_leftPivotMotor.setVoltage( 6 * percentPower);
+        m_leftPivotMotor.setVoltage(3 * percentPower);
     }
     public void pivotUp() {
         m_leftPivotMotor.setVoltage(3);
@@ -117,17 +110,8 @@ public class Pivot extends SubsystemBase{
         m_leftPivotMotor.setVoltage(feedback + feedforward);
     }
 
-    private void voltagePivot(Measure<Voltage> voltage) {
+    private void voltageDrive(Measure<Voltage> voltage) {
         m_leftPivotMotor.setVoltage(voltage.in(Volts));
-    }
-
-     public void logMotors(SysIdRoutineLog log) {
-        log.motor("pivot")
-            .voltage(mutableAppliedVoltage.mut_replace(
-                m_leftPivotMotor.getAppliedOutput() * m_leftPivotMotor.getBusVoltage(), Volts))
-
-            .angularPosition(mutableDistance.mut_replace(getPivotDegrees(), Degrees))
-            .angularVelocity(mutableVelocity.mut_replace(getPivotRPM_Degrees(), DegreesPerSecond));
     }
 
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
@@ -138,7 +122,13 @@ public class Pivot extends SubsystemBase{
             return pivotRoutine.dynamic(direction);
         }
 
-    
+     private void logMotors(SysIdRoutineLog log) {
+        log.motor("pivot")
+            .voltage(mutableAppliedVoltage.mut_replace(
+                m_leftPivotMotor.getAppliedOutput() * m_leftPivotMotor.getBusVoltage(), Volts))
+            .angularPosition(mutableDistance.mut_replace(getPivotRadians(), Radians))
+            .angularVelocity(mutableVelocity.mut_replace(getPivotRPM_Radians(), RadiansPerSecond));
+    }
 
     @Override
     public void periodic() {

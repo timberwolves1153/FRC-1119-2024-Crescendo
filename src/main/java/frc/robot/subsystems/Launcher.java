@@ -20,6 +20,7 @@ import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -103,6 +104,15 @@ public void configMotors(){
     private void voltageDrive(Measure<Voltage> voltage){
         leftShooterMotor.setVoltage(voltage.in(Volts));
     }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction){
+        return sysIdQuasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction){
+        return sysIdDynamic(direction);
+    }
+
 
     private void logMotors(SysIdRoutineLog logger){
         logger.motor("pivot")
