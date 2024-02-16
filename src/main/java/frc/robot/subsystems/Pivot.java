@@ -18,8 +18,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants;
 import edu.wpi.first.units.MutableMeasure;
 import edu.wpi.first.units.Velocity;
@@ -42,13 +44,16 @@ public class Pivot extends SubsystemBase{
 
     private PIDController leftPivotMotor;
 
-    private SysIdRoutine pivotRoutine = new SysIdRoutine(
-        new SysIdRoutine.Config(), 
-        new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this));
-
     private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
     private final MutableMeasure<Angle> mutableDistance = mutable(Degrees.of(0));
     private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(DegreesPerSecond.of(0));
+
+
+    private SysIdRoutine pivotRoutine = new SysIdRoutine(
+        new SysIdRoutine.Config(), 
+        new SysIdRoutine.Mechanism(this::voltagePivot, this::logMotors, this));
+
+        
 
     
     public Pivot() {
@@ -73,11 +78,11 @@ public class Pivot extends SubsystemBase{
         m_leftPivotMotor.setVoltage( 6 * percentPower);
     }
     public void pivotUp() {
-        m_leftPivotMotor.setVoltage(6);
+        m_leftPivotMotor.setVoltage(3);
     }
 
     public void pivotDown() {
-        m_leftPivotMotor.setVoltage(-6);
+        m_leftPivotMotor.setVoltage(-3);
     }
 
     public void pivotStop() {
@@ -112,7 +117,7 @@ public class Pivot extends SubsystemBase{
         m_leftPivotMotor.setVoltage(feedback + feedforward);
     }
 
-    private void voltageDrive(Measure<Voltage> voltage) {
+    private void voltagePivot(Measure<Voltage> voltage) {
         m_leftPivotMotor.setVoltage(voltage.in(Volts));
     }
 
@@ -124,6 +129,14 @@ public class Pivot extends SubsystemBase{
             .angularPosition(mutableDistance.mut_replace(getPivotDegrees(), Degrees))
             .angularVelocity(mutableVelocity.mut_replace(getPivotRPM_Degrees(), DegreesPerSecond));
     }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+            return pivotRoutine.quasistatic(direction);
+        }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+            return pivotRoutine.dynamic(direction);
+        }
 
     
 

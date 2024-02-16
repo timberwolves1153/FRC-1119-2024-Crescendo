@@ -51,6 +51,13 @@ public class RobotContainer {
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
+    
+    private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
+
+
 
     // private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
     // private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
@@ -67,11 +74,6 @@ public class RobotContainer {
 
     private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton opOuttake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-
-    private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
-    private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
-    private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
 
     // private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
     // private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
@@ -128,16 +130,23 @@ public class RobotContainer {
         opA.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Collect+Speaker
         opY.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
 
-        opB.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
-        opB.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        opX.onTrue(new InstantCommand(() -> launcher.shootAmp()));
-        opX.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        // opB.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
+        // opB.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        // opX.onTrue(new InstantCommand(() -> launcher.shootAmp()));
+        // opX.onFalse(new InstantCommand(() -> launcher.launcherStop()));
 
         opIntake.onTrue(new InstantCommand(() -> collector.collectorIntake()));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        opA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        opX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+
+        opB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        opY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+       
 
         //opPivot.onTrue(new InstantCommand(() -> ))
 

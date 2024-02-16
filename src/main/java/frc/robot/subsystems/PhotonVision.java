@@ -74,7 +74,7 @@ public class PhotonVision {
         targetPitch = target.getPitch();
         targetArea = target.getArea();
         targetSkew = target.getSkew();
-        targetPose = target.getCameraToTarget();
+       // targetPose = target.getCameraToTarget();
         targetCorners = target.getDetectedCorners();
 
         int targetID = target.getFiducialId();
