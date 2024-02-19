@@ -1,9 +1,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-public class Collector {
+public class Collector extends SubsystemBase {
 
     private CANSparkMax collectorMotor;
 
@@ -15,12 +18,16 @@ public class Collector {
     }
 
     public void collectorIntake() {
-        collectorMotor.setVoltage(-6);
+        collectorMotor.setVoltage(-2);
     }
     public void collectorOuttake() {
-        collectorMotor.setVoltage(6);
+        collectorMotor.setVoltage(2);
     }
     public void collectorStop() {
         collectorMotor.setVoltage(0);
+    }
+
+    public double collectorVolatge(){
+        return (collectorMotor.getBusVoltage()) * (collectorMotor.getAppliedOutput());
     }
 }

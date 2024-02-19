@@ -50,11 +50,11 @@ public class Launcher extends SubsystemBase {
      log -> {
         log.motor("left launcher")
         .voltage(appliedVoltage.mut_replace(leftShooterMotor.getAppliedOutput() * leftShooterMotor.getBusVoltage(), 
-        Volts)).angularVelocity(velocity.mut_replace(getVelocity(), RPM));
+        Volts)).angularVelocity(velocity.mut_replace(getLeftVelocity(), RPM));
 
         log.motor("right launcher")
         .voltage(appliedVoltage.mut_replace(rightShooterMotor.getAppliedOutput() * rightShooterMotor.getBusVoltage(), 
-        Volts)).angularVelocity(velocity.mut_replace(getVelocity(), RPM));
+        Volts)).angularVelocity(velocity.mut_replace(getRightVelocity(), RPM));
      }, this));
          
 
@@ -87,14 +87,20 @@ public void launcherStop() {
     rightShooterMotor.setVoltage(0);
 }
 
-public double getVelocity() {
+public double getLeftVelocity() {
     return leftShooterMotor.getEncoder().getVelocity();
 }
 
+public double getRightVelocity() {
+    return rightShooterMotor.getEncoder().getVelocity();
+}
+
 public void setLauncherVelocity(double setpoint){
-    double feedBack = shooterMotorController.calculate(getVelocity(), setpoint);
+    double feedBackLeft = shooterMotorController.calculate(getLeftVelocity(), setpoint);
+    double feedBackRight = shooterMotorController.calculate(getRightVelocity(), setpoint);
     double feedForward = shooterFF.calculate(setpoint);
-    leftShooterMotor.setVoltage(feedBack + feedForward);
+    leftShooterMotor.setVoltage(feedBackLeft + feedForward);
+    rightShooterMotor.setVoltage(feedBackRight + feedForward);
 }
 
 public double getLeftVoltage(){
@@ -125,16 +131,17 @@ public void configMotors(){
     rightShooterMotor.burnFlash();
 }
 
-    // public void voltageDrive(Measure<Voltage> voltage){
-    //     leftShooterMotor.setVoltage(voltage.in(Volts));
-    //     rightShooterMotor.setVoltage(voltage.in(Volts));
-    // }
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction){
+        return launcherRoutine.quasistatic(direction);
+    }
 
-    // public Command sysIdQuasistatic(SysIdRoutine.Direction direction){
-    //     return launcherRoutine.quasistatic(direction);
-    // }
+    public Command sysIdDynamic(SysIdRoutine.Direction direction){
+        return launcherRoutine.dynamic(direction);
+    }
 
-    // public Command sysIdDynamic(SysIdRoutine.Direction direction){
-    //     return launcherRoutine.dynamic(direction);
-    // }
+@Override
+    public void periodic() {
+        SmartDashboard.putNumber("Launcher Left Voltage", getLeftVoltage());
+        SmartDashboard.putNumber("Lancher Right Voltage", getRightVoltage());
+    }
 }

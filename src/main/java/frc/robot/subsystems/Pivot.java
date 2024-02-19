@@ -36,7 +36,7 @@ public class Pivot extends SubsystemBase{
 
     private CANSparkMax m_leftPivotMotor;
     private CANSparkMax m_rightPivotMotor;
-    private DigitalInput lowerLimitSwitch;
+    //private DigitalInput lowerLimitSwitch;
     private DutyCycleEncoder pivotAbsoluteEncoder;
     private SparkPIDController leftPivotMotorPID;
     private SparkPIDController rightPivotMotorPID;
@@ -56,10 +56,10 @@ public class Pivot extends SubsystemBase{
        m_leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
        m_rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
 
-       lowerLimitSwitch = new DigitalInput(1);
+      // lowerLimitSwitch = new DigitalInput(1);
 
        leftPivotMotor = new PIDController(0.03426, 0, 0); //Tune
-       leftPivotFF = new ArmFeedforward(0, 1.87, 1.56, 0.14); //Tune
+       leftPivotFF = new ArmFeedforward(1.115, 1.87, 1.56, 0.14); //Tune
 
        pivotAbsoluteEncoder = new DutyCycleEncoder(0);
 
@@ -73,7 +73,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public void movePivot(double percentPower) {
-        m_leftPivotMotor.setVoltage(3 * percentPower);
+        m_leftPivotMotor.setVoltage(2 * percentPower);
     }
     public void pivotUp() {
         m_leftPivotMotor.setVoltage(3);
@@ -84,15 +84,39 @@ public class Pivot extends SubsystemBase{
     }
 
     public void pivotStop() {
-        m_leftPivotMotor.setVoltage(1);
+        m_leftPivotMotor.setVoltage(0);
+    }
+
+     public void pivotHold() {
+        double currentPosition = getPivotDegrees();
+        if (currentPosition < 34) {
+            m_leftPivotMotor.setVoltage(.75);
+        } else if (currentPosition < 56) {
+            m_leftPivotMotor.setVoltage(.5);
+        }  else if (currentPosition < 72) {
+            m_leftPivotMotor.setVoltage(.3);
+        }  else if (currentPosition < 91) {
+            m_leftPivotMotor.setVoltage(.1);
+        }  else {
+            m_leftPivotMotor.setVoltage(-.2);
+        }
+    }
+
+    public void teleopPivot(double percentPower) {
+        if (Math.abs(percentPower) < .2) {
+            pivotHold();
+        } else {
+            movePivot(percentPower);
+        }
     }
 
     public double getAbsolutePosition() {
-        return pivotAbsoluteEncoder.getAbsolutePosition();
+        return (pivotAbsoluteEncoder.getAbsolutePosition() + .25) % 1;
     }
 
     public double getPivotRadians() {
-        return getAbsolutePosition() * 2 * Math.PI / 60;
+        return (getAbsolutePosition() * -2 * Math.PI ) * 26 / 60 + Math.toRadians(143);
+
     }
 
     public double getPivotDegrees() {
@@ -139,10 +163,10 @@ public class Pivot extends SubsystemBase{
     public void periodic() {
 
         if (Constants.tunePivot) {
-        SmartDashboard.getNumber("Pivot Degrees", getPivotDegrees());
-        SmartDashboard.getNumber("Pivot Radians", getPivotRadians());
-        SmartDashboard.getNumber("Pivot Absolute Position", getAbsolutePosition());
-        SmartDashboard.getNumber("Pivot Setpoint", leftPivotMotor.getSetpoint());
+        SmartDashboard.putNumber("Pivot Degrees", getPivotDegrees());
+        SmartDashboard.putNumber("Pivot Radians", getPivotRadians());
+        SmartDashboard.putNumber("Pivot Absolute Position", getAbsolutePosition());
+        SmartDashboard.putNumber("Pivot Setpoint", leftPivotMotor.getSetpoint());
         }
 
     }

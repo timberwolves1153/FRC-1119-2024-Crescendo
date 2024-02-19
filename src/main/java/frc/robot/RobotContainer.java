@@ -57,7 +57,18 @@ public class RobotContainer {
     private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
     private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
 
+    private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton opOuttake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
+    // private final JoystickButton opOverrideIntake = new JoystickButton(operator, XboxController.Button.kRightTrigger.value);
+    // private final JoystickButton opOverrideOuttake = new JoystickButton(operator, XboxController.Button.kLeftTrigger.value);
+
+
+
+    private final POVButton DownDPad = new POVButton(operator, 180);
+    private final POVButton UpDPad = new POVButton(operator, 0);
+    private final POVButton RightDPad = new POVButton(operator, 90);
+    private final POVButton LeftDPad = new POVButton(operator, 270);
 
     // private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
     // private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
@@ -69,11 +80,6 @@ public class RobotContainer {
 
     // private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
     // private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
-
-    
-
-    private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final JoystickButton opOuttake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
     // private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
     // private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
@@ -102,7 +108,8 @@ public class RobotContainer {
             new TeleopPivot(
                 pivot, 
                 () -> -operator.getRawAxis(translationAxis)
-            ));
+            )
+           );
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -123,25 +130,38 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         
-        driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        // driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
 
-        driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
-        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        opA.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Collect+Speaker
+        opA.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Collect
+        opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        opX.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Speaker
+        opX.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
         opY.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
+        opY.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        opB.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Stowed
+        opB.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
 
-        // opB.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
-        // opB.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        // opX.onTrue(new InstantCommand(() -> launcher.shootAmp()));
-        // opX.onFalse(new InstantCommand(() -> launcher.launcherStop()));
+        DownDPad.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
+        DownDPad.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        UpDPad.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
+        UpDPad.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        
+        // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
-        opIntake.onTrue(new InstantCommand(() -> collector.collectorIntake()));
-        opIntake.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opIntake.onTrue(new InstantCommand(() -> collector.collectorIntake(), collector));
+        opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+        opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
+        opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
-        opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
-        opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opOverrideIntake.onTrue(new InstantCommand(() -> collector.collectorIntake(), collector));
+        opOverrideIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+        opOverrideOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
+        opOverrideOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
         // opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
         // opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));
@@ -149,37 +169,10 @@ public class RobotContainer {
         // opB.whileTrue(launcher.sysIdDynamic(Direction.kForward));
         // opY.whileTrue(launcher.sysIdDynamic(Direction.kReverse));
 
-        opA.whileTrue(new InstantCommand(() -> 
-        pivot.movePivotVolts(SmartDashboard.getNumber("pivotVoltsTest", 0))));
+        // opA.onTrue(new InstantCommand(() -> 
+        // pivot.movePivotVolts(SmartDashboard.getNumber("pivotVoltsTest", 0)), pivot));
+        // opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
        
-
-        //opPivot.onTrue(new InstantCommand(() -> ))
-
-        // atariButton1.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Collect
-        // atariButton2.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR Speaker
-        // atariButton3.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //SWITCH THIS FOR AMP
-
-        // atariButton4.onTrue(new InstantCommand(() -> launcher.shootAmp()));
-        // atariButton4.onTrue(new InstantCommand(() -> collector.collectorIntake()));
-        // atariButton4.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        // atariButton4.onFalse(new InstantCommand(() -> collector.collectorStop()));
-
-        // atariButton5.onTrue(new InstantCommand(() -> launcher.shootSpeaker()));
-        // atariButton5.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
-        // atariButton5.onFalse(new InstantCommand(() -> launcher.launcherStop()));
-        // atariButton5.onFalse(new InstantCommand(() -> collector.collectorStop()));
-
-        // atariButton7.onTrue(new InstantCommand(() -> collector.collectorIntake()));
-        // atariButton7.onFalse(new InstantCommand(() -> collector.collectorStop()));
-
-        // atariButton8.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
-        // atariButton8.onFalse(new InstantCommand(() -> collector.collectorStop()));
-
-        // atariButton11.onTrue(new InstantCommand(() -> pivot.pivotUp()));
-        // atariButton11.onFalse(new InstantCommand(() -> pivot.pivotStop()));
-
-        // atariButton12.onTrue(new InstantCommand(() -> pivot.pivotDown()));
-        // atariButton12.onFalse(new InstantCommand(() -> pivot.pivotStop()));
 
     }
 
@@ -204,11 +197,4 @@ public class RobotContainer {
 
     //    return AutoBuilder.followPath(path);
     }
-
-    protected void execute() {
-        SmartDashboard.putNumber("Pivot Degrees", pivot.getPivotDegrees());
-        SmartDashboard.putNumber("Launcher Left Voltage", launcher.getLeftVoltage());
-        SmartDashboard.putNumber("Lancher Right Voltage", launcher.getRightVoltage());
-        
-     }
 }
