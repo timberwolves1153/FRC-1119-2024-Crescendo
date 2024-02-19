@@ -106,6 +106,8 @@ public class RobotContainer {
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+        
+
 
         // Configure the button bindings
         configureButtonBindings();
@@ -202,4 +204,11 @@ public class RobotContainer {
 
     //    return AutoBuilder.followPath(path);
     }
+
+    protected void execute() {
+        SmartDashboard.putNumber("Pivot Degrees", pivot.getPivotDegrees());
+        SmartDashboard.putNumber("Launcher Left Voltage", launcher.getLeftVoltage());
+        SmartDashboard.putNumber("Lancher Right Voltage", launcher.getRightVoltage());
+        
+     }
 }
