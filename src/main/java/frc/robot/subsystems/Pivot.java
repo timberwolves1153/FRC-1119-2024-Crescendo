@@ -79,7 +79,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public void pivotStop() {
-        m_leftPivotMotor.setVoltage(0);
+        m_leftPivotMotor.setVoltage(1);
     }
 
     public double getAbsolutePosition() {

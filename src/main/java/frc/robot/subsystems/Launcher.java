@@ -84,6 +84,14 @@ public void setLauncherVelocity(double setpoint){
     leftShooterMotor.setVoltage(feedBack + feedForward);
 }
 
+public double getLeftVoltage(){
+    return (leftShooterMotor.getBusVoltage()) * (leftShooterMotor.getAppliedOutput());
+}
+
+public double getRightVoltage(){
+    return (rightShooterMotor.getBusVoltage()) * (rightShooterMotor.getAppliedOutput());
+}
+
 public void configMotors(){
     leftShooterMotor.restoreFactoryDefaults();
     rightShooterMotor.restoreFactoryDefaults();
