@@ -10,6 +10,8 @@ public class Collector {
     public Collector() {
         
         collectorMotor = new CANSparkMax(51, MotorType.kBrushless);
+
+        collectorMotor.setSmartCurrentLimit(40);
     }
 
     public void collectorIntake() {

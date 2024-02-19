@@ -33,6 +33,9 @@ public class PhotonVision {
     private Transform3d robotToCam;
     private boolean hasTargets;
     private double targetYaw, targetPitch, targetArea, targetSkew, poseAmbiguity;
+    private double targetRotation;
+    private double targetI;
+
 
     private List<PhotonTrackedTarget> targets;
     private Transform2d targetPose;
@@ -44,10 +47,10 @@ public class PhotonVision {
     final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
     final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(21.7);
     
+    
 
     public PhotonVision(String string) {
         
-
         camera = new PhotonCamera("camera");
         camera.setDriverMode(true);
         
@@ -58,17 +61,16 @@ public class PhotonVision {
 
         photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam);
         photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-
-        var result = camera.getLatestResult();
-        if (result.getMultiTagResult().estimatedPose.isPresent) {
-            Transform3d fieldtoCamera = result.getMultiTagResult().estimatedPose.best;
-        }
         
-        target = result.getBestTarget();
+        // target = result.getBestTarget();
 
-        hasTargets = result.hasTargets();
+        // hasTargets = result.hasTargets();
 
-        targets = result.getTargets();
+        // targets = result.getTargets();
+
+        // if (result.getMultiTagResult().estimatedPose.isPresent) {
+        //     Transform3d fieldtoCamera = result.getMultiTagResult().estimatedPose.best;
+        // }
 
         targetYaw = target.getYaw();
         targetPitch = target.getPitch();
@@ -92,4 +94,14 @@ public class PhotonVision {
         return photonPoseEstimator.update();
     }
 
+    public double aimAtTarget() {
+        var result = camera.getLatestResult();
+        if(result.hasTargets()) {
+            targetRotation = result.getBestTarget().getYaw();
+            return targetRotation;
+        } else {
+            return 0;
+        }
+            
+    }
 }

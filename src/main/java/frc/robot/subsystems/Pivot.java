@@ -59,12 +59,17 @@ public class Pivot extends SubsystemBase{
        lowerLimitSwitch = new DigitalInput(1);
 
        leftPivotMotor = new PIDController(0.03426, 0, 0); //Tune
-       leftPivotFF = new ArmFeedforward(0, 0 , 0, 0); //Tune
+       leftPivotFF = new ArmFeedforward(0, 1.87, 1.56, 0.14); //Tune
 
        pivotAbsoluteEncoder = new DutyCycleEncoder(0);
 
        configPivot();
+       SmartDashboard.putNumber("pivotVoltsTest", 0);
 
+    }
+
+    public void movePivotVolts(double volts) {
+        m_leftPivotMotor.setVoltage(volts);
     }
 
     public void movePivot(double percentPower) {
@@ -150,6 +155,9 @@ public class Pivot extends SubsystemBase{
 
         m_leftPivotMotor.clearFaults();
         m_rightPivotMotor.clearFaults();
+
+        m_leftPivotMotor.setSmartCurrentLimit(40);
+        m_rightPivotMotor.setSmartCurrentLimit(40);
 
         m_leftPivotMotor.setIdleMode(IdleMode.kBrake);
         m_rightPivotMotor.setIdleMode(IdleMode.kBrake);

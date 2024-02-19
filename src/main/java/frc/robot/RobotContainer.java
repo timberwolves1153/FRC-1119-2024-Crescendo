@@ -141,11 +141,14 @@ public class RobotContainer {
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake()));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
-        opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
-        opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));
+        // opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
+        // opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));
 
-        opB.whileTrue(launcher.sysIdDynamic(Direction.kForward));
-        opY.whileTrue(launcher.sysIdDynamic(Direction.kReverse));
+        // opB.whileTrue(launcher.sysIdDynamic(Direction.kForward));
+        // opY.whileTrue(launcher.sysIdDynamic(Direction.kReverse));
+
+        opA.whileTrue(new InstantCommand(() -> 
+        pivot.movePivotVolts(SmartDashboard.getNumber("pivotVoltsTest", 0))));
        
 
         //opPivot.onTrue(new InstantCommand(() -> ))
@@ -194,7 +197,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //return autoChooser.getSelected();
-        return new PathPlannerAuto("Score3MidCollect_Mid");
+        return new PathPlannerAuto("CenterShootCenterGrab");
     //    PathPlannerPath path = PathPlannerPath.f romPathFile("StraightLine");
 
     //    return AutoBuilder.followPath(path);

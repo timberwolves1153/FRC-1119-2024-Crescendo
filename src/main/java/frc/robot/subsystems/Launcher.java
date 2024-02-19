@@ -37,13 +37,26 @@ public class Launcher extends SubsystemBase {
 
     private SimpleMotorFeedforward shooterFF;
 
-    private SysIdRoutine shooterRoutine = new SysIdRoutine(
-        new SysIdRoutine.Config(),
-        new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors,this)
-        );
+    private final MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0)); 
+    private final MutableMeasure<Velocity<Angle>> velocity = mutable(RPM.of(0));
+   
+    private final SysIdRoutine launcherRoutine = new SysIdRoutine(
+      new SysIdRoutine.Config(),
+      new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
+        leftShooterMotor.setVoltage(volts.in(Volts));
+        rightShooterMotor.setVoltage(volts.in(Volts));
+      
+     },
+     log -> {
+        log.motor("left launcher")
+        .voltage(appliedVoltage.mut_replace(leftShooterMotor.getAppliedOutput() * leftShooterMotor.getBusVoltage(), 
+        Volts)).angularVelocity(velocity.mut_replace(getVelocity(), RPM));
 
-         private final MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0)); 
-         private final MutableMeasure<Velocity<Angle>> velocity = mutable(RPM.of(0));
+        log.motor("right launcher")
+        .voltage(appliedVoltage.mut_replace(rightShooterMotor.getAppliedOutput() * rightShooterMotor.getBusVoltage(), 
+        Volts)).angularVelocity(velocity.mut_replace(getVelocity(), RPM));
+     }, this));
+         
 
   public Launcher(){
 
@@ -91,6 +104,9 @@ public void configMotors(){
     leftShooterMotor.clearFaults();
     rightShooterMotor.clearFaults();
 
+    leftShooterMotor.setSmartCurrentLimit(40);
+    rightShooterMotor.setSmartCurrentLimit(40);
+
     leftShooterMotor.setIdleMode(IdleMode.kBrake);
     rightShooterMotor.setIdleMode(IdleMode.kBrake);
 
@@ -101,26 +117,16 @@ public void configMotors(){
     rightShooterMotor.burnFlash();
 }
 
-    private void voltageDrive(Measure<Voltage> voltage){
-        leftShooterMotor.setVoltage(voltage.in(Volts));
-    }
+    // public void voltageDrive(Measure<Voltage> voltage){
+    //     leftShooterMotor.setVoltage(voltage.in(Volts));
+    //     rightShooterMotor.setVoltage(voltage.in(Volts));
+    // }
 
-    public Command sysIdQuasistatic(SysIdRoutine.Direction direction){
-        return sysIdQuasistatic(direction);
-    }
+    // public Command sysIdQuasistatic(SysIdRoutine.Direction direction){
+    //     return launcherRoutine.quasistatic(direction);
+    // }
 
-    public Command sysIdDynamic(SysIdRoutine.Direction direction){
-        return sysIdDynamic(direction);
-    }
-
-
-    private void logMotors(SysIdRoutineLog logger){
-        logger.motor("pivot")
-        .voltage
-        (appliedVoltage.mut_replace
-        (
-            leftShooterMotor.getAppliedOutput() * leftShooterMotor.getBusVoltage(), Volts
-            )
-        ).angularVelocity(velocity.mut_replace(getVelocity(), RPM));
-    }
+    // public Command sysIdDynamic(SysIdRoutine.Direction direction){
+    //     return launcherRoutine.dynamic(direction);
+    // }
 }
