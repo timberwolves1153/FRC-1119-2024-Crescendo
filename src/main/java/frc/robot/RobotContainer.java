@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.TeleopPivot;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TurnAndX;
+import frc.robot.lib.util.AxisButton;
 import frc.robot.subsystems.*;
 
 /**
@@ -57,18 +58,17 @@ public class RobotContainer {
     private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
     private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
 
-    private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final JoystickButton opOuttake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
 
-    // private final JoystickButton opOverrideIntake = new JoystickButton(operator, XboxController.Button.kRightTrigger.value);
-    // private final JoystickButton opOverrideOuttake = new JoystickButton(operator, XboxController.Button.kLeftTrigger.value);
+    private final JoystickButton opAmpLauncher = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final AxisButton opSpeakerLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
 
 
-
-    private final POVButton DownDPad = new POVButton(operator, 180);
-    private final POVButton UpDPad = new POVButton(operator, 0);
-    private final POVButton RightDPad = new POVButton(operator, 90);
-    private final POVButton LeftDPad = new POVButton(operator, 270);
+    // private final POVButton DownDPad = new POVButton(operator, 180);
+    // private final POVButton UpDPad = new POVButton(operator, 0);
+    // private final POVButton RightDPad = new POVButton(operator, 90);
+    // private final POVButton LeftDPad = new POVButton(operator, 270);
 
     // private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
     // private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
@@ -136,19 +136,19 @@ public class RobotContainer {
         // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        opA.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Collect
+        opA.onTrue(new InstantCommand(() -> pivot.setPivotPosition(-3.91), pivot)); //Collect
         opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opX.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Speaker
+        opX.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Speaker
         opX.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opY.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
+        opY.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
         opY.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opB.whileTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Stowed
+        opB.onTrue(new InstantCommand(() -> pivot.setPivotPosition(16.75), pivot)); //Stowed
         opB.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
 
-        DownDPad.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
-        DownDPad.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
-        UpDPad.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
-        UpDPad.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        opSpeakerLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
+        opSpeakerLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        opAmpLauncher.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
+        opAmpLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
         
         // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), pivot));
         // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
@@ -157,11 +157,6 @@ public class RobotContainer {
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-
-        opOverrideIntake.onTrue(new InstantCommand(() -> collector.collectorIntake(), collector));
-        opOverrideIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        opOverrideOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
-        opOverrideOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
         // opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
         // opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));

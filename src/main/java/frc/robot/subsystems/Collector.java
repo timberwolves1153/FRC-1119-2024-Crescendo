@@ -18,10 +18,10 @@ public class Collector extends SubsystemBase {
     }
 
     public void collectorIntake() {
-        collectorMotor.setVoltage(-2);
+        collectorMotor.setVoltage(-6);
     }
     public void collectorOuttake() {
-        collectorMotor.setVoltage(2);
+        collectorMotor.setVoltage(6);
     }
     public void collectorStop() {
         collectorMotor.setVoltage(0);
