@@ -27,10 +27,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import frc.robot.Constants;
 
+
 public class Launcher extends SubsystemBase {
     private CANSparkMax leftShooterMotor;
     private CANSparkMax rightShooterMotor;
-
 
     private SparkPIDController shooterPID;
     private PIDController shooterMotorController;
@@ -60,6 +60,7 @@ public class Launcher extends SubsystemBase {
 
   public Launcher(){
 
+    
     leftShooterMotor = new CANSparkMax(61, MotorType.kBrushless);
     rightShooterMotor = new CANSparkMax(62, MotorType.kBrushless);
 
@@ -80,6 +81,7 @@ public void shootAmp(){
 public void shootSpeaker(){
     leftShooterMotor.setVoltage(-8);
     rightShooterMotor.setVoltage(-8);
+    
 }
 
 public void launcherStop() {

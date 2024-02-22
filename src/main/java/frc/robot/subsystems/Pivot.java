@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -32,7 +33,7 @@ import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
-public class Pivot extends SubsystemBase{
+public class Pivot extends PIDSubsystem{
 
     private CANSparkMax m_leftPivotMotor;
     private CANSparkMax m_rightPivotMotor;
@@ -53,13 +54,16 @@ public class Pivot extends SubsystemBase{
     
     public Pivot() {
 
+       super(new PIDController(0.03426, 0, 0));
+    
        m_leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
        m_rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
 
       // lowerLimitSwitch = new DigitalInput(1);
 
-       leftPivotMotor = new PIDController(0.03426, 0, 0); //Tune
+       //leftPivotMotor = new PIDController(0.03426, 0, 0); //Tune
        leftPivotFF = new ArmFeedforward(1.115, 1.87, 1.56, 0.14); //Tune
+       leftPivotMotorPID = m_leftPivotMotor.getPIDController();
 
        pivotAbsoluteEncoder = new DutyCycleEncoder(0);
 
@@ -76,18 +80,18 @@ public class Pivot extends SubsystemBase{
         m_leftPivotMotor.setVoltage(2 * percentPower);
     }
     public void pivotUp() {
-        m_leftPivotMotor.setVoltage(3);
+        m_leftPivotMotor.setVoltage(2);
     }
 
     public void pivotDown() {
-        m_leftPivotMotor.setVoltage(-3);
+        m_leftPivotMotor.setVoltage(2);
     }
 
     public void pivotStop() {
         m_leftPivotMotor.setVoltage(0);
     }
 
-     public void pivotHold() {
+    public void pivotHold() {
         double currentPosition = getPivotDegrees();
         if (currentPosition < 34) {
             m_leftPivotMotor.setVoltage(.75);
@@ -100,6 +104,41 @@ public class Pivot extends SubsystemBase{
         }  else {
             m_leftPivotMotor.setVoltage(-.2);
         }
+    }
+
+    @Override
+    protected void useOutput(double output, double setPoint) {
+        movingPivot(output);
+    }
+
+    public void movingPivot(double volts) {}
+         
+    @Override
+    protected double getMeasurement() {
+       return getPivotRadians();
+    }
+
+    public void setSetpointDegrees(double degrees) {
+        double newSetpoint = Math.toRadians(degrees);
+        setSetpoint(newSetpoint);
+        getController().reset();
+        enable();
+    }
+
+    public void increaseSetpoint(double degrees) {
+        double newSetpoint = Math.toRadians(degrees);
+        double oldSetpoint = getController().getSetpoint();
+        setSetpoint(newSetpoint + oldSetpoint);
+        getController().reset();
+        enable();
+    }
+
+    public void decreaseSetpoint(double degrees) {
+        double newSetpoint = Math.toRadians(degrees);
+        double oldSetpoint = getController().getSetpoint();
+        setSetpoint(newSetpoint - oldSetpoint);
+        getController().reset();
+        enable();
     }
 
     public void teleopPivot(double percentPower) {
@@ -159,6 +198,8 @@ public class Pivot extends SubsystemBase{
             .angularVelocity(mutableVelocity.mut_replace(getPivotRPM_Radians(), RadiansPerSecond));
     }
 
+    
+
     @Override
     public void periodic() {
 
@@ -166,12 +207,10 @@ public class Pivot extends SubsystemBase{
         SmartDashboard.putNumber("Pivot Degrees", getPivotDegrees());
         SmartDashboard.putNumber("Pivot Radians", getPivotRadians());
         SmartDashboard.putNumber("Pivot Absolute Position", getAbsolutePosition());
-        SmartDashboard.putNumber("Pivot Setpoint", leftPivotMotor.getSetpoint());
+        //SmartDashboard.putNumber("Pivot Setpoint", leftPivotMotor.getSetpoint());
         }
 
     }
-
-
 
     public void configPivot() {
         m_leftPivotMotor.restoreFactoryDefaults();

@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonUtils;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import org.photonvision.targeting.TargetCorner;
@@ -34,7 +35,7 @@ public class PhotonVision {
     private boolean hasTargets;
     private double targetYaw, targetPitch, targetArea, targetSkew, poseAmbiguity;
     private double targetRotation;
-    private double targetI;
+    private int targetID;
 
 
     private List<PhotonTrackedTarget> targets;
@@ -51,7 +52,7 @@ public class PhotonVision {
 
     public PhotonVision(String string) {
         
-        camera = new PhotonCamera("camera");
+        camera = new PhotonCamera("AprilTagCamera");
         camera.setDriverMode(true);
         
         robotToCam = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d(0,0,0));
@@ -102,9 +103,21 @@ public class PhotonVision {
         } else {
             return 0;
         }
-            
     }
 
-   
+    public double calculateRange() {
+        var result = camera.getLatestResult();
+        if(result.hasTargets()) {
+            double range = PhotonUtils.calculateDistanceToTargetMeters(
+                CAMERA_PITCH_RADIANS, 
+                Units.inchesToMeters(57), 
+                CAMERA_HEIGHT_METERS, 
+                Units.degreesToRadians(result.getBestTarget().getPitch()));
+            return range;
+        } else {
+            return 0;
+        }  
+    }
+
 }
 

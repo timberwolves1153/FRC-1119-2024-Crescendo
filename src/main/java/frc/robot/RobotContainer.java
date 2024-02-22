@@ -52,6 +52,8 @@ public class RobotContainer {
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
+
+    private final JoystickButton driveAprilTagAlignment = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     
     private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -61,8 +63,9 @@ public class RobotContainer {
     private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
 
-    private final JoystickButton opAmpLauncher = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final AxisButton opSpeakerLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
+    //private final JoystickButton opAmpLauncher = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton opIntakeOverride = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
 
 
     // private final POVButton DownDPad = new POVButton(operator, 180);
@@ -92,6 +95,7 @@ public class RobotContainer {
     private final Pivot pivot = new Pivot();
     private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
+
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -136,19 +140,21 @@ public class RobotContainer {
         // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        opA.onTrue(new InstantCommand(() -> pivot.setPivotPosition(-3.91), pivot)); //Collect
+        opA.onTrue(new InstantCommand(() -> pivot.setSetpoint(-3.91), pivot)); //Collect
         opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opX.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Speaker
+        opX.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Speaker
         opX.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opY.onTrue(new InstantCommand(() -> pivot.setPivotPosition(0), pivot)); //Amp
+        opY.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Amp
         opY.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opB.onTrue(new InstantCommand(() -> pivot.setPivotPosition(16.75), pivot)); //Stowed
+        opB.onTrue(new InstantCommand(() -> pivot.setSetpoint(16.75), pivot)); //Stowed
         opB.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
 
-        opSpeakerLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
-        opSpeakerLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
-        opAmpLauncher.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
-        opAmpLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        opLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
+        opLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        //opAmpLauncher.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
+        //opAmpLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+        opIntakeOverride.onTrue(new InstantCommand(() -> collector.intakeOverride(), collector));
+        opIntakeOverride.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         
         // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), pivot));
         // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
