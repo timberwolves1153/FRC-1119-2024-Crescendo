@@ -45,7 +45,7 @@ public class PhotonVision {
     private PIDController translationPID, rotationPID;
 
     final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(0); //CHANGE BASED ON CAMERA PLACEMENT
-    final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+    final double TARGET_HEIGHT_METERS = Units.inchesToMeters(57);
     final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(21.7);
     
     
@@ -85,8 +85,8 @@ public class PhotonVision {
         bestCameraToTarget = target.getBestCameraToTarget();
         alternateCameraToTarget = target.getAlternateCameraToTarget();
 
-        translationPID = new PIDController(0.1, 0, 0); //tune values
-        rotationPID = new PIDController(0.1, 0, 0); //tune values
+        translationPID = new PIDController(0.1, 0, 0); //tune
+        rotationPID = new PIDController(0.1, 0, 0); //tune
 
     }
 
@@ -110,7 +110,7 @@ public class PhotonVision {
         if(result.hasTargets()) {
             double range = PhotonUtils.calculateDistanceToTargetMeters(
                 CAMERA_PITCH_RADIANS, 
-                Units.inchesToMeters(57), 
+                TARGET_HEIGHT_METERS, 
                 CAMERA_HEIGHT_METERS, 
                 Units.degreesToRadians(result.getBestTarget().getPitch()));
             return range;

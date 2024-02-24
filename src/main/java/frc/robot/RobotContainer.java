@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.CollectNote;
 import frc.robot.commands.TeleopPivot;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TurnAndX;
@@ -52,6 +53,10 @@ public class RobotContainer {
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
+
+    private final JoystickButton driveRightBumper = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton driveLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
 
     private final JoystickButton driveAprilTagAlignment = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     
@@ -140,14 +145,14 @@ public class RobotContainer {
         // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        opA.onTrue(new InstantCommand(() -> pivot.setSetpoint(-3.91), pivot)); //Collect
-        opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opX.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Speaker
-        opX.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opY.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Amp
-        opY.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opB.onTrue(new InstantCommand(() -> pivot.setSetpoint(16.75), pivot)); //Stowed
-        opB.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        // opA.onTrue(new InstantCommand(() -> pivot.setSetpoint(-3.91), pivot)); //Collect
+        // opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        // opX.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Speaker
+        // opX.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        // opY.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Amp
+        // opY.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        // opB.onTrue(new InstantCommand(() -> pivot.setSetpoint(16.75), pivot)); //Stowed
+        // opB.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
 
         opLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         opLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
@@ -156,13 +161,19 @@ public class RobotContainer {
         opIntakeOverride.onTrue(new InstantCommand(() -> collector.intakeOverride(), collector));
         opIntakeOverride.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         
-        // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
+        opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
-        opIntake.onTrue(new InstantCommand(() -> collector.collectorIntake(), collector));
+        opIntake.onTrue(new CollectNote(collector));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+
+        driveRightBumper.onTrue(new InstantCommand(() -> pivot.pivotClimb(), pivot));
+        driveRightBumper.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
+
+        driveLeftBumper.onTrue(new InstantCommand(() -> pivot.pivotUp(), pivot));
+        driveLeftBumper.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
         // opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
         // opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -19,15 +20,12 @@ public class Collector extends SubsystemBase {
         collectorMotor.setSmartCurrentLimit(40);  
 
     }
+    public boolean hasNote() {
+        return limit.get();
+    }
 
     public void collectorIntake() { 
-        if(limit.get()) {
-            collectorMotor.setVoltage(0);
-        } else if(!limit.get()) {
-            collectorMotor.setVoltage(-8);
-        } else {
-            collectorMotor.setVoltage(0);
-        }
+        collectorMotor.setVoltage(-8);
     }
 
     public void intakeOverride() {
@@ -44,5 +42,11 @@ public class Collector extends SubsystemBase {
 
     public double collectorVolatge(){
         return (collectorMotor.getBusVoltage()) * (collectorMotor.getAppliedOutput());
+    }
+
+    @Override
+
+    public void periodic() {
+        SmartDashboard.putBoolean("Has Note ", hasNote());
     }
 }

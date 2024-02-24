@@ -33,7 +33,7 @@ import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
-public class Pivot extends PIDSubsystem{
+public class Pivot extends SubsystemBase{
 
     private CANSparkMax m_leftPivotMotor;
     private CANSparkMax m_rightPivotMotor;
@@ -54,7 +54,7 @@ public class Pivot extends PIDSubsystem{
     
     public Pivot() {
 
-       super(new PIDController(0.03426, 0, 0));
+       //super(new PIDController(0.03426, 0, 0));
     
        m_leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
        m_rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
@@ -83,8 +83,16 @@ public class Pivot extends PIDSubsystem{
         m_leftPivotMotor.setVoltage(2);
     }
 
+    // public void pivotSetToClimb() {
+    //     m_leftPivotMotor.setVoltage(6);
+    // }
+
+    public void pivotClimb() {
+        m_leftPivotMotor.setVoltage(-6);
+    }
+
     public void pivotDown() {
-        m_leftPivotMotor.setVoltage(2);
+        m_leftPivotMotor.setVoltage(-2);
     }
 
     public void pivotStop() {
@@ -93,53 +101,20 @@ public class Pivot extends PIDSubsystem{
 
     public void pivotHold() {
         double currentPosition = getPivotDegrees();
-        if (currentPosition < 34) {
+        if (currentPosition < 29) { // changed from 34
+            m_leftPivotMotor.setVoltage(.9);
+        } else if (currentPosition < 30) { // changed from 56
             m_leftPivotMotor.setVoltage(.75);
-        } else if (currentPosition < 56) {
-            m_leftPivotMotor.setVoltage(.5);
         }  else if (currentPosition < 72) {
-            m_leftPivotMotor.setVoltage(.3);
+            m_leftPivotMotor.setVoltage(.8);
         }  else if (currentPosition < 91) {
-            m_leftPivotMotor.setVoltage(.1);
+            m_leftPivotMotor.setVoltage(.7);
         }  else {
             m_leftPivotMotor.setVoltage(-.2);
         }
     }
 
-    @Override
-    protected void useOutput(double output, double setPoint) {
-        movingPivot(output);
-    }
-
-    public void movingPivot(double volts) {}
-         
-    @Override
-    protected double getMeasurement() {
-       return getPivotRadians();
-    }
-
-    public void setSetpointDegrees(double degrees) {
-        double newSetpoint = Math.toRadians(degrees);
-        setSetpoint(newSetpoint);
-        getController().reset();
-        enable();
-    }
-
-    public void increaseSetpoint(double degrees) {
-        double newSetpoint = Math.toRadians(degrees);
-        double oldSetpoint = getController().getSetpoint();
-        setSetpoint(newSetpoint + oldSetpoint);
-        getController().reset();
-        enable();
-    }
-
-    public void decreaseSetpoint(double degrees) {
-        double newSetpoint = Math.toRadians(degrees);
-        double oldSetpoint = getController().getSetpoint();
-        setSetpoint(newSetpoint - oldSetpoint);
-        getController().reset();
-        enable();
-    }
+   
 
     public void teleopPivot(double percentPower) {
         if (Math.abs(percentPower) < .2) {
