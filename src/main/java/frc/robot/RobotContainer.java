@@ -97,7 +97,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Collector collector = new Collector();
-    private final Pivot pivot = new Pivot();
+    private final PIDPivot PIDPivot = new PIDPivot();
     private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
 
@@ -113,12 +113,12 @@ public class RobotContainer {
                 () -> fieldCentric.getAsBoolean()
             ));
 
-         pivot.setDefaultCommand(
-            new TeleopPivot(
-                pivot, 
-                () -> -operator.getRawAxis(translationAxis)
-            )
-           );
+        //  PIDPivot.setDefaultCommand(
+        //     new TeleopPivot(
+        //         PIDPivot, 
+        //         () -> -operator.getRawAxis(translationAxis)
+        //     )
+        //    );
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -145,14 +145,14 @@ public class RobotContainer {
         // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
 
-        // opA.onTrue(new InstantCommand(() -> pivot.setSetpoint(-3.91), pivot)); //Collect
-        // opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        // opX.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Speaker
-        // opX.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        // opY.onTrue(new InstantCommand(() -> pivot.setSetpoint(0), pivot)); //Amp
-        // opY.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        // opB.onTrue(new InstantCommand(() -> pivot.setSetpoint(16.75), pivot)); //Stowed
-        // opB.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
+        //opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot)); //Collect
+        //opA.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
+        // opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(0), PIDPivot)); //Speaker
+        // opX.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
+        // opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(0), PIDPivot)); //Amp
+        // opY.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
+        // opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(16.75), PIDPivot)); //Stowed
+        // opB.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
 
         opLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         opLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
@@ -161,19 +161,13 @@ public class RobotContainer {
         opIntakeOverride.onTrue(new InstantCommand(() -> collector.intakeOverride(), collector));
         opIntakeOverride.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         
-        opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), pivot));
-        opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
+        // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), PIDPivot));
+        // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
         opIntake.onTrue(new CollectNote(collector));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-
-        driveRightBumper.onTrue(new InstantCommand(() -> pivot.pivotClimb(), pivot));
-        driveRightBumper.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
-
-        driveLeftBumper.onTrue(new InstantCommand(() -> pivot.pivotUp(), pivot));
-        driveLeftBumper.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
         // opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
         // opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));
@@ -186,6 +180,11 @@ public class RobotContainer {
         // opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
        
 
+        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
+        opY.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
+        opX.onTrue(new InstantCommand(() -> 
+            PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
+            PIDPivot));
     }
 
     public Joystick getDriveController(){
