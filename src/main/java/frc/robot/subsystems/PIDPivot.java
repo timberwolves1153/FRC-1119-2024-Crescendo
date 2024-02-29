@@ -18,7 +18,7 @@ public class PIDPivot extends PIDSubsystem {
                                                // value, and if it changes over time/
 
     public PIDPivot() {
-        super(new PIDController(64, 0.01, 1));
+        super(new PIDController(55, 0, 1));
 
         m_leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
         m_rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
@@ -94,7 +94,7 @@ public class PIDPivot extends PIDSubsystem {
         double adjustedVolts = volts;
         // We are good + is up, - is down
         double constantVolts;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -3, 5); //change this according to volts given to the collector(current: 2)
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -6, 5); //change this according to volts given to the collector(current: 2)
         if (clampedVolts > 0) {
             constantVolts = 0; // Needs to be tuned 1153(0.15)
             m_leftPivotMotor.setVoltage(clampedVolts + constantVolts);
@@ -116,7 +116,7 @@ public class PIDPivot extends PIDSubsystem {
 
     public double getPivotRadians() {
         // the 60/26 comes from the pivot gear ratios.
-        return (getAbsolutePosition() * -2 * Math.PI) * 26 / 60 + Math.toRadians(102);// 102 sets base -> -2 to -3
+        return (getAbsolutePosition() * -2 * Math.PI) * 26 / 60 + Math.toRadians(97.25);// 102 sets base -> -2 to -3
     }
 
     public double getPivotDegrees() {
@@ -135,14 +135,15 @@ public class PIDPivot extends PIDSubsystem {
         public void pivotHold() {
         double currentPosition = getPivotDegrees();
         if (currentPosition < 29) { // changed from 34
-            m_leftPivotMotor.setVoltage(.9);
+            m_leftPivotMotor.setVoltage(.5);
         } else if (currentPosition < 30) { // changed from 56
-            m_leftPivotMotor.setVoltage(.75);
-        }  else if (currentPosition < 72) {
-            m_leftPivotMotor.setVoltage(.8);
+            m_leftPivotMotor.setVoltage(.5);
+        }  else if (currentPosition < 61) {
+            m_leftPivotMotor.setVoltage(.3);
         }  else if (currentPosition < 91) {
-            m_leftPivotMotor.setVoltage(.7);
-        }  else {
+            m_leftPivotMotor.setVoltage(.1);
+        }  
+        else {
             m_leftPivotMotor.setVoltage(-.2);
         }
     }

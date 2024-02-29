@@ -1,9 +1,11 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.proto.Kinematics.ProtobufSwerveModulePosition;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -73,7 +75,7 @@ public class RobotContainer {
     private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
 
 
-    // private final POVButton DownDPad = new POVButton(operator, 180);
+    private final POVButton DownDPad = new POVButton(operator, 180);
     // private final POVButton UpDPad = new POVButton(operator, 0);
     // private final POVButton RightDPad = new POVButton(operator, 90);
     // private final POVButton LeftDPad = new POVButton(operator, 270);
@@ -118,8 +120,20 @@ public class RobotContainer {
         //         PIDPivot, 
         //         () -> -operator.getRawAxis(translationAxis)
         //     )
-        //    );
+         //  );
 
+
+        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(9), PIDPivot));
+        NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
+        NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
+        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(32), PIDPivot));
+
+        NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));
+        NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
+
+        NamedCommands.registerCommand("Shoot Note", new InstantCommand(() -> collector.intakeOverride(), collector));
+        NamedCommands.registerCommand("Stop Collector", new InstantCommand(() -> collector.collectorStop(), collector));
+        
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
         
@@ -144,15 +158,6 @@ public class RobotContainer {
 
         // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
         // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
-
-        //opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot)); //Collect
-        //opA.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
-        // opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(0), PIDPivot)); //Speaker
-        // opX.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
-        // opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(0), PIDPivot)); //Amp
-        // opY.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
-        // opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(16.75), PIDPivot)); //Stowed
-        // opB.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
 
         opLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         opLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
@@ -180,12 +185,18 @@ public class RobotContainer {
         // opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
        
 
-        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
-        opY.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
+        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(9), PIDPivot));
+        opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(32), PIDPivot));
+        //opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
+        opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(85), PIDPivot));
+        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
+
+        DownDPad.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
+
         opX.onTrue(new InstantCommand(() -> 
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
             PIDPivot));
-    }
+     }
 
     public Joystick getDriveController(){
         return driver;
@@ -202,10 +213,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        //return autoChooser.getSelected();
-        return new PathPlannerAuto("CenterShootCenterGrab");
-    //    PathPlannerPath path = PathPlannerPath.f romPathFile("StraightLine");
-
-    //    return AutoBuilder.followPath(path);
+        return autoChooser.getSelected();
+        //return new PathPlannerAuto("Middle3NoteAuto");
     }
 }
