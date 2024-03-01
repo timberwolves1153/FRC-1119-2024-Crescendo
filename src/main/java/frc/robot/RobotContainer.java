@@ -163,7 +163,9 @@ public class RobotContainer {
         // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), PIDPivot));
         // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
-        opIntake.onTrue(new CollectNote(collector));
+    
+        // opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+        opIntake.onTrue(new InstantCommand(() -> collector.noteDetector(), collector));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
@@ -189,6 +191,8 @@ public class RobotContainer {
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
             PIDPivot));
     }
+
+    
 
     public Joystick getDriveController(){
         return driver;
