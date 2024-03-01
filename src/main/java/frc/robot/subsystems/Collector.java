@@ -12,6 +12,7 @@ public class Collector extends SubsystemBase {
 
     private CANSparkMax collectorMotor;
     DigitalInput limit = new DigitalInput(2);
+    private boolean note;
 
     public Collector() {
         
@@ -43,6 +44,22 @@ public class Collector extends SubsystemBase {
     public double collectorVolatge(){
         return (collectorMotor.getBusVoltage()) * (collectorMotor.getAppliedOutput());
     }
+
+    // public void noteDetector() {
+    //     note = hasNote();
+    //      if(note == true){
+    //          collectorOuttake();
+    //          try {
+    //              wait(10);
+    //          } catch (InterruptedException e) {
+    //              e.printStackTrace();
+    //          }
+    //          collectorStop();
+    //      }
+    //      else{
+    //          collectorIntake();
+    //      }
+    //  }
 
     @Override
 

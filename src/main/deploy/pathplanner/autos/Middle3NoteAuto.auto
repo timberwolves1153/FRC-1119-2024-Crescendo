@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 0.25
           }
         },
         {
@@ -48,15 +48,69 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Start"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Pivot Collect"
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.12
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mid Range"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev Motors"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Start"
+            "pathName": "Collect Left Side Note"
           }
         },
         {

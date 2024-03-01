@@ -123,16 +123,17 @@ public class RobotContainer {
          //  );
 
 
-        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(9), PIDPivot));
+        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
         NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
         NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
-        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(32), PIDPivot));
+        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(30), PIDPivot));
 
         NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
 
         NamedCommands.registerCommand("Shoot Note", new InstantCommand(() -> collector.intakeOverride(), collector));
         NamedCommands.registerCommand("Stop Collector", new InstantCommand(() -> collector.collectorStop(), collector));
+        NamedCommands.registerCommand("Collector Outtake", new InstantCommand(() -> collector.collectorOuttake(), collector));
         
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -170,6 +171,7 @@ public class RobotContainer {
         // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
         opIntake.onTrue(new CollectNote(collector));
+        //opIntake.onTrue(new InstantCommand(() -> collector.noteDetector(), collector));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
