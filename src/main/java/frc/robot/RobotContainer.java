@@ -73,24 +73,10 @@ public class RobotContainer {
     private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
 
 
-    private final POVButton opClimberDown = new POVButton(operator, 180);
-    private final POVButton opClimberUp = new POVButton(operator, 0);
+    private final POVButton DownDPad = new POVButton(operator, 180);
     // private final POVButton RightDPad = new POVButton(operator, 90);
     // private final POVButton LeftDPad = new POVButton(operator, 270);
 
-    // private final JoystickButton atariButton1 = new JoystickButton(atari, 1);
-    // private final JoystickButton atariButton2 = new JoystickButton(atari, 2);
-    // private final JoystickButton atariButton3 = new JoystickButton(atari, 3);
-
-    // private final JoystickButton atariButton4 = new JoystickButton(atari, 4);
-    // private final JoystickButton atariButton5 = new JoystickButton(atari, 5);
-    // private final JoystickButton atariButton6 = new JoystickButton(atari, 6);
-
-    // private final JoystickButton atariButton7 = new JoystickButton(atari, 7);
-    // private final JoystickButton atariButton8 = new JoystickButton(atari, 8);
-
-    // private final JoystickButton atariButton11 = new JoystickButton(atari, 11);
-    // private final JoystickButton atariButton12 = new JoystickButton(atari, 12);
     //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     
@@ -124,7 +110,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
         NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
         NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
-        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(30), PIDPivot));
+        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(29), PIDPivot));
 
         NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
@@ -151,55 +137,27 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        
-        // driveA.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
 
-        // driveB.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
-        // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
+        opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(32), PIDPivot));
+        //opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
+        opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(86), PIDPivot));
+        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
 
-        //opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot)); //Collect
-        //opA.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
-        // opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(0), PIDPivot)); //Speaker
-        // opX.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
-        // opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(0), PIDPivot)); //Amp
-        // opY.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
-        // opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpoint(16.75), PIDPivot)); //Stowed
-        // opB.onFalse(new InstantCommand(() -> PIDPivot.holdPosition(), PIDPivot));
+        DownDPad.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
 
         opLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         opLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
-        //opAmpLauncher.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
-        //opAmpLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+
         opIntakeOverride.onTrue(new InstantCommand(() -> collector.intakeOverride(), collector));
         opIntakeOverride.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        
-        // opY.onTrue(new InstantCommand(() -> pivot.pivotHold(), PIDPivot));
-        // opY.onFalse(new InstantCommand(() -> pivot.pivotStop(), pivot));
 
         opIntake.onTrue(new CollectNote(collector));
-        //opIntake.onTrue(new InstantCommand(() -> collector.noteDetector(), collector));
+        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3), PIDPivot));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        // opClimberUp.onTrue(new InstantCommand(() -> PIDPivot.pivotClimbUp(), PIDPivot));
-        // opClimberUp.onFalse(new InstantCommand(() -> PIDPivot.pivotHold(), PIDPivot));
-        // opClimberDown.onTrue(new InstantCommand(() -> PIDPivot.pivotClimbDown(), PIDPivot));
-        // opClimberDown.onFalse(new InstantCommand(() -> PIDPivot.pivotHold(), PIDPivot));
 
-        // opA.whileTrue(launcher.sysIdQuasistatic(Direction.kForward));
-        // opX.whileTrue(launcher.sysIdQuasistatic(Direction.kReverse));
-
-        // opB.whileTrue(launcher.sysIdDynamic(Direction.kForward));
-        // opY.whileTrue(launcher.sysIdDynamic(Direction.kReverse));
-
-        // opA.onTrue(new InstantCommand(() -> 
-        // pivot.movePivotVolts(SmartDashboard.getNumber("pivotVoltsTest", 0)), pivot));
-        // opA.onFalse(new InstantCommand(() -> pivot.pivotHold(), pivot));
-       
-
-        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
-        opY.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
         opX.onTrue(new InstantCommand(() -> 
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
             PIDPivot));
@@ -222,10 +180,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        //return autoChooser.getSelected();
-        return new PathPlannerAuto("CenterShootCenterGrab");
-    //    PathPlannerPath path = PathPlannerPath.f romPathFile("StraightLine");
-
+        return new PathPlannerAuto("Middle3NoteAuto");
     //    return AutoBuilder.followPath(path);
     }
 }

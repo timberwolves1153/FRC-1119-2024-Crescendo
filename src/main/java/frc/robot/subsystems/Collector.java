@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -12,7 +13,6 @@ public class Collector extends SubsystemBase {
 
     private CANSparkMax collectorMotor;
     DigitalInput limit = new DigitalInput(2);
-    private boolean note;
 
     public Collector() {
         
@@ -23,24 +23,6 @@ public class Collector extends SubsystemBase {
     }
     public boolean hasNote() {
         return limit.get();
-    }
-
-    //When has note
-    public void noteDetector() {
-       note = hasNote();
-        if(note == true){
-            collectorOuttake();
-            try {
-                wait(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            collectorStop();
-        }
-        else{
-            collectorIntake();
-        }
-
     }
 
     public void collectorIntake() { 
@@ -62,22 +44,6 @@ public class Collector extends SubsystemBase {
     public double collectorVolatge(){
         return (collectorMotor.getBusVoltage()) * (collectorMotor.getAppliedOutput());
     }
-
-    // public void noteDetector() {
-    //     note = hasNote();
-    //      if(note == true){
-    //          collectorOuttake();
-    //          try {
-    //              wait(10);
-    //          } catch (InterruptedException e) {
-    //              e.printStackTrace();
-    //          }
-    //          collectorStop();
-    //      }
-    //      else{
-    //          collectorIntake();
-    //      }
-    //  }
 
     @Override
 

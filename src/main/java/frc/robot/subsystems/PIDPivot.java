@@ -94,7 +94,7 @@ public class PIDPivot extends PIDSubsystem {
         double adjustedVolts = volts;
         // We are good + is up, - is down
         double constantVolts;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -6, 5); //change this according to volts given to the collector(current: 2)
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -3, 5); //change this according to volts given to the collector(current: 2)
         if (clampedVolts > 0) {
             constantVolts = 0; // Needs to be tuned 1153(0.15)
             m_leftPivotMotor.setVoltage(clampedVolts + constantVolts);
@@ -142,8 +142,7 @@ public class PIDPivot extends PIDSubsystem {
             m_leftPivotMotor.setVoltage(.3);
         }  else if (currentPosition < 91) {
             m_leftPivotMotor.setVoltage(.1);
-        }  
-        else {
+        }  else {
             m_leftPivotMotor.setVoltage(-.2);
         }
     }
