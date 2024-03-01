@@ -18,7 +18,7 @@ public class PIDPivot extends PIDSubsystem {
                                                // value, and if it changes over time/
 
     public PIDPivot() {
-        super(new PIDController(55, 0, 1));
+        super(new PIDController(55, 0, 1));//REEEETUNEEEE
 
         m_leftPivotMotor = new CANSparkMax(41, MotorType.kBrushless);
         m_rightPivotMotor = new CANSparkMax(42, MotorType.kBrushless);
@@ -84,6 +84,16 @@ public class PIDPivot extends PIDSubsystem {
         m_leftPivotMotor.setVoltage(0);
     }
 
+    public void pivotClimbUp(){
+        m_leftPivotMotor.setVoltage(6);
+    }
+
+    public void pivotClimbDown(){
+        m_leftPivotMotor.setVoltage(-6);
+    }
+
+
+
     @Override
     protected void useOutput(double output, double setpoint) {
         PIDMovePivot(output);
@@ -138,12 +148,11 @@ public class PIDPivot extends PIDSubsystem {
             m_leftPivotMotor.setVoltage(.5);
         } else if (currentPosition < 30) { // changed from 56
             m_leftPivotMotor.setVoltage(.5);
-        }  else if (currentPosition < 61) {
+        }  else if (currentPosition <61) {
             m_leftPivotMotor.setVoltage(.3);
         }  else if (currentPosition < 91) {
             m_leftPivotMotor.setVoltage(.1);
-        }  
-        else {
+        }  else {
             m_leftPivotMotor.setVoltage(-.2);
         }
     }
