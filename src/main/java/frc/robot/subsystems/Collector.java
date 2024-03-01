@@ -25,6 +25,24 @@ public class Collector extends SubsystemBase {
         return limit.get();
     }
 
+    //When has note
+    public void noteDetector() {
+       note = hasNote();
+        if(note == true){
+            collectorOuttake();
+            try {
+                wait(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            collectorStop();
+        }
+        else{
+            collectorIntake();
+        }
+
+    }
+
     public void collectorIntake() { 
         collectorMotor.setVoltage(-8);
     }
