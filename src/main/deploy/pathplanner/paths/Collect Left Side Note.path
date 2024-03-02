@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Pivot Collect",
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.65,
       "command": {
         "type": "sequential",
         "data": {
@@ -75,7 +75,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -27.514421349461788,
+    "rotation": -19.820016911062257,
     "rotateFast": false
   },
   "reversed": false,

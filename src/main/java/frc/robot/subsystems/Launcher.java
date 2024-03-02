@@ -84,6 +84,11 @@ public void shootSpeaker(){
     
 }
 
+public void shootSpeakerDistance() {
+    leftShooterMotor.setVoltage(-10);
+    rightShooterMotor.setVoltage(-10);
+}
+
 public void launcherStop() {
     leftShooterMotor.setVoltage(0);
     rightShooterMotor.setVoltage(0);

@@ -68,18 +68,17 @@ public class RobotContainer {
     private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
 
-    //private final JoystickButton opAmpLauncher = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton opIntakeOverride = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
+
+    private final JoystickButton opSpeakerDistance = new JoystickButton(operator, XboxController.Button.kRightStick.value);
 
 
     private final POVButton DownDPad = new POVButton(operator, 180);
     // private final POVButton RightDPad = new POVButton(operator, 90);
     // private final POVButton LeftDPad = new POVButton(operator, 270);
+    // private final POVButton UpDPad = new POVButton(operator, 0);
 
-    //private final JoystickButton OP = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-
-    
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Collector collector = new Collector();
@@ -106,14 +105,16 @@ public class RobotContainer {
         //     )
         //    );
 
-
-        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
+        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(11.2), PIDPivot));
         NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
         NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
-        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(29), PIDPivot));
+        NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(87)));;
+        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28), PIDPivot));
+        NamedCommands.registerCommand("Pivot Long Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(35.2))); //TUNE FIRST
 
-        NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));
+        NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));   
         NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
+        NamedCommands.registerCommand("Shoot Speaker Distance", new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
 
         NamedCommands.registerCommand("Shoot Note", new InstantCommand(() -> collector.intakeOverride(), collector));
         NamedCommands.registerCommand("Stop Collector", new InstantCommand(() -> collector.collectorStop(), collector));
@@ -122,8 +123,6 @@ public class RobotContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
         
-
-
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -142,7 +141,7 @@ public class RobotContainer {
         opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(32), PIDPivot));
         //opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
         opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(86), PIDPivot));
-        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(0), PIDPivot));
+        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(-5.66), PIDPivot));
 
         DownDPad.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
 
@@ -158,12 +157,13 @@ public class RobotContainer {
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
+        opSpeakerDistance.onTrue(new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
+        opSpeakerDistance.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+
         opX.onTrue(new InstantCommand(() -> 
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
             PIDPivot));
     }
-
-    
 
     public Joystick getDriveController(){
         return driver;
