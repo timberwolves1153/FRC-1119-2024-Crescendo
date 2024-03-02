@@ -3,7 +3,8 @@
   "robotLength": 0.71,
   "holonomicMode": true,
   "pathFolders": [
-    "Middle 3 Note Auto"
+    "Middle 3 Note Auto",
+    "CollectAndShootCloseNotes"
   ],
   "autoFolders": [
     "3 Note Autos",

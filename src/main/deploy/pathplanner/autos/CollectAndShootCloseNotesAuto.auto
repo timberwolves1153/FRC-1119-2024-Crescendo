@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.25,
-      "y": 5.54
+      "x": 1.2,
+      "y": 5.56
     },
     "rotation": 0
   },
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.1
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start"
+            "pathName": "ShootAndCollect"
           }
         },
         {
@@ -62,7 +62,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.1
+            "waitTime": 0.05
           }
         },
         {
@@ -80,49 +80,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Stop Collector"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mid Range"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Rev Motors"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Shoot Note"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Collect Left Side Note"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Collector"
           }
         }
       ]
