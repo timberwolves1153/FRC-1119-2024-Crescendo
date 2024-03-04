@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.25,
-      "y": 5.54
+      "x": 1.2,
+      "y": 5.56
     },
     "rotation": 0
   },
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.1
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ShootandCollect"
+            "pathName": "MiddleStartToRightNote"
           }
         },
         {
@@ -62,7 +62,73 @@
         {
           "type": "wait",
           "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.12
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightNoteToMiddleShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
             "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Collect"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CollectAndShootMiddleNote"
           }
         },
         {
@@ -98,7 +164,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.5
           }
         },
         {
@@ -108,26 +174,26 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.5
+            "pathName": "MiddleToCollectLeftNote"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Collect Left Side Note"
+            "pathName": "LeftNoteToMiddleShoot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Stop Collector"
+            "name": "Shoot Note"
           }
         }
       ]
     }
   },
-  "folder": "3 Note Autos",
+  "folder": "4 Note Autos",
   "choreoAuto": false
 }

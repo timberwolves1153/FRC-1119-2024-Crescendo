@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2028547365365412,
-        "y": 5.555162990025228
+        "x": 0.69,
+        "y": 4.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.881819101984069,
-        "y": 5.020221368763539
+        "x": 1.6899999999999986,
+        "y": 4.5
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.622507500654099,
-        "y": 4.361831681056846
+        "x": 2.58,
+        "y": 4.44
       },
       "prevControl": {
-        "x": 1.892106440854486,
-        "y": 4.999646691022705
+        "x": 1.61,
+        "y": 4.44
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "PivotDown",
+      "name": "Pivot Down",
       "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
@@ -42,6 +42,12 @@
               "type": "named",
               "data": {
                 "name": "Pivot Collect"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Launcher"
               }
             }
           ]
@@ -57,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.48601154199871,
+    "rotation": -44.1272088294848,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CollectAndShootCloseNotes",
+  "folder": "RightAndMiddleCollectCloseNotesPaths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -59.322719978203615,
     "velocity": 0
   },
   "useDefaultConstraints": true

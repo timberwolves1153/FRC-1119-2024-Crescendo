@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2,
-      "y": 5.56
+      "x": 0.6873341839169218,
+      "y": 4.4985046270670574
     },
-    "rotation": 0
+    "rotation": -60.34900738633804
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Subwoofer"
+            "name": "Rev Motors"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Rev Motors"
+            "name": "Pivot Subwoofer"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.5
           }
         },
         {
@@ -36,21 +36,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Launcher"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "ShootAndCollect"
+            "pathName": "RightStartCollectRightNote"
           }
         },
         {
@@ -80,13 +68,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Rev Motors"
+            "name": "Stop Collector"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 1.5
+            "pathName": "RightNoteToMiddleShoot"
           }
         },
         {
@@ -94,10 +82,52 @@
           "data": {
             "name": "Shoot Note"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.02
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Collect"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CollectAndShootMiddleNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
         }
       ]
     }
   },
-  "folder": "3 Note Autos",
+  "folder": "4 Note Autos",
   "choreoAuto": false
 }

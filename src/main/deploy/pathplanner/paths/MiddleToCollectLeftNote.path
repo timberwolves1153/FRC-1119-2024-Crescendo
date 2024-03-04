@@ -1,0 +1,82 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.66,
+        "y": 5.53
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6485085387473581,
+        "y": 6.0890837303303105
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.62,
+        "y": 7.01
+      },
+      "prevControl": {
+        "x": 0.9175632109025029,
+        "y": 6.44600253612721
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Run Collector",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Collect"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Launcher"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Note"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 23.38522105721389,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "RightAndMiddleCollectCloseNotesPaths",
+  "previewStartingState": {
+    "rotation": 0.6573279717127576,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
