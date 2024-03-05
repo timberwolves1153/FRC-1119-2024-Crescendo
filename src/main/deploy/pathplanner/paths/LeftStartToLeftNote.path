@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6,
-        "y": 5.54
+        "x": 0.7347867643712158,
+        "y": 6.56743713487427
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6,
-        "y": 5.54
+        "x": 1.180841020641578,
+        "y": 7.611393904868734
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.0,
-        "y": 5.75
+        "x": 2.7942287560875694,
+        "y": 7.032472423326349
       },
       "prevControl": {
-        "x": 5.844045543002029,
-        "y": 7.155745465638513
+        "x": 2.25326933890862,
+        "y": 7.544960292232722
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pivot Collect",
-      "waypointRelativePos": 0.65,
+      "name": "Collect Position",
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,25 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Collect"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
                 "name": "Stop Launcher"
               }
             },
             {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.25
-              }
-            },
-            {
               "type": "named",
               "data": {
-                "name": "Collect Note"
+                "name": "Pivot Collect"
               }
             }
           ]
@@ -75,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -19.820016911062257,
+    "rotation": -39.093858886229505,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Middle 3 Note Auto",
+  "folder": "LeftCollectCloseNotes",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 59.85861444792461,
     "velocity": 0
   },
   "useDefaultConstraints": true

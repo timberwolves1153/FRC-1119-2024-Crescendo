@@ -44,6 +44,8 @@ public class PhotonVision {
     private Transform3d bestCameraToTarget, alternateCameraToTarget;
     private PIDController translationPID, rotationPID;
 
+    private Swerve swerve;
+
     final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(0); //CHANGE BASED ON CAMERA PLACEMENT
     final double TARGET_HEIGHT_METERS = Units.inchesToMeters(57);
     final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(21.7);
@@ -52,18 +54,16 @@ public class PhotonVision {
 
     public PhotonVision(String string) {
         
-        camera = new PhotonCamera("PhotonCamera");// Initiates a new camera
-        camera.setDriverMode(true);//Driver mode: normal view of the camera
+        camera = new PhotonCamera("AprilTagCamera");
+        camera.setDriverMode(true);
         
-        robotToCam = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d(0,0,0)); // taking a 3D grid, and translating the ROBOT to the point(change the translation3D and the yaw and pitch of Rotation3D)
-        camera.setPipelineIndex(2); // Check if change in value is needed 
-
+        robotToCam = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d(0,0,0));
+        camera.setPipelineIndex(2);
+        
         aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
-        photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam); // Collecting the positions of the VISIBLE apriltags- to caluclate robot position.
-        photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);//IF MULTITAGFALLBACK FAILS, ALTERNATE
-
-        
+        photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam);
+        photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
         
         // target = result.getBestTarget();
 
@@ -87,10 +87,10 @@ public class PhotonVision {
         bestCameraToTarget = target.getBestCameraToTarget();
         alternateCameraToTarget = target.getAlternateCameraToTarget();
 
-        translationPID = new PIDController(.25, 0, 0.3); //tune
-        rotationPID = new PIDController(0.05, 0, 0.02); //tune
+        translationPID = new PIDController(0.05, 0, 0.02); //tune
+        rotationPID = new PIDController(0, 0, 0); //tune
 
-        }
+    }
 
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
         photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
@@ -103,7 +103,7 @@ public class PhotonVision {
             targetRotation = result.getBestTarget().getYaw();
             return targetRotation;
         } else {
-            return 0.0;
+            return 0;
         }
     }
 

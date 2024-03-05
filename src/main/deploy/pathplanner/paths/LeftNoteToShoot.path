@@ -3,59 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 5.75
+        "x": 2.79,
+        "y": 7.03
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.985174926028354,
-        "y": 6.999079834900366
+        "x": 1.7289332125485053,
+        "y": 6.741323327964576
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.572939832902567,
-        "y": 6.33
+        "x": 1.68,
+        "y": 5.56
       },
       "prevControl": {
-        "x": 4.854938564838963,
-        "y": 6.517304026974466
+        "x": 1.7320637185803638,
+        "y": 5.9324177681434245
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 5.909737034827444,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
-      "waypointRelativePos": 0.2,
+      "name": "Shoot Position",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Long Range"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.1
-              }
-            },
             {
               "type": "named",
               "data": {
@@ -77,7 +59,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot Speaker Distance"
+                "name": "Rev Motors"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Wing Line"
               }
             }
           ]
@@ -93,11 +81,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 6.0682834006426924,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Middle 3 Note Auto",
+  "folder": "LeftCollectCloseNotes",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

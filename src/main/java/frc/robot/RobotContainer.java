@@ -114,7 +114,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("Pivot Wing Line", new InstantCommand(() -> PIDPivot.setSetpointDegrees(16.9)));
 
         NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));   
-
         NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
         NamedCommands.registerCommand("Shoot Speaker Distance", new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
 
@@ -182,7 +181,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("MiddleCollectAndShootCloseNotesAuto");
+        return new PathPlannerAuto("MiddleCollectAndShootCloseNotes");
     //    return AutoBuilder.followPath(path);
     }
 }
