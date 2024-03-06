@@ -158,13 +158,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Rev Motors"
+            "name": "Shoot Speaker Distance"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 2.0
           }
         },
         {

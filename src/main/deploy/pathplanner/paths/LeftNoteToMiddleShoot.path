@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.62,
-        "y": 7.01
+        "x": 2.78,
+        "y": 7.07
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4213939522026635,
-        "y": 6.5486372194118445
+        "x": 2.581393952202663,
+        "y": 6.608637219411845
       },
       "isLocked": false,
       "linkedName": null
@@ -71,7 +71,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Rev Motors"
+                "name": "Shoot Speaker Distance"
               }
             },
             {

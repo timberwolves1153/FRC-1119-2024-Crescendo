@@ -26,13 +26,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 2.0
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
@@ -146,7 +152,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Rev Motors"
+            "name": "Shoot Speaker Distance"
           }
         },
         {
@@ -174,9 +180,33 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
           }
         }
       ]
