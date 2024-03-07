@@ -109,7 +109,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(11.2), PIDPivot));
         NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
         NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3.8), PIDPivot));
-        NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(87)));;
+        NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(87)));
         NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(25.25), PIDPivot));
         NamedCommands.registerCommand("Pivot Long Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(35.2))); //TUNE FIRST
         NamedCommands.registerCommand("Pivot Wing Line", new InstantCommand(() -> PIDPivot.setSetpointDegrees(16.9)));
@@ -156,7 +156,7 @@ public class RobotContainer {
         opIntake.onTrue(new CollectNote(collector));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3), PIDPivot));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5)));
+        opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
 
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
@@ -164,11 +164,11 @@ public class RobotContainer {
         opSpeakerDistance.onTrue(new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
         opSpeakerDistance.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
 
-        driveClimberUp.onTrue(new InstantCommand(() -> actuator.climberUp()));
-        driveClimberUp.onFalse(new InstantCommand(() -> actuator.climberStop()));
+        driveClimberUp.onTrue(new InstantCommand(() -> actuator.climberUp(), actuator));
+        driveClimberUp.onFalse(new InstantCommand(() -> actuator.climberStop(), actuator));
 
-        driveClimberDown.onTrue(new InstantCommand(() -> actuator.climberDown()));
-        driveClimberDown.onFalse(new InstantCommand(() -> actuator.climberStop()));
+        driveClimberDown.onTrue(new InstantCommand(() -> actuator.climberDown(), actuator));
+        driveClimberDown.onFalse(new InstantCommand(() -> actuator.climberStop(), actuator));
 
         opX.onTrue(new InstantCommand(() -> 
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
