@@ -54,8 +54,8 @@ public class RobotContainer {
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton driveRightBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final JoystickButton driveLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driveClimberUp = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton driveClimberDown = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
 
     private final JoystickButton driveAprilTagAlignment = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
@@ -85,6 +85,7 @@ public class RobotContainer {
     private final PIDPivot PIDPivot = new PIDPivot();
     private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
+    private final Actuator actuator = new Actuator();
 
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -162,6 +163,12 @@ public class RobotContainer {
 
         opSpeakerDistance.onTrue(new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
         opSpeakerDistance.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
+
+        driveClimberUp.onTrue(new InstantCommand(() -> actuator.climberUp()));
+        driveClimberUp.onFalse(new InstantCommand(() -> actuator.climberStop()));
+
+        driveClimberDown.onTrue(new InstantCommand(() -> actuator.climberDown()));
+        driveClimberDown.onFalse(new InstantCommand(() -> actuator.climberStop()));
 
         opX.onTrue(new InstantCommand(() -> 
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
