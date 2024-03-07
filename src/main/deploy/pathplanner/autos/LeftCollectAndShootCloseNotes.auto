@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.75
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -51,6 +51,120 @@
           "type": "path",
           "data": {
             "pathName": "LeftNoteToShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Collect"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleShootToMiddleCollectAndShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.12
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mid Range"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker Distance"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleShootAndCollectToRightCollect"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.12
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightNoteCollectToMiddleShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
           }
         }
       ]

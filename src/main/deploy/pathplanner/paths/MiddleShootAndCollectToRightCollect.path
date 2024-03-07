@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 2.85,
-        "y": 5.56
+        "y": 5.6
       },
       "prevControl": null,
       "nextControl": {
         "x": 0.6019195390991928,
-        "y": 5.447556236152934
+        "y": 5.487556236152934
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.575946885997818,
-        "y": 4.109393467341848
+        "x": 2.567615516910424,
+        "y": 4.1046482092964185
       },
       "prevControl": {
-        "x": 1.5759468859978178,
-        "y": 4.109393467341848
+        "x": 1.5676155169104238,
+        "y": 4.1046482092964185
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,37 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Initiate Collector",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Launcher"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,

@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 1.68,
-        "y": 5.56
+        "y": 5.5
       },
       "prevControl": {
         "x": 1.9211012757285624,
-        "y": 5.029973528155149
+        "y": 4.969973528155149
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,31 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Rev and Shoot",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Rev Motors"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Wing Line"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
