@@ -74,7 +74,7 @@ public class RobotContainer {
     private final JoystickButton opSpeakerDistance = new JoystickButton(operator, XboxController.Button.kRightStick.value);
 
 
-    private final POVButton DownDPad = new POVButton(operator, 180);
+    private final POVButton opTeleopPivot = new POVButton(operator, 180);
     // private final POVButton RightDPad = new POVButton(operator, 90);
     // private final POVButton LeftDPad = new POVButton(operator, 270);
     // private final POVButton UpDPad = new POVButton(operator, 0);
@@ -145,7 +145,7 @@ public class RobotContainer {
         opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(86), PIDPivot));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3.8), PIDPivot));
 
-        DownDPad.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
+        opTeleopPivot.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
 
         opLauncher.onTrue(new InstantCommand(() -> launcher.shootSpeaker(), launcher));
         opLauncher.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
@@ -190,7 +190,8 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("MiddleCollectAndShootCloseNotes");
+        return autoChooser.getSelected();
+        //return new PathPlannerAuto("MiddleCollectAndShootCloseNotes");
     //    return AutoBuilder.followPath(path);
     }
 }
