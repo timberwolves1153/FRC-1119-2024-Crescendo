@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 2.85,
-        "y": 5.6
+        "y": 5.3
       },
       "prevControl": null,
       "nextControl": {
         "x": 0.6019195390991928,
-        "y": 5.487556236152934
+        "y": 5.187556236152934
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.567615516910424,
-        "y": 4.1046482092964185
+        "x": 2.6,
+        "y": 3.95
       },
       "prevControl": {
-        "x": 1.5676155169104238,
-        "y": 4.1046482092964185
+        "x": 1.6,
+        "y": 3.95
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Initiate Collector",
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
         "data": {
@@ -69,7 +69,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -3.725440842230629,
     "rotateFast": false
   },
   "reversed": false,
