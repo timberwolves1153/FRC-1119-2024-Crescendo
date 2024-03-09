@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.58,
-        "y": 3.95
+        "x": 8.03,
+        "y": 7.46
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9970254044554328,
-        "y": 4.452390820157362
+        "x": 6.92292926570586,
+        "y": 7.4368575160559995
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.68,
-        "y": 5.4
+        "x": 4.865382962318089,
+        "y": 6.454637642099712
       },
       "prevControl": {
-        "x": 1.9211012757285624,
-        "y": 4.86997352815515
+        "x": 5.721823555606399,
+        "y": 6.726191976556981
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,25 +32,12 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Rev and Shoot",
-      "waypointRelativePos": 0.1,
+      "name": "Pivot Far Shot",
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Rev Motors"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Wing Line"
-              }
-            }
-          ]
+          "commands": []
         }
       }
     }
@@ -63,11 +50,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 11.944177188446332,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AmpCollectCloseNotes",
+  "folder": "Amp3Note",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

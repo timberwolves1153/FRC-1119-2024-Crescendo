@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.66,
-        "y": 5.56
+        "x": 2.79,
+        "y": 7.03
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6485085387473581,
-        "y": 6.11908373033031
+        "x": 2.0453956429541362,
+        "y": 5.639974638727904
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.7765034664929384,
-        "y": 7.070857093368131
+        "x": 1.84,
+        "y": 7.74
       },
       "prevControl": {
-        "x": 1.0740666773954413,
+        "x": 1.81561889841337,
         "y": 6.506859629495342
       },
       "nextControl": null,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Run Collector",
-      "waypointRelativePos": 0,
+      "name": "Amp Position",
+      "waypointRelativePos": 0.25,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,19 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Collect"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Stop Launcher"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Shoot Note"
+                "name": "Pivot Amp"
               }
             }
           ]
@@ -69,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 23.38522105721389,
+    "rotation": -89.54528113830686,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "Amp3Note",
   "previewStartingState": {
-    "rotation": 0.6573279717127576,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

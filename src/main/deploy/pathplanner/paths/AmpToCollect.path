@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.66,
-        "y": 5.56
+        "x": 1.84,
+        "y": 7.74
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6485085387473581,
-        "y": 6.11908373033031
+        "x": 2.8400000000000034,
+        "y": 7.74
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.7765034664929384,
-        "y": 7.070857093368131
+        "x": 8.030035398493188,
+        "y": 7.457299800095784
       },
       "prevControl": {
-        "x": 1.0740666773954413,
-        "y": 6.506859629495342
+        "x": 7.0300353984931885,
+        "y": 7.457299800095784
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Run Collector",
-      "waypointRelativePos": 0,
+      "name": "Pivot Collect",
+      "waypointRelativePos": 0.65,
       "command": {
         "type": "sequential",
         "data": {
@@ -47,13 +47,30 @@
             {
               "type": "named",
               "data": {
+                "name": "Shoot Note"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stop Launcher",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
                 "name": "Stop Launcher"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Shoot Note"
+                "name": "Stop Collector"
               }
             }
           ]
@@ -69,13 +86,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 23.38522105721389,
+    "rotation": 7.125016348901648,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "Amp3Note",
   "previewStartingState": {
-    "rotation": 0.6573279717127576,
+    "rotation": -89.73528010105382,
     "velocity": 0
   },
   "useDefaultConstraints": true

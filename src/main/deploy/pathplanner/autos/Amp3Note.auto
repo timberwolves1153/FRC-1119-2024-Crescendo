@@ -1,0 +1,109 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.73,
+      "y": 6.57
+    },
+    "rotation": 60.26
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Subwoofer"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev Motors"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStartToLeftNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.12
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NoteCollectToAmp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev Motors"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AmpToCollect"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.12
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Collector"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "3 Note Autos",
+  "choreoAuto": false
+}
