@@ -100,6 +100,24 @@
           "data": {
             "name": "Stop Collector"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CollectToLongDistanceShot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
         }
       ]
     }

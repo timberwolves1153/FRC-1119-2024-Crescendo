@@ -33,11 +33,24 @@
   "eventMarkers": [
     {
       "name": "Pivot Far Shot",
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Long Range"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Speaker Distance"
+              }
+            }
+          ]
         }
       }
     }
