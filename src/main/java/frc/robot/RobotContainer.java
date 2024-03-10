@@ -106,15 +106,15 @@ public class RobotContainer {
         //     )
         //    );
 
-        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(11.25), PIDPivot));
+        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(13.25), PIDPivot));
         NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
         NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3.8), PIDPivot));
         NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(87)));
-        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(26), PIDPivot));
+        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(31.2), PIDPivot));
         NamedCommands.registerCommand("Pivot Long Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(35.2))); //TUNE FIRST
-        NamedCommands.registerCommand("Pivot Wing Line", new InstantCommand(() -> PIDPivot.setSetpointDegrees(16.9)));
+        NamedCommands.registerCommand("Pivot Wing Line", new InstantCommand(() -> PIDPivot.setSetpointDegrees(22.25)));
 
-        NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeaker(), launcher));   
+        NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));   
         NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
         NamedCommands.registerCommand("Shoot Speaker Distance", new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
 
@@ -139,7 +139,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
+        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(11.3), PIDPivot));
         opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(32), PIDPivot));
         //opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(45), PIDPivot));
         opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(86), PIDPivot));
@@ -156,7 +156,7 @@ public class RobotContainer {
         opIntake.onTrue(new CollectNote(collector));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3), PIDPivot));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(10.5), PIDPivot));
+        opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(11.3), PIDPivot));
 
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));

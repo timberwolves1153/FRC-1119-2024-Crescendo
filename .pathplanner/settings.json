@@ -3,8 +3,9 @@
   "robotLength": 0.71,
   "holonomicMode": true,
   "pathFolders": [
-    "AmpCollectCloseNotes",
     "Amp3Note",
+    "AmpCollectCloseNotes",
+    "When we don't get to run autos",
     "NonAmpAndMiddleCollectCloseNotesPaths"
   ],
   "autoFolders": [

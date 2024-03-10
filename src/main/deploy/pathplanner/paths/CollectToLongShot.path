@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7090624707565208,
-        "y": 4.495567086372268
+        "x": 8.03,
+        "y": 7.46
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6164764209227671,
-        "y": 1.9648817242496637
+        "x": 6.92292926570586,
+        "y": 7.4368575160559995
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.0,
-        "y": 0.8
+        "x": 4.865382962318089,
+        "y": 6.454637642099712
       },
       "prevControl": {
-        "x": 2.311101604659348,
-        "y": 0.8308620166112516
+        "x": 5.721823555606399,
+        "y": 6.726191976556981
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,12 +32,25 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Get Ready",
+      "name": "Pivot Far Shot",
       "waypointRelativePos": 0.15,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Long Range"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Speaker Distance"
+              }
+            }
+          ]
         }
       }
     }
@@ -50,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 11.944177188446332,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "When we don't get to run autos",
+  "folder": "Amp3Note",
   "previewStartingState": {
-    "rotation": -60.75117366345312,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
