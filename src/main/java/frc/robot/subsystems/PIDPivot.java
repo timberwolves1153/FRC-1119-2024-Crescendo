@@ -102,7 +102,7 @@ public class PIDPivot extends PIDSubsystem {
             constantVolts = 0;// Once again MIGHT needs to be tuned 1153(0)
             m_leftPivotMotor.setVoltage(clampedVolts - constantVolts);
         }
-        SmartDashboard.putNumber("Pivot output",clampedVolts);
+        SmartDashboard.putNumber("Pivot output", clampedVolts);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class PIDPivot extends PIDSubsystem {
 
     public double getPivotRadians() {
         // the 60/26 comes from the pivot gear ratios.
-        return (getAbsolutePosition() * -2 * Math.PI) * 26 / 60 + Math.toRadians(97.25);// 102 sets base -> -2 to -3
+        return (getAbsolutePosition() * -2 * Math.PI) * 36 / 60 + Math.toRadians(134.7);// 102 sets base -> -2 to -3
     }
 
     public double getPivotDegrees() {
@@ -140,7 +140,7 @@ public class PIDPivot extends PIDSubsystem {
             m_leftPivotMotor.setVoltage(.5);
         }  else if (currentPosition < 61) {
             m_leftPivotMotor.setVoltage(.3);
-        }  else if (currentPosition < 91) {
+        }  else if (currentPosition < 115) {
             m_leftPivotMotor.setVoltage(.1);
         }  else {
             m_leftPivotMotor.setVoltage(-.2);
