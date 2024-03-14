@@ -111,12 +111,14 @@ public class PIDPivot extends PIDSubsystem {
     }
 
     public double getAbsolutePosition() {
-        return (pivotAbsoluteEncoder.getAbsolutePosition() + .25) % 1;
+        return (pivotAbsoluteEncoder.getAbsolutePosition() + .15) % 1;
     }
 
     public double getPivotRadians() {
         // the 60/26 comes from the pivot gear ratios.
-        return (getAbsolutePosition() * -2 * Math.PI) * 36 / 60 + Math.toRadians(134.7);// 102 sets base -> -2 to -3
+        return (getAbsolutePosition() * -2 * Math.PI) * 26 / 60;// + Math.toRadians(134.7);// 102 sets base -> -2 to -3
+     // +116
+     // +
     }
 
     public double getPivotDegrees() {
