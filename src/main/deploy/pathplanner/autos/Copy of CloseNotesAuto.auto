@@ -14,19 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Subwoofer TELE"
+            "name": "Rev Motors"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Rev Motors"
+            "name": "Pivot Subwoofer TELE"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.75
+            "waitTime": 1.5
           }
         },
         {
@@ -38,13 +38,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.15
+            "waitTime": 0.1
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Collect"
           }
         },
         {
@@ -60,15 +66,51 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Stop Collector"
+            "pathName": "Copy of RightNoteToSubwoofer"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.05
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Collect"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SubwooferToMidNote"
           }
         },
         {
@@ -92,13 +134,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RightNoteToMiddleShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Note"
+            "pathName": "MidNoteToSubwoofer"
           }
         },
         {
@@ -110,37 +146,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Stop Launcher"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Collect"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.75
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CollectAndShootMiddleNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Collector Outtake"
+            "name": "Shoot Note"
           }
         },
         {
@@ -150,45 +156,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Stop Collector"
+            "pathName": "SubwooferToLeftNote"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleCollectToShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker Distance"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.75
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Note"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MiddleToCollectLeftNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LeftNoteToMiddleShoot"
+            "pathName": "LeftNoteToSubwoofer"
           }
         },
         {

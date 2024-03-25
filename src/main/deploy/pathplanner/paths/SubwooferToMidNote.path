@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.68,
+        "x": 1.2,
         "y": 5.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8099076920573773,
-        "y": 5.55076982040085
+        "x": 2.200000000000017,
+        "y": 5.56
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.661057564108011,
+        "x": 2.92,
         "y": 5.56
       },
       "prevControl": {
-        "x": 2.622104793438532,
-        "y": 5.540523614665261
+        "x": 1.92,
+        "y": 5.56
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "pivot collect",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -61,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "CloseNotesAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

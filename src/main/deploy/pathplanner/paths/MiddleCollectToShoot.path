@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7090624707565208,
-        "y": 4.495567086372268
+        "x": 2.66,
+        "y": 5.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6164764209227671,
-        "y": 1.9648817242496637
+        "x": 1.6658581184519112,
+        "y": 5.573373042475034
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.0,
-        "y": 0.8
+        "x": 1.68,
+        "y": 5.56
       },
       "prevControl": {
-        "x": 2.311101604659348,
-        "y": 0.8308620166112516
+        "x": 1.8312112453642195,
+        "y": 5.573373042486497
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,12 +32,19 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Get Ready",
-      "waypointRelativePos": 0.15,
+      "name": "Set Pivot",
+      "waypointRelativePos": 0.1,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Wing Line"
+              }
+            }
+          ]
         }
       }
     }
@@ -50,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 0.4821724298353284,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "When we don't get to run autos",
+  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
   "previewStartingState": {
-    "rotation": -60.75117366345312,
+    "rotation": 0.6573279717127576,
     "velocity": 0
   },
   "useDefaultConstraints": true

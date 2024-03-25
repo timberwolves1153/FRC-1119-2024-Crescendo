@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.55,
-        "y": 4.35
+        "x": 3.06,
+        "y": 7.08
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3778645547563935,
-        "y": 4.584332480337558
+        "x": 2.0743776084708565,
+        "y": 6.419591986103404
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.68,
+        "x": 1.2,
         "y": 5.56
       },
       "prevControl": {
-        "x": 1.7593840773921174,
-        "y": 4.8788345263523265
+        "x": 1.811757936312081,
+        "y": 5.680366242249072
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
+      "name": "Ready SHot",
       "waypointRelativePos": 0,
       "command": {
         "type": "sequential",
@@ -41,24 +41,43 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot Speaker Distance"
+                "name": "Stop Collector"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Pivot Up",
-      "waypointRelativePos": 0.45,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.02
+              }
+            },
             {
               "type": "named",
               "data": {
-                "name": "Pivot Wing Line"
+                "name": "Collector Outtake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.12
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Collector"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Speaker Distance"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Subwoofer AUTO"
               }
             }
           ]
@@ -78,7 +97,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "CloseNotesAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

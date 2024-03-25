@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3778645547563935,
-        "y": 4.584332480337558
+        "x": 1.7914845908364796,
+        "y": 4.7344206441019505
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.68,
+        "x": 1.2,
         "y": 5.56
       },
       "prevControl": {
-        "x": 1.7593840773921174,
-        "y": 4.8788345263523265
+        "x": 1.8895711725072741,
+        "y": 4.999500425541135
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,43 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
-      "waypointRelativePos": 0,
+      "name": "Pivot Up",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Subwoofer AUTO"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collector Outtake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.12
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Collector"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Rev",
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -42,23 +77,6 @@
               "type": "named",
               "data": {
                 "name": "Shoot Speaker Distance"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Pivot Up",
-      "waypointRelativePos": 0.45,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Wing Line"
               }
             }
           ]
@@ -78,7 +96,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "CloseNotesAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

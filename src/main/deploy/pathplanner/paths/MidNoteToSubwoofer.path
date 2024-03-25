@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.55,
-        "y": 4.35
+        "x": 2.92,
+        "y": 5.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3778645547563935,
-        "y": 4.584332480337558
+        "x": 1.5577715367753011,
+        "y": 5.534466424383086
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.68,
+        "x": 1.2,
         "y": 5.56
       },
       "prevControl": {
-        "x": 1.7593840773921174,
-        "y": 4.8788345263523265
+        "x": 2.1910974627636457,
+        "y": 5.592826351529481
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
-      "waypointRelativePos": 0,
+      "name": "Subwoofer",
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot Speaker Distance"
+                "name": "Pivot Subwoofer AUTO"
               }
             }
           ]
@@ -49,8 +49,8 @@
       }
     },
     {
-      "name": "Pivot Up",
-      "waypointRelativePos": 0.45,
+      "name": "Collector Stuff",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -58,7 +58,25 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Wing Line"
+                "name": "Collector Outtake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.12
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Collector"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Speaker Distance"
               }
             }
           ]
@@ -78,7 +96,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "CloseNotesAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

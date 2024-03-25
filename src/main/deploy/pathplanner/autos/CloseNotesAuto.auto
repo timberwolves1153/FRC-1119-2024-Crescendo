@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.75
+            "waitTime": 2.0
           }
         },
         {
@@ -45,6 +45,18 @@
           "type": "named",
           "data": {
             "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Collect"
           }
         },
         {
@@ -92,7 +104,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RightNoteToMiddleShoot"
+            "pathName": "RightNoteToSubwoofer"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
@@ -104,7 +122,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -134,43 +152,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CollectAndShootMiddleNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Collector Outtake"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Collector"
+            "pathName": "SubwooferToMidNote"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleCollectToShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker Distance"
+            "pathName": "MidNoteToSubwoofer"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.75
+            "waitTime": 0.75
           }
         },
         {
@@ -180,15 +174,21 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "MiddleToCollectLeftNote"
+            "waitTime": 0.25
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LeftNoteToMiddleShoot"
+            "pathName": "SubwooferToLeftNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftNoteToSubwoofer"
           }
         },
         {

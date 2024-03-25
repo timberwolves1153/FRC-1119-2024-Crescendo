@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.58,
-        "y": 4.44
+        "x": 2.55,
+        "y": 4.35
       },
       "prevControl": {
-        "x": 1.8493774844976816,
-        "y": 5.078036628918015
+        "x": 1.8193774844976813,
+        "y": 4.988036628918015
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Pivot Down",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -57,7 +57,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.17633276890974,
+    "rotation": -57.120000000000005,
     "rotateFast": false
   },
   "reversed": false,

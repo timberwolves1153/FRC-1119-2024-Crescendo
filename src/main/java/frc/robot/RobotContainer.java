@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.fasterxml.jackson.databind.node.IntNode;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -50,12 +51,12 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton fieldCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
-    private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driveClimberDown = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driveClimberUp = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton driveClimberUp = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton driveClimberDown = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driveRightBumper = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton driveLeftBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
 
     private final JoystickButton driveAprilTagAlignment = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
@@ -69,9 +70,9 @@ public class RobotContainer {
     private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
 
     private final JoystickButton opIntakeOverride = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
+    private final AxisButton opSpeakerDistance = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
 
-    private final JoystickButton opSpeakerDistance = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+    private final JoystickButton opLauncher = new JoystickButton(operator, XboxController.Button.kRightStick.value);
 
 
     private final POVButton opTeleopPivot = new POVButton(operator, 180);
@@ -106,13 +107,15 @@ public class RobotContainer {
         //     )
         //    );
 
-        NamedCommands.registerCommand("Pivot Subwoofer", new InstantCommand(() -> PIDPivot.setSetpointDegrees(22.5), PIDPivot));
-        NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(28.4), PIDPivot));
-        NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(-3.8), PIDPivot));
-        NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(87)));
-        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(36.2), PIDPivot));
-        NamedCommands.registerCommand("Pivot Long Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(35.2))); //TUNE FIRST
-        NamedCommands.registerCommand("Pivot Wing Line", new InstantCommand(() -> PIDPivot.setSetpointDegrees(27.75)));
+        NamedCommands.registerCommand("Pivot Subwoofer TELE", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.TELE_SUBWOOFER_SETPOINT), PIDPivot));
+        NamedCommands.registerCommand("Pivot Subwoofer AUTO", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT), PIDPivot));
+
+        NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT), PIDPivot));
+        NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
+        NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AMP_SETPOINT)));
+        NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT), PIDPivot));
+        NamedCommands.registerCommand("Pivot Long Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT))); //TUNE FIRST
+        NamedCommands.registerCommand("Pivot Wing Line", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SHOT_SETPOINT)));
 
         NamedCommands.registerCommand("Rev Motors", new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));   
         NamedCommands.registerCommand("Stop Launcher", new InstantCommand(() -> launcher.launcherStop(), launcher));
@@ -139,9 +142,10 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -> s_Swerve.zeroGyro()));
 
-        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(22.5)));
-        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(0.5), PIDPivot));
-        opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(120)));
+        opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.TELE_SUBWOOFER_SETPOINT)));
+        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
+        opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AMP_SETPOINT)));
+        opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT)));
 
         opTeleopPivot.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
 
@@ -152,9 +156,9 @@ public class RobotContainer {
         opIntakeOverride.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
         opIntake.onTrue(new CollectNote(collector));
-        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(0.5), PIDPivot));
+        opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(22.5), PIDPivot));
+        opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.TELE_SUBWOOFER_SETPOINT)));
 
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
@@ -169,8 +173,9 @@ public class RobotContainer {
         driveClimberDown.onFalse(new InstantCommand(() -> actuator.climberStop(), actuator));
 
         opX.onTrue(new InstantCommand(() -> 
-            PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", 0)),
+            PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", PIDPivot.TELE_SUBWOOFER_SETPOINT)),
             PIDPivot));
+        //opX.onFalse(new InstantCommand(() -> PIDPivot.pivotHold()));
     }
 
     public Joystick getDriveController(){
@@ -189,7 +194,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return autoChooser.getSelected();
-        //return new PathPlannerAuto("MiddleCollectAndShootCloseNotes");
+       // return new PathPlannerAuto("CloseNotesAuto");
     //    return AutoBuilder.followPath(path);
     }
 }

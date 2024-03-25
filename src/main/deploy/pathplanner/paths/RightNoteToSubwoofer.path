@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.68,
-        "y": 5.56
+        "x": 2.55,
+        "y": 4.35
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8099076920573773,
-        "y": 5.55076982040085
+        "x": 1.7914845908364796,
+        "y": 4.7344206441019505
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.661057564108011,
+        "x": 1.2,
         "y": 5.56
       },
       "prevControl": {
-        "x": 2.622104793438532,
-        "y": 5.540523614665261
+        "x": 1.8895711725072741,
+        "y": 4.999500425541135
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "pivot collect",
-      "waypointRelativePos": 0.1,
+      "name": "Pivot Up",
+      "waypointRelativePos": 0.45,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,7 +41,24 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Collect"
+                "name": "Pivot Subwoofer AUTO"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Rev",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Speaker Distance"
               }
             }
           ]
@@ -61,7 +78,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": "CloseNotesAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

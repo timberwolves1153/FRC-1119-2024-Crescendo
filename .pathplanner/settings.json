@@ -5,8 +5,10 @@
   "pathFolders": [
     "Amp3Note",
     "AmpCollectCloseNotes",
-    "When we don't get to run autos",
-    "NonAmpAndMiddleCollectCloseNotesPaths"
+    "CloseNotesAuto",
+    "TestingFor5Note",
+    "NonAmpAndMiddleCollectCloseNotesPaths",
+    "When we don't get to run autos"
   ],
   "autoFolders": [
     "3 Note Autos",

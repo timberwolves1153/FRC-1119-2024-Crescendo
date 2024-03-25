@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.68,
-        "y": 0.6
+        "x": 1.2,
+        "y": 5.56
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.68,
-        "y": 0.5999999999999996
+        "x": 1.645210307964476,
+        "y": 4.865911285707283
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.13652113519766,
-        "y": 0.7715504152812825
+        "x": 2.55,
+        "y": 4.35
       },
       "prevControl": {
-        "x": 7.136521135197659,
-        "y": 0.7715504152812825
+        "x": 2.1492899126149134,
+        "y": 4.588153136206022
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -30.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,11 +45,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -40.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TestingFor5Note",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

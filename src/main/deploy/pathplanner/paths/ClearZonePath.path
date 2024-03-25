@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.5667461571889965,
-        "y": 1.6729845781966435
+        "x": 4.846474147924599,
+        "y": 1.8383377051114282
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.679275604996708,
-        "y": 0.6030525805127416
+        "x": 8.134083377171494,
+        "y": 2.431663631099773
       },
       "prevControl": {
-        "x": 2.679275604996708,
-        "y": 0.6030525805127416
+        "x": 4.95346734769299,
+        "y": 1.6827112327210427
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,6 +53,29 @@
           ]
         }
       }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Collect"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Note"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -63,11 +86,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 11.30993247402027,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "When we don't get to run autos",
   "previewStartingState": {
     "rotation": -59.266243984903646,
     "velocity": 0
