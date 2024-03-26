@@ -46,7 +46,7 @@ public class PhotonVision {
 
     private Swerve swerve;
 
-    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(0); //CHANGE BASED ON CAMERA PLACEMENT
+    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(10.5); //CHANGE BASED ON CAMERA PLACEMENT
     final double TARGET_HEIGHT_METERS = Units.inchesToMeters(57);
     final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(21.7);
     
