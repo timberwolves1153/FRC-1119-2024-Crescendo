@@ -48,6 +48,6 @@ public class Collector extends SubsystemBase {
     @Override
 
     public void periodic() {
-        SmartDashboard.putBoolean("Has Note ", hasNote());
+        SmartDashboard.putBoolean("Has Note ", !hasNote());
     }
 }

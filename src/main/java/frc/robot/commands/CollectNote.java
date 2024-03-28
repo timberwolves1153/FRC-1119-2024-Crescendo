@@ -26,7 +26,7 @@ public class CollectNote extends Command {
 
     @Override
     public boolean isFinished() {     
-        return collector.hasNote();
+        return !collector.hasNote();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class CollectNote extends Command {
         if (interrupted) {
             collector.collectorStop();
         }
-        new PositionNote(collector).withTimeout(.5);
+        //new PositionNote(collector).withTimeout(.5);
         // new InstantCommand(() -> collector.collectorOuttake(), collector)
         //     .withTimeout(.5)
         //     .andThen(new InstantCommand(() -> collector.collectorStop(), collector));
