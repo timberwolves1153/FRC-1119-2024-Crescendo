@@ -5,6 +5,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -556,6 +557,8 @@ public class Limelight {
 
     public static NetworkTableEntry getLimelightNTTableEntry(String tableName, String entryName) {
         return getLimelightNTTable(tableName).getEntry(entryName);
+
+
     }
 
     public static double getLimelightNTDouble(String tableName, String entryName) {
@@ -949,74 +952,4 @@ public class Limelight {
         return results;
     }
 
-    double limelight_aim_proportional() {
-        double kP = .035;
-
-    double targetingAngularVelocity = Limelight.getTX("limelight") * kP;
-
-    targetingAngularVelocity *= Constants.Swerve.maxAngularVelocity;
-
-    //invert since tx is positive when the target is to the right of the crosshair
-    targetingAngularVelocity *= -1.0;
-
-    return targetingAngularVelocity;
-    }   
-
-    double limelight_range_proportional()
-  {    
-    double kP = .1;
-    double targetingForwardSpeed = Limelight.getTY("limelight") * kP;
-    targetingForwardSpeed *= Constants.Swerve.maxSpeed;
-    targetingForwardSpeed *= -1.0;
-    return targetingForwardSpeed;
-  }
 }
-
-
-// package frc.robot.subsystems;
-
-// import frc.robot.Constants;
-// import frc.robot.lib.util.LimelightHelpers;
-
-// public class Limelight {
-    
-//     public double targetAngularVelocity;
-//     private double kP = 0.35;
-
-//     double limelight_aim_proportional(){
-
-//       double kP = .000;//TUNE
-
-//       double targetAngularVelocity = LimelightHelpers.getTX("limelight") * kP;
-
-//       targetAngularVelocity *= Constants.maxAngularVelocity;
-
-//       targetAngularVelocity *= -1.0;
-
-//       return targetAngularVelocity;
-
-
-
-
-
-    
-
-//     }
-
-//     double limelight_range_proportional(){
-//         double kP = .000;//TUNE
-//         double targetForwardSpeed = LimelightHelpers.getTY("limelight") * kP;
-//         targetForwardSpeed *= Swerve.kMaxAngularSpeed;
-//         targetForwardSpeed *= -1.0;
-//         return targetForwardSpeed;
-//     }
-
-//     private void drive(boolean fieldRelative){
-
-//         var xSpeed =
-//             -m_xspeedLimiter.calulate;
-
-//     }
-// }
-
-
