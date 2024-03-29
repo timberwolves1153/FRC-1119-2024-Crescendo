@@ -26,11 +26,11 @@ public class Collector extends SubsystemBase {
     }
 
     public void collectorIntake() { 
-        collectorMotor.setVoltage(-8);
+        collectorMotor.setVoltage(-10);
     }
 
     public void intakeOverride() {
-        collectorMotor.setVoltage(-8);
+        collectorMotor.setVoltage(-10);
     }
 
     public void collectorOuttake() {

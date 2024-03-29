@@ -3,11 +3,32 @@ package frc.robot.subsystems;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Vision extends SubsystemBase{
+
+    public AprilTagFieldLayout aprilTagFieldLayout;
+    public Limelight limelight;
+
+    public final double LIMELIGHT_HEIGHT_METERS = Units.inchesToMeters(9.75); //CHANGE BASED ON CAMERA PLACEMENT
+    public final double TARGET_HEIGHT_METERS = Units.inchesToMeters(57);
+    public final double LIMELIGHT_MOUNT_DEGREES = Units.degreesToRadians(61);
+    public final double LIMELIGHT_CALCULATED_DEGREES = Units.degreesToRadians(limelight.getTY("limelight"));
+    
+    public Vision() {
+
+
+        // getLimelightNTTable("limelight");
+        // getLimelightNTTableEntry("limelight");
+        
+        aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+
+    }
 
     double limelight_aim_proportional() {
         double kP = 0.0; //TUNE
@@ -36,20 +57,6 @@ public class Vision extends SubsystemBase{
     return targetingForwardSpeed;
 
   }
-
-    public AprilTagFieldLayout aprilTagFieldLayout;
-    public Limelight limelight;
-
-    public final double LIMELIGHT_HEIGHT_METERS = Units.inchesToMeters(9.75); //CHANGE BASED ON CAMERA PLACEMENT
-    public final double TARGET_HEIGHT_METERS = Units.inchesToMeters(57);
-    public final double LIMELIGHT_MOUNT_DEGREES = Units.degreesToRadians(61);
-    public final double LIMELIGHT_CALCULATED_DEGREES = Units.degreesToRadians(limelight.getTY("limelight"));
-
-    public Vision() {
-
-        aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-
-    }
 
     public double getDistance() {
         final double tan = Math.tan(LIMELIGHT_MOUNT_DEGREES + LIMELIGHT_CALCULATED_DEGREES);

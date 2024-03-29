@@ -60,9 +60,9 @@ public class PIDPivot extends PIDSubsystem {
         //ONLY GAFFEY CAN EDIT THESE VALUES
         SmartDashboard.putNumber("Encoder Offset", NS_ENCODER_OFFSET);
         degreesToEncoderMap.put(COLLECT_SETPOINT,0.122);
-        degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.228);//0.242);
+        degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.032);//0.242);
         degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.280); 
-        degreesToEncoderMap.put(AMP_SETPOINT,0.682);
+        degreesToEncoderMap.put(AMP_SETPOINT,0.557);
         degreesToEncoderMap.put(AUTO_SHOT_SETPOINT,0.290); //0.274);
 
     }

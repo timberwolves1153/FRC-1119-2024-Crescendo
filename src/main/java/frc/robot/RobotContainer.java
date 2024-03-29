@@ -70,9 +70,9 @@ public class RobotContainer {
     private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
 
     private final JoystickButton opIntakeOverride = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final AxisButton opSpeakerDistance = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
+    private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
 
-    private final JoystickButton opLauncher = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+    private final JoystickButton opSpeakerDistance = new JoystickButton(operator, XboxController.Button.kRightStick.value);
 
 
     private final POVButton opTeleopPivot = new POVButton(operator, 180);

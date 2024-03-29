@@ -29,8 +29,8 @@ import frc.robot.Constants;
 
 
 public class Launcher extends SubsystemBase {
-    private CANSparkMax leftShooterMotor;
-    private CANSparkMax rightShooterMotor;
+    private CANSparkMax bottomShooterMotor;
+    private CANSparkMax topShooterMotor;
 
     private SparkPIDController shooterPID;
     private PIDController shooterMotorController;
@@ -43,17 +43,17 @@ public class Launcher extends SubsystemBase {
     private final SysIdRoutine launcherRoutine = new SysIdRoutine(
       new SysIdRoutine.Config(),
       new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
-        leftShooterMotor.setVoltage(volts.in(Volts));
-        rightShooterMotor.setVoltage(volts.in(Volts));
+        bottomShooterMotor.setVoltage(volts.in(Volts));
+        topShooterMotor.setVoltage(volts.in(Volts));
       
      },
      log -> {
         log.motor("left launcher")
-        .voltage(appliedVoltage.mut_replace(leftShooterMotor.getAppliedOutput() * leftShooterMotor.getBusVoltage(), 
+        .voltage(appliedVoltage.mut_replace(bottomShooterMotor.getAppliedOutput() * bottomShooterMotor.getBusVoltage(), 
         Volts)).angularVelocity(velocity.mut_replace(getLeftVelocity(), RPM));
 
         log.motor("right launcher")
-        .voltage(appliedVoltage.mut_replace(rightShooterMotor.getAppliedOutput() * rightShooterMotor.getBusVoltage(), 
+        .voltage(appliedVoltage.mut_replace(topShooterMotor.getAppliedOutput() * topShooterMotor.getBusVoltage(), 
         Volts)).angularVelocity(velocity.mut_replace(getRightVelocity(), RPM));
      }, this));
          
@@ -61,8 +61,8 @@ public class Launcher extends SubsystemBase {
   public Launcher(){
 
     
-    leftShooterMotor = new CANSparkMax(61, MotorType.kBrushless);
-    rightShooterMotor = new CANSparkMax(62, MotorType.kBrushless);
+    bottomShooterMotor = new CANSparkMax(61, MotorType.kBrushless);
+    topShooterMotor = new CANSparkMax(62, MotorType.kBrushless);
 
     shooterMotorController = new PIDController(0, 0, 0); //TUNE IT
 
@@ -74,68 +74,68 @@ public class Launcher extends SubsystemBase {
 
 
 public void shootAmp(){
-    leftShooterMotor.setVoltage(-2);
-    rightShooterMotor.setVoltage(-2);
+    bottomShooterMotor.setVoltage(-2);
+    topShooterMotor.setVoltage(-2);
 }
 
 public void shootSpeaker(){
-    leftShooterMotor.setVoltage(-8);
-    rightShooterMotor.setVoltage(-8);
+    bottomShooterMotor.setVoltage(-6);
+    topShooterMotor.setVoltage(-6);
     
 }
 
 public void shootSpeakerDistance() {
-    leftShooterMotor.setVoltage(-10);
-    rightShooterMotor.setVoltage(-10);
+    bottomShooterMotor.setVoltage(-10);
+    topShooterMotor.setVoltage(-10);
 }
 
 public void launcherStop() {
-    leftShooterMotor.setVoltage(0);
-    rightShooterMotor.setVoltage(0);
+    bottomShooterMotor.setVoltage(0);
+    topShooterMotor.setVoltage(0);
 }
 
 public double getLeftVelocity() {
-    return leftShooterMotor.getEncoder().getVelocity();
+    return bottomShooterMotor.getEncoder().getVelocity();
 }
 
 public double getRightVelocity() {
-    return rightShooterMotor.getEncoder().getVelocity();
+    return topShooterMotor.getEncoder().getVelocity();
 }
 
 public void setLauncherVelocity(double setpoint){
     double feedBackLeft = shooterMotorController.calculate(getLeftVelocity(), setpoint);
     double feedBackRight = shooterMotorController.calculate(getRightVelocity(), setpoint);
     double feedForward = shooterFF.calculate(setpoint);
-    leftShooterMotor.setVoltage(feedBackLeft + feedForward);
-    rightShooterMotor.setVoltage(feedBackRight + feedForward);
+    bottomShooterMotor.setVoltage(feedBackLeft + feedForward);
+    topShooterMotor.setVoltage(feedBackRight + feedForward);
 }
 
 public double getLeftVoltage(){
-    return (leftShooterMotor.getBusVoltage()) * (leftShooterMotor.getAppliedOutput());
+    return (bottomShooterMotor.getBusVoltage()) * (bottomShooterMotor.getAppliedOutput());
 }
 
 public double getRightVoltage(){
-    return (rightShooterMotor.getBusVoltage()) * (rightShooterMotor.getAppliedOutput());
+    return (topShooterMotor.getBusVoltage()) * (topShooterMotor.getAppliedOutput());
 }
 
 public void configMotors(){
-    leftShooterMotor.restoreFactoryDefaults();
-    rightShooterMotor.restoreFactoryDefaults();
+    bottomShooterMotor.restoreFactoryDefaults();
+    topShooterMotor.restoreFactoryDefaults();
 
-    leftShooterMotor.clearFaults();
-    rightShooterMotor.clearFaults();
+    bottomShooterMotor.clearFaults();
+    topShooterMotor.clearFaults();
 
-    leftShooterMotor.setSmartCurrentLimit(40);
-    rightShooterMotor.setSmartCurrentLimit(40);
+    bottomShooterMotor.setSmartCurrentLimit(40);
+    topShooterMotor.setSmartCurrentLimit(40);
 
-    leftShooterMotor.setIdleMode(IdleMode.kBrake);
-    rightShooterMotor.setIdleMode(IdleMode.kBrake);
+    bottomShooterMotor.setIdleMode(IdleMode.kBrake);
+    topShooterMotor.setIdleMode(IdleMode.kBrake);
 
-    rightShooterMotor.setInverted(false);
-    leftShooterMotor.setInverted(false);
+    topShooterMotor.setInverted(false);
+    bottomShooterMotor.setInverted(false);
 
-    leftShooterMotor.burnFlash();
-    rightShooterMotor.burnFlash();
+    bottomShooterMotor.burnFlash();
+    topShooterMotor.burnFlash();
 }
 
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction){
