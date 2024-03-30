@@ -87,6 +87,7 @@ public class RobotContainer {
     private final Launcher launcher = new Launcher();
     private final TurnAndX xLock = new TurnAndX(s_Swerve);
     private final Actuator actuator = new Actuator();
+    private final Vision vision = new Vision();
 
    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */

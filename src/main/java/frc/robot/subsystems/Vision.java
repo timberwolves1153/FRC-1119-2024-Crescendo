@@ -63,6 +63,8 @@ public class Vision extends SubsystemBase{
         return (TARGET_HEIGHT_METERS - LIMELIGHT_HEIGHT_METERS) / tan;   
     }
 
+    
+
     @Override
     public void periodic() {
 
