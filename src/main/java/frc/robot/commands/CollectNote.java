@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Limelight;
 
@@ -31,9 +33,13 @@ public class CollectNote extends Command {
     @Override
     public void end(boolean interrupted) {
     //    collector.collectorStop();
-    if (!collector.hasNote()) {
+    if (collector.hasNote()) {
             collector.collectorStop();
-            limelight.setLEDMode_ForceBlink("limelight");
+            // new SequentialCommandGroup(
+            // new InstantCommand(() -> limelight.setLEDMode_ForceBlink("limelight"), limelight),
+            // new WaitCommand(3),
+            // new InstantCommand(() -> limelight.setLEDMode_ForceOff("limelight")));
+          //  limelight.setLEDMode_ForceOff("limelight");
 
         }
         //new PositionNote(collector).withTimeout(.5);

@@ -111,7 +111,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Pivot Subwoofer TELE", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.TELE_SUBWOOFER_SETPOINT), PIDPivot));
         NamedCommands.registerCommand("Pivot Subwoofer AUTO", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT), PIDPivot));
 
-        NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT), PIDPivot));
+        NamedCommands.registerCommand("Pivot Stage", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SHOT_SETPOINT), PIDPivot));
         NamedCommands.registerCommand("Pivot Collect", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
         NamedCommands.registerCommand("Pivot Amp", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AMP_SETPOINT)));
         NamedCommands.registerCommand("Pivot Mid Range", new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT), PIDPivot));
@@ -170,8 +170,8 @@ public class RobotContainer {
         driveClimberUp.onTrue(new InstantCommand(() -> actuator.climberUp(), actuator));
         driveClimberUp.onFalse(new InstantCommand(() -> actuator.climberStop(), actuator));
 
-        driveClimberDown.onTrue(new InstantCommand(() -> actuator.climberDown(), actuator));
-        driveClimberDown.onFalse(new InstantCommand(() -> actuator.climberStop(), actuator));
+        //driveClimberDown.onTrue(new InstantCommand(() -> actuator.climberDown(), actuator));
+       // driveClimberDown.onFalse(new InstantCommand(() -> actuator.climberStop(), actuator));
 
         opX.onTrue(new InstantCommand(() -> 
             PIDPivot.setSetpointDegrees(SmartDashboard.getNumber("Command Setpoint Degrees", PIDPivot.TELE_SUBWOOFER_SETPOINT)),

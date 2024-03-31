@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2,
-        "y": 5.56
+        "x": 5.76,
+        "y": 6.28
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.875558369325685,
-        "y": 5.0278149855228715
+        "x": 6.76,
+        "y": 6.28
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.55,
-        "y": 4.35
+        "x": 8.24,
+        "y": 7.41
       },
       "prevControl": {
-        "x": 1.8193774844976813,
-        "y": 4.988036628918015
+        "x": 7.489024262459554,
+        "y": 6.854483700997477
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,25 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Pivot Down",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Collect"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -57,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -58.10101496059554,
+    "rotation": -30.699722550814354,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmpAndMiddleCollectCloseNotesPaths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0,
-    "velocity": 0
+    "velocity": 4.5
   },
   "useDefaultConstraints": true
 }

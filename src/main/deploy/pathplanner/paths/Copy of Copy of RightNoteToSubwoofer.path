@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2,
-        "y": 5.56
+        "x": 2.55,
+        "y": 4.35
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.006291026800063,
-        "y": 6.283418822761816
+        "x": 1.7914845908364796,
+        "y": 4.7344206441019505
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.0567697154351654,
-        "y": 7.081004493762541
+        "x": 1.2,
+        "y": 5.56
       },
       "prevControl": {
-        "x": 2.2786373534832376,
-        "y": 6.779478203506169
+        "x": 1.8895711725072741,
+        "y": 4.999500425541135
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pivot Collect",
-      "waypointRelativePos": 0.0,
+      "name": "Pivot Up",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,19 +41,42 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Collect"
+                "name": "Pivot Subwoofer TELE"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Stop Launcher"
+                "name": "Collector Outtake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.12
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Shoot Note"
+                "name": "Stop Collector"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Rev",
+      "waypointRelativePos": 0.3,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Speaker Distance"
               }
             }
           ]
@@ -69,7 +92,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 74.66054996321022,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,

@@ -22,7 +22,7 @@ public class Collector extends SubsystemBase {
 
     }
     public boolean hasNote() {
-        return limit.get();
+        return !limit.get();
     }
 
     public void collectorIntake() { 

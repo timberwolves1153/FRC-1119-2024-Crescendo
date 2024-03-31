@@ -24,10 +24,11 @@ public class PIDPivot extends PIDSubsystem {
     private DutyCycleEncoder pivotAbsoluteEncoder;
     private final double unitCircleOffset = 0; // Need to tune this for the pivot radians. ASK how to get the exact value, and if it changes over time
     private Pigeon2 encoder;
-    private final double NS_ENCODER_OFFSET = .48;
+    private final double NS_ENCODER_OFFSET = .37;
     private final DigitalInput magnetSwitch;
 
     private HashMap<Double, Double> degreesToEncoderMap = new HashMap<>();
+    private HashMap<Double, Double> pivotDegreesToEncoderMap = new HashMap<>();
 
     public final double COLLECT_SETPOINT = -3;
     public final double TELE_SUBWOOFER_SETPOINT = 10.9;
@@ -59,11 +60,11 @@ public class PIDPivot extends PIDSubsystem {
 
         //ONLY GAFFEY CAN EDIT THESE VALUES
         SmartDashboard.putNumber("Encoder Offset", NS_ENCODER_OFFSET);
-        degreesToEncoderMap.put(COLLECT_SETPOINT,0.122);
-        degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.032);//0.242);
-        degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.280); 
-        degreesToEncoderMap.put(AMP_SETPOINT,0.557);
-        degreesToEncoderMap.put(AUTO_SHOT_SETPOINT,0.290); //0.274);
+        degreesToEncoderMap.put(COLLECT_SETPOINT,0.115);
+        degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.185);//0.242);
+        degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.214); 
+        degreesToEncoderMap.put(AMP_SETPOINT,0.659);
+        degreesToEncoderMap.put(AUTO_SHOT_SETPOINT,0.331); //0.274);
 
     }
 
@@ -141,7 +142,7 @@ public class PIDPivot extends PIDSubsystem {
         }
         // We are good + is up, - is down
         double constantVolts;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -6, 9); //change this according to volts given to the collector(current: 2)
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -7.5, 10.5); //change this according to volts given to the collector(current: 2)
         if (clampedVolts > 0) {
             constantVolts = 0.25; // Needs to be tuned 1153(0.15)
             m_leftPivotMotor.setVoltage(clampedVolts + constantVolts);
@@ -208,6 +209,12 @@ public class PIDPivot extends PIDSubsystem {
         getController().setD(SmartDashboard.getNumber("Pivot D", getController().getD()));;
         enable();
     }
+
+    // public void interpolatedSetpoint(double degrees) {
+
+    //     Optional<Double> newSafeSetpoint = Optional.of(pivotDegreesToEncoderMap.get(degrees));
+
+    // }
 
     public void pivotHold() {
         double currentPosition = getPivotDegrees();

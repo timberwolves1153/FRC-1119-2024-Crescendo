@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.5
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.15
+            "waitTime": 0.1
           }
         },
         {
@@ -48,33 +48,33 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Collect"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "MiddleStartToRightNote"
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Copy of RightNoteToSubwoofer"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Stop Collector"
+            "name": "Shoot Note"
           }
         },
         {
@@ -86,43 +86,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Collector Outtake"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.12
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Collector"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RightNoteToSubwoofer"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Note"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
+            "name": "Pivot Collect"
           }
         },
         {
@@ -134,19 +98,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.02
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Collect"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.75
+            "waitTime": 0.3
           }
         },
         {
@@ -156,57 +108,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "MidNoteToSubwoofer"
+            "name": "Collector Outtake"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Note"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SubwooferToLeftNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LeftNoteToSubwoofer"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Note"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.35
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Launcher"
+            "waitTime": 0.1
           }
         },
         {
@@ -214,10 +124,34 @@
           "data": {
             "name": "Stop Collector"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev Motors"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Stage"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
         }
       ]
     }
   },
-  "folder": "4 Note Autos",
+  "folder": null,
   "choreoAuto": false
 }
