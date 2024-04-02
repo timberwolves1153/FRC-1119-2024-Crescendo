@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Actuator extends SubsystemBase {
     
     private CANSparkMax actuatorMotor;
-    //DigitalInput actuatorLimit = new DigitalInput(2);
+   // DigitalInput actuatorLimit = new DigitalInput(2);
 
     public Actuator() {
 
@@ -23,7 +23,8 @@ public class Actuator extends SubsystemBase {
     //     return !actuatorLimit.get();
     // }
 
-    // public void climberDown() {
+    public void climberDown() {
+        actuatorMotor.setVoltage(10);
     //     if (actuatorLimit()) {
     //         actuatorMotor.setVoltage(0);
     //     }
@@ -31,7 +32,7 @@ public class Actuator extends SubsystemBase {
     //         actuatorMotor.setVoltage(10);
     //     }
 
-    // }
+    }
  
     public void climberUp() {
         actuatorMotor.setVoltage(-10);

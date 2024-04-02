@@ -12,7 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Collector extends SubsystemBase {
 
     private CANSparkMax collectorMotor;
-    DigitalInput limit = new DigitalInput(2);
+    DigitalInput limit = new DigitalInput(1);
 
     public Collector() {
         
@@ -48,6 +48,6 @@ public class Collector extends SubsystemBase {
     @Override
 
     public void periodic() {
-        SmartDashboard.putBoolean("Has Note ", !hasNote());
+        SmartDashboard.putBoolean("Has Note", hasNote());
     }
 }

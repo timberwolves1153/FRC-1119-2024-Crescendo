@@ -26,6 +26,7 @@ public class PIDPivot extends PIDSubsystem {
     private Pigeon2 encoder;
     private final double NS_ENCODER_OFFSET = .37;
     private final DigitalInput magnetSwitch;
+  //  private static 
 
     private HashMap<Double, Double> degreesToEncoderMap = new HashMap<>();
     private HashMap<Double, Double> pivotDegreesToEncoderMap = new HashMap<>();
@@ -34,7 +35,7 @@ public class PIDPivot extends PIDSubsystem {
     public final double TELE_SUBWOOFER_SETPOINT = 10.9;
     public final double AUTO_SUBWOOFER_SETPOINT = 11;
     public final double AMP_SETPOINT = 86;
-    public final double AUTO_SHOT_SETPOINT = 1;
+    public final double STAGE_SHOT_SETPOINT = 1;
     
 
     public PIDPivot() {
@@ -64,7 +65,7 @@ public class PIDPivot extends PIDSubsystem {
         degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.185);//0.242);
         degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.214); 
         degreesToEncoderMap.put(AMP_SETPOINT,0.659);
-        degreesToEncoderMap.put(AUTO_SHOT_SETPOINT,0.331); //0.274);
+        degreesToEncoderMap.put(STAGE_SHOT_SETPOINT,0.331); //0.274);
 
     }
 
@@ -210,11 +211,11 @@ public class PIDPivot extends PIDSubsystem {
         enable();
     }
 
-    // public void interpolatedSetpoint(double degrees) {
+    public void interpolatedSetpoint() {
 
-    //     Optional<Double> newSafeSetpoint = Optional.of(pivotDegreesToEncoderMap.get(degrees));
+       // newSafeSetpoint = Optional.of(pivotDegreesToEncoderMap.get());
 
-    // }
+    }
 
     public void pivotHold() {
         double currentPosition = getPivotDegrees();

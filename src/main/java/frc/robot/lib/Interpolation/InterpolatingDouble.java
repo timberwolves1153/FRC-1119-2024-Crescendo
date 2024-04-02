@@ -1,7 +1,9 @@
 package frc.robot.lib.Interpolation;
 
+import edu.wpi.first.math.interpolation.Interpolatable;
+
 public class InterpolatingDouble
-    implements Interpolable<InterpolatingDouble>,
+    implements Interpolatable<InterpolatingDouble>,
         InverseInterpolable<InterpolatingDouble>,
         Comparable<InterpolatingDouble> {
 

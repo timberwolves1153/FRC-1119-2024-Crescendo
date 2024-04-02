@@ -19,33 +19,38 @@ public class CollectNote extends Command {
         this.collector = collector;
     }
 
-    @Override
-    public void initialize() {
-        collector.collectorIntake();
-    }
+    // @Override
+    // public void initialize() {
+    //     collector.collectorIntake();
+    // }
 
     @Override
     public void execute() {
-
+        if (collector.hasNote()) {
+            collector.collectorIntake();
+        } else {
+            collector.collectorStop();
+        }
     }
 
 
     @Override
     public void end(boolean interrupted) {
     //    collector.collectorStop();
-    if (collector.hasNote()) {
-            collector.collectorStop();
-            // new SequentialCommandGroup(
-            // new InstantCommand(() -> limelight.setLEDMode_ForceBlink("limelight"), limelight),
-            // new WaitCommand(3),
-            // new InstantCommand(() -> limelight.setLEDMode_ForceOff("limelight")));
-          //  limelight.setLEDMode_ForceOff("limelight");
+    //     new SequentialCommandGroup(
+    //         new InstantCommand(() -> limelight.setLEDMode_ForceBlink("limelight"), limelight),
+    //         new WaitCommand(1),
+    //         new InstantCommand(() -> limelight.setLEDMode_ForceOff("limelight")));
+    }
 
+    @Override
+    public boolean isFinished() {
+        if(collector.hasNote()) {
+            
+            return false;
+        } else {
+            return true;
         }
-        //new PositionNote(collector).withTimeout(.5);
-        // new InstantCommand(() -> collector.collectorOuttake(), collector)
-        //     .withTimeout(.5)
-        //     .andThen(new InstantCommand(() -> collector.collectorStop(), collector));
     }
 
 }

@@ -18,8 +18,9 @@ public class Vision extends SubsystemBase{
     public final double LIMELIGHT_HEIGHT_METERS = Units.inchesToMeters(9.75); //CHANGE BASED ON CAMERA PLACEMENT
     public final double TARGET_HEIGHT_METERS = Units.inchesToMeters(57);
     public final double LIMELIGHT_MOUNT_DEGREES = Units.degreesToRadians(61);
-    public final double LIMELIGHT_CALCULATED_DEGREES = Units.degreesToRadians(limelight.getTY("limelight"));
-    
+    public double LIMELIGHT_CALCULATED_DEGREES = Units.degreesToRadians(limelight.getTY("limelight"));
+   // private double LIMELIGHT_CALCULATED_DEGREES = Units.degreesToRadians(limelight.getTY("limelight"));
+
     public Vision() {
 
 
@@ -62,8 +63,6 @@ public class Vision extends SubsystemBase{
         final double tan = Math.tan(LIMELIGHT_MOUNT_DEGREES + LIMELIGHT_CALCULATED_DEGREES);
         return (TARGET_HEIGHT_METERS - LIMELIGHT_HEIGHT_METERS) / tan;   
     }
-
-    
 
     @Override
     public void periodic() {

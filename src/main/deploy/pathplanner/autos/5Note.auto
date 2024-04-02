@@ -148,6 +148,54 @@
           "data": {
             "name": "Shoot Note"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.15
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TestPath1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Stage"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev Motors"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.75
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Note"
+          }
         }
       ]
     }
