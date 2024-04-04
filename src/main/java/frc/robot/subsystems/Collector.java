@@ -12,12 +12,12 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Collector extends SubsystemBase {
 
     private CANSparkMax collectorMotor;
-    DigitalInput limit = new DigitalInput(1);
+    private DigitalInput limit;
 
     public Collector() {
         
         collectorMotor = new CANSparkMax(51, MotorType.kBrushless);
-
+        limit = new DigitalInput(2);
         collectorMotor.setSmartCurrentLimit(40);  
 
     }

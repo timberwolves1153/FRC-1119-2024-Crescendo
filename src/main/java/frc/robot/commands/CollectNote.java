@@ -26,31 +26,18 @@ public class CollectNote extends Command {
 
     @Override
     public void execute() {
-        if (collector.hasNote()) {
-            collector.collectorIntake();
-        } else {
-            collector.collectorStop();
-        }
+        collector.collectorIntake();
     }
 
 
     @Override
     public void end(boolean interrupted) {
-    //    collector.collectorStop();
-    //     new SequentialCommandGroup(
-    //         new InstantCommand(() -> limelight.setLEDMode_ForceBlink("limelight"), limelight),
-    //         new WaitCommand(1),
-    //         new InstantCommand(() -> limelight.setLEDMode_ForceOff("limelight")));
+        collector.collectorStop();
     }
 
     @Override
     public boolean isFinished() {
-        if(collector.hasNote()) {
-            
-            return false;
-        } else {
-            return true;
-        }
+        return collector.hasNote();
     }
 
 }

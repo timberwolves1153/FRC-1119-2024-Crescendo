@@ -16,12 +16,28 @@
     },
     {
       "anchor": {
-        "x": 2.92,
-        "y": 6.871942365438616
+        "x": 8.250803231464285,
+        "y": 5.777632787493063
       },
       "prevControl": {
-        "x": 2.9105529890257786,
-        "y": 6.892517043179449
+        "x": 8.241356220490065,
+        "y": 5.798207465233896
+      },
+      "nextControl": {
+        "x": 8.260250242438506,
+        "y": 5.75705810975223
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.537066619156935,
+        "y": 6.400138677054605
+      },
+      "prevControl": {
+        "x": 5.580696742741641,
+        "y": 6.341218065562194
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,59 +46,24 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 45.0,
+      "waypointRelativePos": 0.9,
+      "rotationDegrees": -20.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Collect AND Shoot",
-      "waypointRelativePos": 0.15,
+      "name": "Collect",
+      "waypointRelativePos": 0.4,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Amp"
-              }
-            },
             {
               "type": "named",
               "data": {
                 "name": "Pivot Collect"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Place Note",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Collector Outtake"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 0.07
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Stop Collector"
               }
             }
           ]
@@ -98,7 +79,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 45.99111940548958,
+    "rotation": 9.462322208025633,
     "rotateFast": false
   },
   "reversed": false,

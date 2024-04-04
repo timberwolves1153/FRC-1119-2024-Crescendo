@@ -1,6 +1,6 @@
 package frc.robot.lib.Interpolation;
 
-public interface Interpolate<T> {
+public interface Interpolable<T> {
 
   /**
    * Interpolates between this value and an other value according to a given parameter. If x is 0,

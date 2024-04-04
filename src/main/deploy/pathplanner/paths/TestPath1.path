@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.92,
-        "y": 6.871942365438616
+        "y": 6.87
       },
       "prevControl": {
-        "x": 1.3768991694374368,
-        "y": 7.345159953477802
+        "x": 1.325425210092126,
+        "y": 6.088885732273835
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,12 +38,6 @@
         "type": "sequential",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Amp"
-              }
-            },
             {
               "type": "named",
               "data": {
@@ -70,7 +64,7 @@
             {
               "type": "wait",
               "data": {
-                "waitTime": 0.07
+                "waitTime": 0.15
               }
             },
             {
@@ -92,7 +86,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 45.99111940548958,
+    "rotation": 32.18224523821575,
     "rotateFast": false
   },
   "reversed": false,

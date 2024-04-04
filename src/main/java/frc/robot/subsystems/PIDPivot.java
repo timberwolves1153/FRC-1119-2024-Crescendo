@@ -36,6 +36,7 @@ public class PIDPivot extends PIDSubsystem {
     public final double AUTO_SUBWOOFER_SETPOINT = 11;
     public final double AMP_SETPOINT = 86;
     public final double STAGE_SHOT_SETPOINT = 1;
+ //   public final double PASS_SETPOINT = 
     
 
     public PIDPivot() {
@@ -48,7 +49,7 @@ public class PIDPivot extends PIDSubsystem {
         encoder.clearStickyFaults();
 
         pivotAbsoluteEncoder = new DutyCycleEncoder(0);
-        magnetSwitch = new DigitalInput(3);
+        magnetSwitch = new DigitalInput(1);
         getController().enableContinuousInput(unitCircleOffset, unitCircleOffset);
         configPivot();
         getController().setSetpoint(getMeasurement());
@@ -63,7 +64,7 @@ public class PIDPivot extends PIDSubsystem {
         SmartDashboard.putNumber("Encoder Offset", NS_ENCODER_OFFSET);
         degreesToEncoderMap.put(COLLECT_SETPOINT,0.115);
         degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.185);//0.242);
-        degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.214); 
+        degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.196); 
         degreesToEncoderMap.put(AMP_SETPOINT,0.659);
         degreesToEncoderMap.put(STAGE_SHOT_SETPOINT,0.331); //0.274);
 
@@ -213,7 +214,7 @@ public class PIDPivot extends PIDSubsystem {
 
     public void interpolatedSetpoint() {
 
-       // newSafeSetpoint = Optional.of(pivotDegreesToEncoderMap.get());
+        //newSafeSetpoint = Optional.of(pivotDegreesToEncoderMap.get());
 
     }
 

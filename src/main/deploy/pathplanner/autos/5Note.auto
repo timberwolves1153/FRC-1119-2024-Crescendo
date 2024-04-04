@@ -168,12 +168,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Rotate"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Pivot Stage"
@@ -195,6 +189,12 @@
           "type": "named",
           "data": {
             "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate"
           }
         }
       ]

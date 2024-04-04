@@ -168,6 +168,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "LeftNoteToSubwoofer"

@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.CollectNote;
+import frc.robot.commands.Rumble;
 import frc.robot.commands.TeleopPivot;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TurnAndX;
@@ -125,7 +126,16 @@ public class RobotContainer {
         NamedCommands.registerCommand("Shoot Note", new InstantCommand(() -> collector.intakeOverride(), collector));
         NamedCommands.registerCommand("Stop Collector", new InstantCommand(() -> collector.collectorStop(), collector));
         NamedCommands.registerCommand("Collector Outtake", new InstantCommand(() -> collector.collectorOuttake(), collector));
-        
+        NamedCommands.registerCommand("SensorCollect", new CollectNote(collector)
+        .andThen(new InstantCommand(() -> collector.collectorOuttake(), collector).withTimeout(.05))
+        .andThen(new InstantCommand(() -> collector.collectorStop(), collector)));
+
+        // opIntake.whileTrue(new CollectNote(collector)
+        //     .andThen(new InstantCommand(
+        //         () -> collector.collectorOuttake(), collector).withTimeout(.05)
+        //         .andThen(new InstantCommand( () -> collector.collectorStop(), collector)
+        //     )));
+
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
         
@@ -144,10 +154,10 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -> s_Swerve.zeroGyro()));
 
         opA.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.TELE_SUBWOOFER_SETPOINT)));
-        opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.STAGE_SHOT_SETPOINT)));
+        opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.STAGE_SHOT_SETPOINT)));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
         opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AMP_SETPOINT)));
-        opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT)));
+        //op.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT)));
 
         opTeleopPivot.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
 
@@ -157,10 +167,15 @@ public class RobotContainer {
         opIntakeOverride.onTrue(new InstantCommand(() -> collector.intakeOverride(), collector));
         opIntakeOverride.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
-        opIntake.whileTrue(new CollectNote(collector));
+        opIntake.whileTrue(new CollectNote(collector)
+            .andThen(new InstantCommand(
+                () -> collector.collectorOuttake(), collector).withTimeout(.05)
+                .andThen(new InstantCommand( () -> collector.collectorStop(), collector)
+            )));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
         opIntake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opIntake.onFalse(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.TELE_SUBWOOFER_SETPOINT)));
+        opIntake.whileTrue(new Rumble(collector, driver, operator));
 
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));

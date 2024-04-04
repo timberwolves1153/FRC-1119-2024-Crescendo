@@ -1,17 +1,17 @@
-// package frc.robot.lib.math;
+package frc.robot.lib.math;
 
-// import frc.robot.lib.Interpolation.InterpolatingDouble;
-// import frc.robot.lib.Interpolation.InterpolatingTreeMap;
-// import frc.robot.lib.Interpolation.InverseInterpolable;
+import edu.wpi.first.math.interpolation.Interpolatable;
+import frc.robot.lib.Interpolation.Interpolable;
+import frc.robot.lib.Interpolation.InterpolatingDouble;
+import frc.robot.lib.Interpolation.InterpolatingTreeMap;
 
-// public class PivotInterpolation {
-
+public class PivotInterpolation {
     
-//     public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> pivotDegreesToEncoderMap = new InterpolatingTreeMap<>();
 
-//     private final double NS_ENCODER_OFFSET = .37;
+    public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> pivotDegreesToEncoderMap = new InterpolatingTreeMap<>();
 
-//     static{
-//         pivotDegreesToEncoderMap.put(new InterpolatingDouble(1.44), new InterpolatingDouble(57.0));
-//     }
-// }
+
+    static{
+        
+    }
+}
