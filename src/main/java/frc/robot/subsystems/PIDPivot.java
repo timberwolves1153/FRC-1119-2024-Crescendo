@@ -36,6 +36,7 @@ public class PIDPivot extends PIDSubsystem {
     public final double AUTO_SUBWOOFER_SETPOINT = 11;
     public final double AMP_SETPOINT = 86;
     public final double STAGE_SHOT_SETPOINT = 1;
+    public final double CLIMB_SETPOINT = 95;
  //   public final double PASS_SETPOINT = 
     
 
@@ -59,14 +60,14 @@ public class PIDPivot extends PIDSubsystem {
         SmartDashboard.putNumber("Pivot P", getController().getP());
         SmartDashboard.putNumber("Pivot D", getController().getD());
 
-
         //ONLY GAFFEY CAN EDIT THESE VALUES
         SmartDashboard.putNumber("Encoder Offset", NS_ENCODER_OFFSET);
         degreesToEncoderMap.put(COLLECT_SETPOINT,0.115);
-        degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.185);//0.242);
-        degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.196); 
-        degreesToEncoderMap.put(AMP_SETPOINT,0.659);
-        degreesToEncoderMap.put(STAGE_SHOT_SETPOINT,0.331); //0.274);
+        degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.196);//0.242);
+        degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.223); 
+        degreesToEncoderMap.put(AMP_SETPOINT,0.6785);
+        degreesToEncoderMap.put(STAGE_SHOT_SETPOINT,0.345); //0.274);
+       // degreesToEncoderMap.put(CLIMB_SETPOINT, 0.745);
 
     }
 
@@ -144,7 +145,7 @@ public class PIDPivot extends PIDSubsystem {
         }
         // We are good + is up, - is down
         double constantVolts;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -7.5, 10.5); //change this according to volts given to the collector(current: 2)
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -7.5, 10); //change this according to volts given to the collector(current: 2)
         if (clampedVolts > 0) {
             constantVolts = 0.25; // Needs to be tuned 1153(0.15)
             m_leftPivotMotor.setVoltage(clampedVolts + constantVolts);

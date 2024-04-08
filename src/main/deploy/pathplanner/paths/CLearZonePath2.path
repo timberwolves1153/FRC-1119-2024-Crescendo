@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2,
-        "y": 5.56
+        "x": 8.13,
+        "y": 2.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7242180455924891,
-        "y": 7.0615511847137435
+        "x": 7.3752580587867955,
+        "y": 1.481376797340061
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.0567697154351654,
-        "y": 7.081004493762541
+        "x": 0.69,
+        "y": 4.5
       },
       "prevControl": {
-        "x": 2.113284226568453,
-        "y": 6.789204858030568
+        "x": 2.139002573744496,
+        "y": 1.4710894584696446
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": 12.851795602413606,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pivot Collect",
-      "waypointRelativePos": 0.0,
+      "name": "Pivot Up",
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -47,19 +41,42 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Collect"
+                "name": "Pivot Subwoofer TELE"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Stop Launcher"
+                "name": "Collector Outtake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Shoot Note"
+                "name": "Stop Collector"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Rev",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Rev Motors"
               }
             }
           ]
@@ -75,11 +92,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 48.4682292589172,
+    "rotation": -58.654129133182074,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CloseNotesAuto",
+  "folder": "When we don't get to run autos",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

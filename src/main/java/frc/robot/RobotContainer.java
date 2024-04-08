@@ -169,7 +169,7 @@ public class RobotContainer {
 
         opIntake.whileTrue(new CollectNote(collector)
             .andThen(new InstantCommand(
-                () -> collector.collectorOuttake(), collector).withTimeout(.05)
+                () -> collector.collectorOuttake(), collector).withTimeout(.09)
                 .andThen(new InstantCommand( () -> collector.collectorStop(), collector)
             )));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
@@ -211,7 +211,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return autoChooser.getSelected();
-       // return new PathPlannerAuto("CloseNotesAuto");
+       // return new PathPlannerAuto("Copy of CloseNotesAuto");
     //    return AutoBuilder.followPath(path);
     }
 }
