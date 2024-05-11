@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.CollectNote;
+import frc.robot.commands.DemoSwerve;
 import frc.robot.commands.Rumble;
 import frc.robot.commands.TeleopPivot;
 import frc.robot.commands.TeleopSwerve;
@@ -39,6 +40,7 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
+    private final Joystick overide = new Joystick(2);
    // private final Joystick atari = new Joystick(1); 
     private final SendableChooser<Command> autoChooser;
   
@@ -94,12 +96,10 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
          s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
+            new DemoSwerve(
                 s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> fieldCentric.getAsBoolean()
+                driver, 
+                overide
             ));
 
         //  PIDPivot.setDefaultCommand(
