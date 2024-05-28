@@ -64,21 +64,21 @@ public class RobotContainer {
 
     private final JoystickButton driveAprilTagAlignment = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     
-    private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
-    private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton opA = new JoystickButton(overide, XboxController.Button.kA.value);
+    private final JoystickButton opY = new JoystickButton(overide, XboxController.Button.kY.value);
+    private final JoystickButton opB = new JoystickButton(overide, XboxController.Button.kB.value);
     private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
 
-    private final JoystickButton opIntake = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-    private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
+    private final JoystickButton opIntake = new JoystickButton(overide, XboxController.Button.kLeftBumper.value);
+    private final AxisButton opOuttake = new AxisButton(overide, XboxController.Axis.kLeftTrigger.value, 0.5);
 
-    private final JoystickButton opIntakeOverride = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
+    private final JoystickButton opIntakeOverride = new JoystickButton(overide, XboxController.Button.kRightBumper.value);
+    private final AxisButton opLauncher = new AxisButton(overide, XboxController.Axis.kRightTrigger.value, 0.5);
 
     private final JoystickButton opSpeakerDistance = new JoystickButton(operator, XboxController.Button.kRightStick.value);
 
 
-    private final POVButton opTeleopPivot = new POVButton(operator, 180);
+    private final POVButton opTeleopPivot = new POVButton(overide, 180);
     // private final POVButton RightDPad = new POVButton(operator, 90);
     // private final POVButton LeftDPad = new POVButton(operator, 270);
     // private final POVButton UpDPad = new POVButton(operator, 0);
@@ -210,8 +210,8 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return autoChooser.getSelected();
-       // return new PathPlannerAuto("Copy of CloseNotesAuto");
-    //    return AutoBuilder.followPath(path);
+       // return autoChooser.getSelected();
+       return new PathPlannerAuto("Copy of CloseNotesAuto");
+       //return AutoBuilder.followPath(path);
     }
 }

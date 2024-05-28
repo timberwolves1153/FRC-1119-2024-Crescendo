@@ -40,8 +40,8 @@ public class DemoSwerve extends Command {
         this.overide = overide;
         addRequirements(s_Swerve);
 
-        stopButton = new JoystickButton(this.overide, XboxController.Button.kA.value);
-        orientationButton = new JoystickButton(this.overide, XboxController.Button.kLeftBumper.value);
+        stopButton = new JoystickButton(this.overide, XboxController.Button.kX.value);
+        orientationButton = new JoystickButton(this.overide, XboxController.Button.kLeftStick.value);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
