@@ -67,7 +67,7 @@ public class PIDPivot extends PIDSubsystem {
         degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.223); 
         degreesToEncoderMap.put(AMP_SETPOINT,0.6785);
         degreesToEncoderMap.put(STAGE_SHOT_SETPOINT,0.345); //0.274);
-       // degreesToEncoderMap.put(CLIMB_SETPOINT, 0.745);
+       degreesToEncoderMap.put(CLIMB_SETPOINT, 0.745);
 
     }
 

@@ -157,6 +157,7 @@ public class RobotContainer {
         opB.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.STAGE_SHOT_SETPOINT)));
         opIntake.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.COLLECT_SETPOINT), PIDPivot));
         opY.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AMP_SETPOINT)));
+        opX.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.CLIMB_SETPOINT)));
         //op.onTrue(new InstantCommand(() -> PIDPivot.setSetpointDegrees(PIDPivot.AUTO_SUBWOOFER_SETPOINT)));
 
         opTeleopPivot.whileTrue(new TeleopPivot(PIDPivot, () -> -operator.getRawAxis(translationAxis)));
