@@ -32,10 +32,10 @@ public class PIDPivot extends PIDSubsystem {
     private HashMap<Double, Double> pivotDegreesToEncoderMap = new HashMap<>();
 
     public final double COLLECT_SETPOINT = -3;
-    public final double TELE_SUBWOOFER_SETPOINT = 10.9;
-    public final double AUTO_SUBWOOFER_SETPOINT = 11;
+    public final double TELE_SUBWOOFER_SETPOINT = 11;
+    public final double AUTO_SUBWOOFER_SETPOINT = 15;
     public final double AMP_SETPOINT = 86;
-    public final double STAGE_SHOT_SETPOINT = 1;
+    public final double PASSING_SETPOINT = 1;
     public final double CLIMB_SETPOINT = 95;
  //   public final double PASS_SETPOINT = 
     
@@ -66,7 +66,7 @@ public class PIDPivot extends PIDSubsystem {
         degreesToEncoderMap.put(TELE_SUBWOOFER_SETPOINT, 0.196);//0.242);
         degreesToEncoderMap.put(AUTO_SUBWOOFER_SETPOINT, 0.223); 
         degreesToEncoderMap.put(AMP_SETPOINT,0.6785);
-        degreesToEncoderMap.put(STAGE_SHOT_SETPOINT,0.345); //0.274);
+        degreesToEncoderMap.put(PASSING_SETPOINT,0.345); //0.274);
        degreesToEncoderMap.put(CLIMB_SETPOINT, 0.745);
 
     }

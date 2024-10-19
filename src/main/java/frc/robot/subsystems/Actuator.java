@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Actuator extends SubsystemBase {
     
     private CANSparkMax actuatorMotor;
-    DigitalInput topLimit = new DigitalInput(3);
-    DigitalInput bottomLimit = new DigitalInput(4);
+    DigitalInput topLimit = new DigitalInput(4);
+    DigitalInput bottomLimit = new DigitalInput(3);
 
     public Actuator() {
 

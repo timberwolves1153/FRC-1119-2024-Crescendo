@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 2.55,
-        "y": 4.35
+        "y": 4.15
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.3778645547563935,
-        "y": 4.584332480337558
+        "y": 4.384332480337559
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.68,
-        "y": 5.56
+        "x": 1.25,
+        "y": 5.55
       },
       "prevControl": {
-        "x": 1.7593840773921174,
-        "y": 4.8788345263523265
+        "x": 2.365324011818302,
+        "y": 5.524300232362749
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
+      "name": "Stop Collect",
       "waypointRelativePos": 0,
       "command": {
         "type": "sequential",
@@ -41,7 +41,25 @@
             {
               "type": "named",
               "data": {
-                "name": "Shoot Speaker Distance"
+                "name": "Stop Collector"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Collector Outtake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.1
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Collector"
               }
             }
           ]
@@ -58,7 +76,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Pivot Wing Line"
+                "name": "Pivot Subwoofer TELE"
               }
             }
           ]

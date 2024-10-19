@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.58,
-        "y": 4.44
+        "y": 4.15
       },
       "prevControl": {
-        "x": 1.61,
-        "y": 4.44
+        "x": 1.58,
+        "y": 4.15
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,6 +53,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "Collect",
+      "waypointRelativePos": 0.75,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot Note"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -63,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -27.931166020390272,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,

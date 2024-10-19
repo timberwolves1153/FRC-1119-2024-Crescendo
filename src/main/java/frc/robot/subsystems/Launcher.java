@@ -79,8 +79,8 @@ public void shootAmp(){
 }
 
 public void shootSpeaker(){
-    bottomShooterMotor.setVoltage(-8);
-    topShooterMotor.setVoltage(-8);
+    bottomShooterMotor.setVoltage(-10);
+    topShooterMotor.setVoltage(-10);
     
 }
 

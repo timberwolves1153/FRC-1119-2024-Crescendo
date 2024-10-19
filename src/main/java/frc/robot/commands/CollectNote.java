@@ -29,15 +29,14 @@ public class CollectNote extends Command {
         collector.collectorIntake();
     }
 
+    // @Override
+    // public void end(boolean interrupted) {
+    //     collector.collectorStop();
+    // }
 
-    @Override
-    public void end(boolean interrupted) {
-        collector.collectorStop();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return collector.hasNote();
-    }
+    // @Override
+    // public boolean isFinished() {
+    //     return collector.hasNote();
+    // }
 
 }
