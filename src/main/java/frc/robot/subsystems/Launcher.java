@@ -74,8 +74,8 @@ public class Launcher extends SubsystemBase {
 
 
 public void shootAmp(){
-    bottomShooterMotor.setVoltage(-2);
-    topShooterMotor.setVoltage(-2);
+    bottomShooterMotor.setVoltage(-6.5);
+    topShooterMotor.setVoltage(-6.5);
 }
 
 public void shootSpeaker(){
@@ -85,8 +85,8 @@ public void shootSpeaker(){
 }
 
 public void shootSpeakerDistance() {
-    bottomShooterMotor.setVoltage(-10);
-    topShooterMotor.setVoltage(-10);
+    bottomShooterMotor.setVoltage(-8);
+    topShooterMotor.setVoltage(-8);
 }
 
 public void launcherStop() {

@@ -71,9 +71,10 @@ public class RobotContainer {
     private final AxisButton opOuttake = new AxisButton(operator, XboxController.Axis.kLeftTrigger.value, 0.5);
 
     private final JoystickButton opIntakeOverride = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
-
     private final JoystickButton opSpeakerDistance = new JoystickButton(operator, XboxController.Button.kRightStick.value);
+
+    private final AxisButton opLauncher = new AxisButton(operator, XboxController.Axis.kRightTrigger.value, 0.5);
+    private final JoystickButton opAmp = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
 
 
     private final POVButton opTeleopPivot = new POVButton(operator, 180);
@@ -180,6 +181,9 @@ public class RobotContainer {
 
         opOuttake.onTrue(new InstantCommand(() -> collector.collectorOuttake(), collector));
         opOuttake.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+
+        opAmp.onTrue(new InstantCommand(() -> launcher.shootAmp(), launcher));
+        opAmp.onTrue(new InstantCommand(() -> launcher.launcherStop(), launcher));
 
         opSpeakerDistance.onTrue(new InstantCommand(() -> launcher.shootSpeakerDistance(), launcher));
         opSpeakerDistance.onFalse(new InstantCommand(() -> launcher.launcherStop(), launcher));
